@@ -2,7 +2,7 @@
 " Plugin for simple search-based folding
 " Ships with support for Ruby, Perl, Java, PHP, Objective Caml, but can be
 " easily tailored to other filetypes.
-"     Version:    0.5.1 <preliminary>
+"     Version:    0.5.0 2007-04-16
 "      Author:    Mauricio Fernandez <mfp@acm.org>
 "  Maintainer:    Mauricio Fernandez <mfp@acm.org> http://eigenclass.org
 "     License:    GPL
@@ -382,13 +382,13 @@ let g:simplefold_marker_end = '\v\}\}\}\}'
 " Ruby support
 let g:ruby_simplefold_expr = 
 	    \'\v(^\s*(def|class|module|attr_reader|attr_accessor|alias_method|' .
-	    \    'attr|module_function|describe|it|before' . ')\s' . 
+	    \    'attr|module_function' . ')\s' . 
 	    \ '|\v^\s*(public|private|protected)>' .
 	    \ '|^\s*\w+attr_(reader|accessor)\s|^\s*[#%"0-9]{0,4}\s*\{\{\{[^{])' .
 	    \ '|^\s*[A-Z]\w+\s*\=[^=]|^__END__$'
 let g:ruby_simplefold_nestable_start_expr = 
 	    \ '\v^\s*(def>|if>|unless>|while>.*(<do>)?|' . 
-		\         'until>.*(<do>)?|case>|for>|begin>|it>|before>)' .
+		\         'until>.*(<do>)?|case>|for>|begin>)' .
 		\ '|^[^#]*.*<do>\s*(\|.*\|)?'
 let g:ruby_simplefold_nestable_end_expr = '\v^\s*end'
     
@@ -414,7 +414,7 @@ let g:perl_simplefold_nestable_start_expr =
 
 " PHP support
 let g:php_simplefold_expr =
-   \ '\v^\s*(interface|(abstract\s*)?class|(abstract\s*)?(public|private|protected|)(\s*static)?\s*function)>' .
+   \ '\v^\s*(class|function|const|public|private|define)>' .
    \ '|^\s*[#%"0-9]{0,4}\s*\{\{\{[^{]'
 let g:php_simplefold_nestable_start_expr =
    \ '\v^\s*(if|for(each)?|while|switch)\s*\(.*\)\_s*\{'
@@ -426,9 +426,9 @@ let g:php_simplefold_prefix =
 " Objective Caml support
 let g:ocaml_simplefold_expr = 
    \ '\v(' .
-   \ '^\s*(exception|type|module|and|class|val|method|inherit|initializer|include|open)>' .
+   \ '^\s*(exception|type|module|class|val|method|inherit|initializer)\s' .
    \ ')|(' .
-   \ '^\s*($|\(\*.*\*\)\s*|\*.*\*\)\s*|.*struct\s*|((exception|type|open|include)>.*)|let.*(in|;|\=)@<!\s*)\n\s*let\zs\s' . 
+   \ '^\s*($|\(\*.*\*\).*|.*\*\)\s*)\n\s*let\zs\s' . 
    \ ')'
 let g:ocaml_simplefold_nestable_start_expr = 
    \ '\v^\s*(if|match|try|for|while)(\s+|\s*$)'
@@ -436,7 +436,7 @@ let g:ocaml_simplefold_nestable_end_expr =
    \ '\v^\s*$'
 
 let g:ocaml_simplefold_prefix =
-     \ '\v^\s*(\*.*|\(\*[^*]*|\(\*|.*\*\))?$'
+     \ '\v^\s*(\*|\(\*|.*\*\))?$'         
 
 let g:omlet_simplefold_expr = g:ocaml_simplefold_expr
 let g:omlet_simplefold_nestable_start_expr = g:ocaml_simplefold_nestable_start_expr

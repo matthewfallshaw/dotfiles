@@ -1,50 +1,70 @@
-desc 'Install the plugin in vendor/plugins/will_paginate'
-task 'will_paginate:install' do
-  require("fileutils")
-  wp_dir = "vendor/plugins/will_paginate"
-  begin
-    FileUtils.mkdir(wp_dir)
-  rescue Errno::EEXIST
-    $stderr.puts("#{wp_dir} already exists: updating ...")
+# Inspired by http://snippets.dzone.com/posts/show/2925
+#
+
+namespace :svn do
+
+  desc 'Configure a subversion wc for rails'
+  task :svnize do
+    svnize
+    resvnize
   end
-  url = "http://github.com/mislav/will_paginate/tarball/master"
-  system("wget -nv #{url} -O- | tar xzv -C #{wp_dir} --strip 1")
+
+  desc 'Re-configure a subversion wc for rails'
+  task :resvnize do
+    resvnize
+  end
+
+  desc 'Add new files to subversion'
+  task :add do
+    `svn status | grep '^?' | sed -e 's/? *//' | sed -e 's/ / /g' | xargs svn add`
+  end
 end
 
-desc 'Add an external project as a sub-tree'
-task 'git:subtree:add' do
-  require("readline")
-  name = (print("Remote Name? ")
-  Readline.readline.chomp)
-  url = (print("Git Repo Url? ")
-  Readline.readline.chomp)
-  `git remote add #{name} #{url}`
-  `git config remote.#{name}.fetch refs/heads/*:refs/remotes/#{name}/*`
-  `git config --add remote.#{name}.fetch refs/tags/*:refs/remotes/#{name}/tags/*`
-  `git config remote.#{name}.tagopt --no-tags`
-  `git fetch #{name}`
+
+
+def svnize  
+  puts "svnizing ."
+  `rm public/index.html`
+  `mv config/database.yml{,.sample}`
+  `svn add *`
+  svn_revert_each(%w[tmp log doc])
+end
+def resvnize
+  puts "re-svnizing ."
+  %w[tmp log doc].each do |d|
+    svn_prop_add("svn:ignore", d, '*')
+  end
+  svn_prop_add("svn:ignore", ".", "*tags\ncoverage")
+  svn_prop_add("svn:ignore", "db/", "*.sqlite3\nschema.rb")
+  svn_prop_add("svn:ignore", "config/", "database.yml")
+  svn_prop_add("svn:externals", "vendor/plugins", "trike_test_tools\thttp://code.trike.com.au/svn/rails/plugins/trike_test_tools")
+  symlink_database_yml_to_database_yml_sample
+  `svn up`
 end
 
-desc 'Merge a sub-tree into your project'
-task 'git:subtree:merge' do
-  require("readline")
-  name = (print("Remote Name? ")
-  Readline.readline.chomp)
-  branch = (print("Remote Branch? ")
-  Readline.readline.chomp)
-  dest = (print("Destination? ")
-  Readline.readline.chomp)
-  `git merge -s ours --no-commit #{name}/#{branch}`
-  `git read-tree --prefix=#{dest} -u #{name}/#{branch}`
-  `git commit -m \"Merge branch '#{branch}' of #{name}\"`
+def svn_prop_add(property, path, value)
+  values = `svn propget #{property} #{path}`.split("\n") || []
+  values += value.split("\n")
+  if property == "svn:externals"
+    values.collect! do |value|
+      local_dir, external = value.split
+      external.sub!(/\/$/, "")
+      "#{local_dir}\t#{external}"
+    end
+  end
+  `svn propset #{property} '#{ values.uniq.join("\n") }' #{path}`
 end
-
-desc 'Pull (fetch & merge) into an existing sub-tree'
-task 'git:subtree:pull' do
-  require("readline")
-  name = (print("Remote Name? ")
-  Readline.readline.chomp)
-  branch = (print("Remote Branch? ")
-  Readline.readline.chomp)
-  `git pull -s subtree #{name} #{branch}`
+def symlink_database_yml_to_database_yml_sample
+  unless File.exist?("config/database.yml")
+    `cd config && ln -s database.yml.sample database.yml && cd ..`                                             
+  end
+end
+def svn_revert_each(dirs)
+  dirs.each do |d|
+    `svn revert #{d}/*`
+  end
+end
+def `(command)
+  puts command
+  puts super
 end

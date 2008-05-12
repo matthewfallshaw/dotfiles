@@ -1,3 +1,5 @@
 /doc/tags
 /spell/*.spl
 /vim*
+.DS_Store
+.*.sw*
