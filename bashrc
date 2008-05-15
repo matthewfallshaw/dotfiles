@@ -13,9 +13,9 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f /opt/local/etc/bash_completion ]; then
-  . /opt/local/etc/bash_completion
-fi
+# if [ -f /opt/local/etc/bash_completion ]; then
+#   . /opt/local/etc/bash_completion
+# fi
 complete -C ~/utils/completion_rake.rb -o default rake
 
 [ -z $DISPLAY ] && export DISPLAY=:0
