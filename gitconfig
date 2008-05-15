@@ -1,16 +1,20 @@
 [user]
-	name = Mislav Marohnić
-	email = mislav.marohnic@gmail.com
+	name = Matthew Fallshaw
+	email = matthew.fallshaw@gmail.com
 [apply]
 	whitespace = nowarn
 [alias]
 	co = checkout
+	st = status
+	ci = commit
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 [core]
-	excludesfile = /home/mislav/.gitignore
-  editor = vim -c 'set ft=diff'
+	excludesfile = /Users/matt/.gitignore
+	editor = vim -c 'set ft=diff'
 [mirror]
 	summary = true
+[merge]
+	tool = opendiff
