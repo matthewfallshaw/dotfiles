@@ -1,15 +1,24 @@
 set nocompatible      " We're running Vim, not Vi
+set encoding=utf8 nobomb " BOM often causes trouble
+set visualbell        " must turn visual bell on to remove audio bell
 syntax on             " Enable syntax highlighting
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugin
 behave xterm
+set linebreak                 " when wrapping, try to break at characters in breakat
+set breakat=\ ^I!@*-+;:,./?   " when wrapping, break at these characters
+set showbreak=>               " character to show that a line is wrapped
+set ignorecase               " ignore case when searching
+set smartcase                " override ignorecase when there are uppercase characters
+set showmatch                             " when inserting a bracked briefly flash its match
 set mouse=a
 set history=50
 set ruler
 set showcmd
+colorscheme desert
 set incsearch
-"set hlsearch
+set hlsearch
 set cursorline
 hi CursorLine term=none cterm=none ctermbg=DarkBlue
 autocmd InsertLeave * hi CursorLine term=none cterm=none ctermbg=DarkBlue
@@ -25,23 +34,6 @@ set enc=utf-8
 set backspace=eol,start,indent " make backspace work
 set hid " no need to save to change buffers
 runtime! macros/matchit.vim
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  if &sh =~ '\<cmd'
-    silent execute '!""C:\Program Files\Vim\vim64\diff" ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . '"'
-  else
-    silent execute '!C:\Program" Files\Vim\vim64\diff" ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-  endif
-endfunction
-set diffexpr=MyDiff()
 if &t_Co > 1
   syntax enable
 endif
@@ -51,7 +43,6 @@ endif
 " but BE CAREFUL! Windows file operations require backslashes--any
 " paths determined manually (not by Vim) need to be reversed.
 set shellslash
-colorscheme desert
 
 " Mappings
 inoremap ( ()<ESC>i
