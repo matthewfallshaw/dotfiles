@@ -9,13 +9,3 @@
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
-
-# set PATH so it includes ports
-export PATH=/opt/local/bin:"${PATH}"
-# set MANPATH so it includes ports
-export MANPATH=/opt/local/share/man:"${MANPATH}"
-
-# set PATH so it includes user's private bin if it exists
-if [ -d ~/bin ] ; then
-    export PATH=~/bin:"${PATH}"
-fi
