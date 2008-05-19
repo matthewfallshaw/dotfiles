@@ -1,7 +1,14 @@
-%w[rubygems wirble].each {|l| require l }
+%w[rubygems wirble pp what_methods].each {|l| require l }
+
+# Wirble
 Wirble.init
 Wirble.colorize
 
+# 'foo'.what?('FOO')
+
+IRB.conf[:AUTO_INDENT] = true
+
+# Tracing execution
 def enable_trace( event_regex = /^(call|return)/, class_regex = /IRB|Wirble|RubyLex|RubyToken/ )
   puts "Enabling method tracing with event regex #{event_regex.inspect} and class exclusion regex #{class_regex.inspect}"
 
@@ -12,19 +19,41 @@ def enable_trace( event_regex = /^(call|return)/, class_regex = /IRB|Wirble|Ruby
   }
   return
 end
-
 def disable_trace
   puts "Disabling method tracing"
 
   set_trace_func nil
 end
 
-# Rails script/console logger ot STDOUT
-script_console_running = ENV.include?('RAILS_ENV') && IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers')
-rails_running = ENV.include?('RAILS_ENV') && !(IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers'))
-irb_standalone_running = !script_console_running && !rails_running
+# .railsrc
+load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV']
 
-if script_console_running
-  require 'logger'
-  Object.const_set(:RAILS_DEFAULT_LOGGER, Logger.new(STDOUT))
+# Benchmarking
+def time(times = 1)
+  ret = nil
+  Benchmark.bm { |x| x.report { times.times { ret = yield } } }
+  ret
+end
+
+if defined? Benchmark
+  class Benchmark::ReportProxy
+    def initialize(bm, iterations)
+      @bm = bm
+      @iterations = iterations
+      @queue = []
+    end
+    
+    def method_missing(method, *args, &block)
+      args.unshift(method.to_s + ':')
+      @bm.report(*args) do
+        @iterations.times { block.call }
+      end
+    end
+  end
+
+  def compare(times = 1, label_width = 12)
+    Benchmark.bm(label_width) do |x|
+      yield Benchmark::ReportProxy.new(x, times)
+    end
+  end
 end

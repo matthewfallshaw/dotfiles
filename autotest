@@ -1,0 +1,11 @@
+%w[autotest/growl autotest/timestamp autotest/redgreen].each {|l| require l}
+
+Autotest.add_hook :initialize do |autotest|
+  [/\.svn/, /\.hg/, /\.git/, /^\.\/vendor/, /^\.\/doc/].each {|exception| autotest.add_exception(exception)}
+end
+
+# Autotest.add_hook :initialize do |at| 
+#   at.add_mapping(/.rb$/) do |f, _|
+#     at.files_matching(/^spec\/.*_spec\.rb$/)
+#   end
+# end

@@ -9,9 +9,9 @@ behave xterm
 set linebreak                 " when wrapping, try to break at characters in breakat
 set breakat=\ ^I!@*-+;:,./?   " when wrapping, break at these characters
 set showbreak=>               " character to show that a line is wrapped
-set ignorecase               " ignore case when searching
-set smartcase                " override ignorecase when there are uppercase characters
-set showmatch                             " when inserting a bracked briefly flash its match
+set ignorecase    " ignore case when searching
+set smartcase     " override ignorecase when there are uppercase characters
+set showmatch       " when inserting a bracked briefly flash its match
 set mouse=a
 set history=50
 set ruler
