@@ -51,14 +51,16 @@ alias svnaddall='svn status | grep "^\?" | awk "{print \$2}" | xargs svn add' # 
 # use readline, completion and require rubygems by default for irb
 alias irb='irb --simple-prompt -r irb/completion -rubygems'
 
-# really awesome function, use: cdgem <gem name>, cd's into your gems directory
-# and opens gem that best matches the gem name provided
+# use: cdgem <gem name>, cd's into your gems directory and opens gem that best
+# matches the gem name provided
 function cdgem {
   cd /opt/local/lib/ruby/gems/1.8/gems/
   cd `ls | grep $1 | sort | tail -1`
 }
+# use: gemdoc <gem name>, opens gem docs from the gem docs directory that best
+# matches the gem name provided
 function gemdoc {
-  firefox /opt/local/lib/ruby/gems/1.8/doc/`ls /opt/local/lib/ruby/gems/1.8/doc | grep $1 | sort | tail -1`/rdoc/index.html
+  open -a firefox /opt/local/lib/ruby/gems/1.8/doc/`ls /opt/local/lib/ruby/gems/1.8/doc | grep $1 | sort | tail -1`/rdoc/index.html
 }
 
 #########
