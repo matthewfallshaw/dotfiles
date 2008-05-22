@@ -1,3 +1,4 @@
 .*.sw?
 .svn
 .DS_Store
+tags

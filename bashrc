@@ -1,5 +1,21 @@
-# If not running interactively, don't do anything
+# set PATH so it includes ports
+export PATH=/opt/local/bin:/opt/local/sbin:"${PATH}"
+# set MANPATH so it includes ports
+export MANPATH=/opt/local/share/man:"${MANPATH}"
+
+# set PATH so it includes user's private bin if it exists
+if [ -d ~/bin ] ; then
+    export PATH=~/bin:"${PATH}"
+fi
+
+# Alias definitions.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# If not running interactively, don't do anything else
 [ -z "$PS1" ] && return
+######################################################
 
 # don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
@@ -7,11 +23,6 @@ export HISTCONTROL=ignoredups
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
-# Alias definitions.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # if [ -f /opt/local/etc/bash_completion ]; then
 #   . /opt/local/etc/bash_completion
@@ -39,13 +50,3 @@ xterm*|rxvt*)
 *)
     ;;
 esac
-
-# set PATH so it includes ports
-export PATH=/opt/local/bin:/opt/local/sbin:"${PATH}"
-# set MANPATH so it includes ports
-export MANPATH=/opt/local/share/man:"${MANPATH}"
-
-# set PATH so it includes user's private bin if it exists
-if [ -d ~/bin ] ; then
-    export PATH=~/bin:"${PATH}"
-fi

@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+%w[ rubygems activerecord ].each {|l| require l }
 # log to
 def l(stream = STDOUT)
   ActiveRecord::Base.logger = Logger.new(stream)
