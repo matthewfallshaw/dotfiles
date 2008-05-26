@@ -105,4 +105,4 @@ au BufWrite /private/tmp/crontab.* set nobackup
 let g:rct_completion_use_fri = 0
 command -bar -nargs=1 OpenURL :!open <args>
 
-let $PATH = '/Users/matt/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:' . $PATH
+let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:' . $PATH
