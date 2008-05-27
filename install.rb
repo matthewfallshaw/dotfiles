@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # (originally) from http://errtheblog.com/posts/89-huba-huba
-# (I took this from git@github.com:/mislav/dotfiles.git)
+# (I took this from git://github.com/mislav/dotfiles.git)
 
 home = ENV['HOME']
 

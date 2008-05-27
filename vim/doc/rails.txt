@@ -112,6 +112,7 @@ Installing and Using the Plugin ~
 						*rails-install-plugin*
 If you have the zip file, extract it to vimfiles (Windows) or ~/.vim
 (everything else).  You should have the following files: >
+	autoload/rails.vim
 	plugin/rails.vim
 	doc/rails.txt
 See |add-local-help| for instructions on enabling the documentation.  In a
@@ -217,7 +218,7 @@ actually edit a file from a Rails application.
 <			On Debian compatible distributions, the following is
 			the preferred method: >
 		:command -bar -nargs=1 OpenURL :!sensible-browser <args>
-<			If has("mac_gui"), has("win32_gui"), or
+<			If exists("$SECURITYSESSIONID"), has("gui_win32"), or
 			executable("sensible-browser") is true, the
 			corresponding command above will be automatically
 			defined.  Otherwise, you must provide your own (which
@@ -277,10 +278,6 @@ Example uses of |gf|, and where they might lead.
 >
 	layout :pri*nt
 <	app/views/layouts/print.rhtml ~
->
-	# In the Blog controller
-	def li*st
-<	app/views/blog/list.rhtml ~
 >
 	<%= link_to "New", new_comme*nt_path %>
 <	app/controllers/comments_controller.rb (jumps to def new) ~
@@ -404,7 +401,6 @@ or modeline like: >
 :Rhelper					|rails-:Rhelper|
 :Rview						|rails-:Rview|
 :Rlayout					|rails-:Rlayout|
-:Rapi						|rails-:Rapi|
 :Rfunctionaltest				|rails-:Rfunctionaltest|
 
 						*rails-:Rcontroller*
@@ -428,7 +424,9 @@ or modeline like: >
 			an extension is given.
 
 						*rails-:Rapi*
-:Rapi [{name}]		Edit the API for the specified controller.
+:Rapi [{name}]		Edit the API for the specified controller.  This
+			command is deprecated; add it yourself with
+			|:Rcommand| if you still desire it.
 
 						*rails-:Rfunctionaltest*
 :Rfunctionaltest [{name}]
@@ -523,14 +521,11 @@ A limited amount of completion with <Tab> is supported.
 :Rscript {script} {options}
 			Call ruby script/{script} {options}.
 
-				*rails-:Rbreakpointer* *rails-:Rconsole*
-:Rbreakpointer {options}
-:Rconsole {options}	Start the appropriate script.  On Windows these are
-			launched in the background with |!start|.  In the
-			terminal version GNU Screen is used if it is running
-			and |g:rails_gnu_screen| is set.  :Rbreakpointer will
-			be removed once Rails 2.0 is released, paralleling the
-			change made there.
+						*rails-:Rconsole*
+:Rconsole {options}	Start script/console.  On Windows it will be launched
+			in the background with |!start|.  In the terminal
+			version GNU Screen is used if it is running and
+			|g:rails_gnu_screen| is set.
 
 						*rails-:Rrunner*
 :[range]Rrunner {code}	Executes {code} with script/runner.  Differs from
@@ -739,9 +734,20 @@ handful of features being implemented.  :A knows about specs and will jump to
 them, but only if no test file is found.  The associated controller or model
 of a spec is detected, so all navigation commands should work as expected
 inside a spec file.  :Rfixtures will find spec fixtures, but the extension is
-mandatory and tab completion will not work.  Notably absent is :Rake support.
-(Is there a way to invoke rake such that it only runs a given spec?)
+mandatory and tab completion will not work.  :Rake will run the currently
+edited spec.
 
+While there are currently no built-in dedicated RSpec navigation commands, you
+can approximate your own with |:Rcommand|.
+>
+	Rcommand specmodel      spec/models      -glob=**/*
+		\ -suffix=_spec.rb               -default=model()
+	Rcommand spechelper     spec/helpers     -glob=**/* 
+		\ -suffix=_helper_spec.rb        -default=controller()
+	Rcommand speccontroller spec/controllers -glob=**/* 
+		\ -suffix=_controller_spec.rb    -default=controller()
+	Rcommand specview spec/views -glob=**/* -suffix=_view_spec.rb
+<
 ==============================================================================
 ABBREVIATIONS				*rails-abbreviations* *rails-snippets*
 
@@ -1087,7 +1093,10 @@ write.  Thus, one can use a custom indent when editing files, yet conform to
 Rails conventions when saving them.  There is also a local buffer version
 of this option, to allow for things like: >
 	autocmd User Rails if &ft == 'ruby' | let b:rails_tabstop = 4 | endif
-This option defaults to 0, which is the recommended value.
+This option defaults to being unset entirely, which blocks the relevant code
+from even loading.  Setting it to zero will allow the code to load without
+actually enabling it (such that it might be enabled later), while setting it
+to a non-zero value enables the behavior.
 
 If instead of all this magic, you would prefer to just override this plugin's
 settings and use your own custom 'shiftwidth', adjust things manually in an
@@ -1108,12 +1117,9 @@ The latest stable version can be found at
     http://www.vim.org/scripts/script.php?script_id=1567
 In Vim 7, you can keep up to date with |GetLatestVimScripts|.
 
-Development versions can be found at the following URLs:
-    http://tpope.us/rails.vba
-    http://tpope.us/rails.zip
-    http://svn.tpope.net/rails/vim/railsvim
-The first is a |vimball| for Vim 7.  The third is a subversion repository
-and contains the very latest features and bugs.
+The very latest development versions can be retrieved from Git:
+    http://git.tpope.net/?p=vim-rails.git
+    git clone git://git.tpope.net/git/vim-rails.git
 
 Feedback is highly desired on this plugin.  Please send all comments,
 complaints, and compliments to the author.  No bug is too small to report.
