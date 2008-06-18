@@ -28,6 +28,7 @@ shopt -s checkwinsize
 #   . /opt/local/etc/bash_completion
 # fi
 complete -C ~/utils/completion_rake.rb -o default rake
+source ~/utils/completion_git.sh
 
 [ -z $DISPLAY ] && export DISPLAY=:0
 [ -z $EDITOR ] && export EDITOR=vim
@@ -35,7 +36,7 @@ complete -C ~/utils/completion_rake.rb -o default rake
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
 xterm-color)
-    PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\033[01;32m\]\u\[\033[00m\]$ '
+    PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\033[01;32m\]\u\[\033[00m\]$(__git_ps1 " (%s)")$ '
     ;;
 *)
     PS1='\h:\w \u\$ '
