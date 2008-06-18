@@ -17,10 +17,11 @@ add-alias ()
 #######
 alias gl='git pull'
 alias gp='git push'
-alias gd='git diff'
-alias gc='git commit -v'
-alias gca='git commit -v -a'
-alias gb='git branch -v'
+alias gd='git diff --ignore-space-change'
+alias gc='git commit --verbose'
+alias gca='git commit --verbose --all'
+alias gb='git branch --verbose'
+alias g='git'
 
 function gco {
   if [ -z "$1" ]; then
