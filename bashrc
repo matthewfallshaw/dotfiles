@@ -8,6 +8,9 @@ if [ -d ~/bin ] ; then
     export PATH=~/bin:"${PATH}"
 fi
 
+# remove duplicates from PATH
+export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
+
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
