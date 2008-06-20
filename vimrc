@@ -105,4 +105,12 @@ au BufWrite /private/tmp/crontab.* set nobackup
 let g:rct_completion_use_fri = 0
 command -bar -nargs=1 OpenURL :!open <args>
 
-let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:' . $PATH
+let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
+
+let b:comment_leader = '# '
+au FileType haskell,vhdl,ada            let b:comment_leader = '-- '
+au FileType vim                         let b:comment_leader = '" '
+au FileType c,cpp,java                  let b:comment_leader = '// '
+au FileType tex                         let b:comment_leader = '% '
+noremap <silent> ,c :<C-B>sil <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
+noremap <silent> ,u :<C-B>sil <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>

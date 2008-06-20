@@ -15,13 +15,14 @@ add-alias ()
 #######
 # git #
 #######
-alias gl='git pull'
-alias gp='git push'
-alias gd='git diff --ignore-space-change'
+alias g='git'
+alias gb='git branch --verbose'
 alias gc='git commit --verbose'
 alias gca='git commit --verbose --all'
-alias gb='git branch --verbose'
-alias g='git'
+alias gd='git diff --ignore-space-change'
+alias gk='gitk &'
+alias gl='git pull'
+alias gp='git push'
 
 function gco {
   if [ -z "$1" ]; then
@@ -72,6 +73,22 @@ alias sr='kill -USR2 `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sst='kill `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sc='script/console'
 alias a='autotest -rails' # makes autotesting even quicker
+
+#############
+# PASSENGER #
+#############
+# Use this in any RAILS_ROOT dir. That restart.txt file tells mod_rails to restart this app.
+# You'll want to do this when (for example) you install a new plugin.
+alias passenger-restart='touch tmp/restart.txt'
+
+# You'll be adding to your vhosts configuration everytime you introduce a new Rails app.
+# Might as well make it a shortcut
+alias passenger-host='sudo gvim -p ~/apache2/vhosts.conf /etc/hosts > /dev/null'
+
+# You'll need to restart apache whenever you make a change to vhosts.
+# You can also click System Preference->Sharing->Web Sharing, but this is quicker.
+alias graceful='sudo apachectl graceful'
+
 
 ########
 # misc #

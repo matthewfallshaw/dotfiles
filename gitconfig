@@ -4,9 +4,9 @@
 [apply]
 	whitespace = nowarn
 [alias]
-	co = checkout
+	ch = checkout
 	st = status
-	ci = commit
+	co = commit
 [color]
 	diff = auto
 	status = auto
