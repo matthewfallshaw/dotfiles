@@ -1,7 +1,7 @@
 " Vim indent file
 " Language:		Ruby
 " Maintainer:		Nikolai Weibull <now at bitwi.se>
-" Info:			$Id: ruby.vim,v 1.5 2006/04/25 22:09:06 vimboss Exp $
+" Info:			$Id: ruby.vim,v 1.40 2007/03/20 13:54:25 dkearns Exp $
 " URL:			http://vim-ruby.rubyforge.org
 " Anon CVS:		See above site
 " Release Coordinator:	Doug Kearns <dougkearns@gmail.com>
@@ -73,7 +73,7 @@ let s:end_start_regex = '^\s*\zs\<\%(module\|class\|def\|if\|for' .
 let s:end_middle_regex = '\<\%(ensure\|else\|\%(\%(^\|;\)\s*\)\@<=\<rescue\>\|when\|elsif\)\>'
 
 " Regex that defines the end-match for the 'end' keyword.
-let s:end_end_regex = '\%(^\|[^.:]\)\@<=\<end\>'
+let s:end_end_regex = '\%(^\|[^.:@$]\)\@<=\<end\>'
 
 " Expression used for searchpair() call for finding match for 'end' keyword.
 let s:end_skip_expr = s:skip_expr .
@@ -217,7 +217,11 @@ function GetRubyIndent()
     call cursor(v:lnum, col)
     let bs = strpart('(){}[]', stridx(')}]', line[col - 1]) * 2, 2)
     if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', s:skip_expr) > 0
-      let ind = line[col-1]==')' ? virtcol('.')-1 : indent(s:GetMSL(line('.')))
+      if line[col-1]==')' && col('.') != col('$') - 1
+	let ind = virtcol('.')-1
+      else
+	let ind = indent(s:GetMSL(line('.')))
+      endif
     endif
     return ind
   endif
@@ -274,7 +278,11 @@ function GetRubyIndent()
   if line =~ '[[({]'
     let counts = s:LineHasOpeningBrackets(lnum)
     if counts[0] == '1' && searchpair('(', '', ')', 'bW', s:skip_expr) > 0
-      return virtcol('.')
+      if col('.') + 1 == col('$')
+	return ind + &sw
+      else
+	return virtcol('.')
+      endif
     elseif counts[1] == '1' || counts[2] == '1'
       return ind + &sw
     else
@@ -284,7 +292,7 @@ function GetRubyIndent()
 
   " If the previous line ended with an "end", match that "end"s beginning's
   " indent.
-  let col = s:Match(lnum, '\%(^\|[^.]\)\<end\>\s*\%(#.*\)\=$')
+  let col = s:Match(lnum, '\%(^\|[^.:@$]\)\<end\>\s*\%(#.*\)\=$')
   if col > 0
     call cursor(lnum, col)
     if searchpair(s:end_start_regex, '', s:end_end_regex, 'bW',
@@ -361,3 +369,5 @@ endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+" vim:set sw=2 sts=2 ts=8 noet ff=unix:
