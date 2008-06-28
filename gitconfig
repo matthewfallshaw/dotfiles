@@ -1,25 +1,31 @@
 [user]
-	name = Matthew Fallshaw
-	email = matthew.fallshaw@gmail.com
+  name = Matthew Fallshaw
+  email = matthew.fallshaw@gmail.com
 [apply]
-	whitespace = nowarn
+  whitespace = nowarn
 [alias]
-	ch = checkout
-	st = status
-	co = commit
+  ch = checkout
+  chb = checkout -b
+  co = commit
+  st = status
+  coa = commit -a
+  d = diff
+  pl = pull
+  pu = push
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
 [core]
-	excludesfile = /Users/matt/.gitignore
-	editor = vim -c 'set ft=diff'
+  excludesfile = /Users/matt/.gitignore
+  editor = vim -c 'set ft=diff'
 [mirror]
-	summary = true
+  summary = true
 [merge]
-	tool = opendiff
+  tool = opendiff
 [branch "master"]
-	remote = origin
-	merge = refs/heads/master
+  remote = origin
+  merge = refs/heads/master
 [color "diff"]
-	new = yellow
+  new = yellow

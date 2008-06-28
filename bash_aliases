@@ -6,13 +6,17 @@ alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
 # git #
 #######
 alias g='git'
+alias ga="git add"
 alias gb='git branch --verbose'
 alias gc='git commit --verbose'
 alias gca='git commit --verbose --all'
+alias gco="git checkout"
 alias gd='git diff --ignore-space-change'
 alias gk='gitk &'
 alias gl='git pull'
+alias gm="git merge"
 alias gp='git push'
+alias gs="git stash"
 
 function gco {
   if [ -z "$1" ]; then
