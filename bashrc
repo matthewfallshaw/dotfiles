@@ -27,12 +27,6 @@ export HISTCONTROL=ignoredups
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# if [ -f /opt/local/etc/bash_completion ]; then
-#   . /opt/local/etc/bash_completion
-# fi
-complete -C ~/utils/completion_rake.rb -o default rake
-source ~/utils/completion_git.sh
-
 [ -z $DISPLAY ] && export DISPLAY=:0
 [ -z $EDITOR ] && export EDITOR=vim
 
@@ -54,3 +48,9 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+complete -C ~/.utils/completion_rake.rb -o default rake
+source ~/.utils/completion_git.sh
+if [ -f /opt/local/etc/bash_completion ]; then
+  . /opt/local/etc/bash_completion
+fi
