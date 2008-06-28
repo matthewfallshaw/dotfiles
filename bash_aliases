@@ -90,7 +90,6 @@ alias ls='ls --color=auto'
 alias ll="ls -l --color=auto"
 alias la='ls -A --color=auto'
 alias lla='ls -Al --color=auto'
-
 alias svnst="svn st | grep -v '^\?'"
-
 alias which='which -a'
+alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
