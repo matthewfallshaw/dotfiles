@@ -54,7 +54,9 @@ inoremap ] <c-r>=ClosePair(']')<CR>
 inoremap } <c-r>=ClosePair('}')<CR>
 
 inoremap " <c-r>=QuoteDelim('"')<CR>
-""inoremap ' <c-r>=QuoteDelim("'")<CR>
+"inoremap ' <c-r>=QuoteDelim("'")<CR>
+
+inoremap <S-CR> <ESC>o
 
 " Alt mapped keys (none of these work on mac)
 inoremap <m-[> [
@@ -107,6 +109,7 @@ command -bar -nargs=1 OpenURL :!open <args>
 
 let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
 
+" Comments
 let b:comment_leader = '# '
 au FileType haskell,vhdl,ada            let b:comment_leader = '-- '
 au FileType vim                         let b:comment_leader = '" '
