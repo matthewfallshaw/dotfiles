@@ -110,4 +110,4 @@ alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
 
-export CDPATH=~/dev:~/Desktop/projects
+export CDPATH=.:~/dev:~/Desktop/projects
