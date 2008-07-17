@@ -110,7 +110,7 @@ command -bar -nargs=1 OpenURL :!open <args>
 let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
 
 " Comments
-let b:comment_leader = '# '
+au FileType ?                           let b:comment_leader = '# '  " default
 au FileType haskell,vhdl,ada            let b:comment_leader = '-- '
 au FileType vim                         let b:comment_leader = '" '
 au FileType c,cpp,java                  let b:comment_leader = '// '

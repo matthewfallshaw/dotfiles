@@ -1,3 +1,5 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
 # set PATH so it includes ports
 export PATH=/opt/local/bin:/opt/local/sbin:"${PATH}"
 # set MANPATH so it includes ports
