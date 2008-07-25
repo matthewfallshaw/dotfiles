@@ -4,3 +4,4 @@
 tags
 tmp/restart.txt
 coverage/
+db/*.sqlite3
