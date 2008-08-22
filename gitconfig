@@ -29,3 +29,5 @@
   merge = refs/heads/master
 [color "diff"]
   new = yellow
+[status]
+  submodulesummary = true
