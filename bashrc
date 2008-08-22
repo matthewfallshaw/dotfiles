@@ -44,7 +44,14 @@ xterm*|rxvt*)
 esac
 
 # completion
-complete -C ~/.utils/completion_rake.rb -o default rake
+complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
+function clear-completion-rake {
+  rm ~/.raketabs-*
+}
+complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
+function clear-completion-cap {
+  rm ~/.captabs-*
+}
 source ~/.utils/completion_git.sh
 if [ -f /opt/local/etc/bash_completion ]; then
   . /opt/local/etc/bash_completion
