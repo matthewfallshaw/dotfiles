@@ -1,0 +1,10 @@
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e[3~": delete-char
+
+# Performs history expansion on space
+#$if Bash
+#  Space: magic-space
+#$endif
+
+set completion-ignore-case on
