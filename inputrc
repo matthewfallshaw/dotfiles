@@ -1,5 +1,7 @@
+# up-arrow history search
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+# forward delete
 "\e[3~": delete-char
 
 # Performs history expansion on space
