@@ -22,8 +22,14 @@ fi
 [ -z "$PS1" ] && return
 ######################################################
 
-# don't put duplicate lines in the history. See bash(1) for more options
-export HISTCONTROL=ignoredups
+# don't put duplicate lines or lines starting with a space (good for sensitive info) in the history.
+export HISTCONTROL=ignoredups:ignorespace
+
+# share history between terms
+shopt -s histappend
+PROMPT_COMMAND='history -a'
+
+export HISTSIZE=10000
 
 export GREP_OPTIONS="--color=auto"
 
