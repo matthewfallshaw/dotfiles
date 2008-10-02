@@ -52,3 +52,4 @@ exec "Snippet rps render :partial => \"".st."item".et."\", :status => ".st.et
 exec "Snippet ril render :inline => \"".st.et."\", :locals => { ".st.et." => \"".st."value".et."\"".st.et." }".st.et
 exec "Snippet rtl render :text => \"".st.et."\", :layout => \"".st.et."\"".st.et
 exec "Snippet reca redirect_to :controller => \"".st."items".et."\", :action => \"".st."list".et."\"".st.et
+exec "Snippet rspec require File.dirname(__FILE__) + '/../spec_helper'<CR><CR>describe ".st."Model".et." do<CR>".st.et."<CR>end"
