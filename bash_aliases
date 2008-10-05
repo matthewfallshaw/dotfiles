@@ -17,6 +17,7 @@ alias gl='git pull'
 alias gm="git merge"
 alias gp='git push'
 alias gs="git stash"
+alias gx="gitx"
 
 function gco {
   if [ -z "$1" ]; then
