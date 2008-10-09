@@ -60,6 +60,7 @@ _cdgemcomplete() {
   return 0
 }
 complete -o default -o nospace -F _cdgemcomplete cdgem
+
 # use: gemdoc <gem name>, opens gem docs from the gem docs directory that best
 # matches the gem name provided
 # (hat tip: http://stephencelis.com/archive/2008/6/bashfully-yours-gem-shortcuts)
@@ -71,6 +72,14 @@ _gemdocomplete() {
   return 0
 }
 complete -o default -o nospace -F _gemdocomplete gemdoc
+
+# use: vimgem <gem name>, cd's into your gems directory and opens gem that best
+# matches the gem name provided in gvim
+function vimgem {
+  gvim -c NERDTree $GEMDIR/gems/`ls $GEMDIR/gems | grep $1 | sort | tail -1`
+}
+complete -o default -o nospace -F _cdgemcomplete vimgem
+
 
 #########
 # RAILS #
