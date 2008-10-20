@@ -10,6 +10,6 @@ if !exists( "*EndToken" )
     endif
   endfunction
 endif
-imap <TAB><CR>    <ESC>:execute 'normal o' . EndToken()<CR>O
+"imap <TAB><CR>    <ESC>:execute 'normal o' . EndToken()<CR>O
 
 imap <<-    <<-QUOTE<CR><Tab><CR>QUOTE<Esc>-A
