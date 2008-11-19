@@ -11,14 +11,24 @@ set breakat=\ ^I!@*-+;:,./?   " when wrapping, break at these characters
 set showbreak=>               " character to show that a line is wrapped
 set ignorecase    " ignore case when searching
 set smartcase     " override ignorecase when there are uppercase characters
-set showmatch       " when inserting a bracked briefly flash its match
+set showmatch       " when inserting a bracket briefly flash its match
 set mouse=a
-set history=50
+set history=500
 set ruler
 set showcmd
+set title
+set scrolloff=3
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+" <C-e> and <C-y> scroll the viewport a single line
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 colorscheme desert
 set incsearch
 set hlsearch
+nmap <silent> <leader>n :silent :nohlsearch<CR>
+let mapleader = ","  " <leader> now means ',' rather than '\'
+set shortmess=atI
 set cursorline
 hi CursorLine term=none cterm=none ctermbg=DarkBlue
 autocmd InsertLeave * hi CursorLine term=none cterm=none ctermbg=DarkBlue
@@ -27,8 +37,10 @@ set autoindent
 set tabstop=4
 set softtabstop=2
 set shiftwidth=2
-set expandtab
 set laststatus=2
+set expandtab
+set smarttab
+autocmd FileType make     set noexpandtab
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
 set enc=utf-8
 set backspace=eol,start,indent " make backspace work
@@ -43,6 +55,12 @@ endif
 " but BE CAREFUL! Windows file operations require backslashes--any
 " paths determined manually (not by Vim) need to be reversed.
 set shellslash
+" use ack for grepping
+set grepprg=ack
+set grepformat=%f:%l:%m
+" By default, pressing <TAB> in command mode will choose the first possible completion with no indication of how many others there might be. The following configuration lets you see what your other options are
+set wildmenu
+set wildmode=list:longest
 
 " Mappings
 inoremap ( ()<Left>
@@ -107,8 +125,8 @@ au BufWrite /private/tmp/crontab.* set nobackup
 let g:rct_completion_use_fri = 0
 command -bar -nargs=1 OpenURL :!open <args>
 
-let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
-
 " NERDTree
 let NERDTreeIgnore=['\~$', '^\.git', '\.swp$', '\.DS_Store$']
 let NERDTreeShowHidden=1
+
+let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
