@@ -1,11 +1,17 @@
 set nocompatible      " We're running Vim, not Vi
+
+let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
+
 set encoding=utf8 nobomb " BOM often causes trouble
-set visualbell        " must turn visual bell on to remove audio bell
-syntax on             " Enable syntax highlighting
+let mapleader = ","  " <leader> now means ',' rather than '\'
+if &t_Co > 1
+  syntax enable       " Enable syntax highlighting without clobbering colors
+endif
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugin
 behave xterm
+set visualbell        " must turn visual bell on to remove audio bell
 set linebreak                 " when wrapping, try to break at characters in breakat
 set breakat=\ ^I!@*-+;:,./?   " when wrapping, break at these characters
 set showbreak=>               " character to show that a line is wrapped
@@ -14,20 +20,15 @@ set smartcase     " override ignorecase when there are uppercase characters
 set showmatch       " when inserting a bracket briefly flash its match
 set mouse=a
 set history=500
-set ruler
 set showcmd
 set title
 set scrolloff=3
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-" <C-e> and <C-y> scroll the viewport a single line
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
 colorscheme desert
 set incsearch
 set hlsearch
 nmap <silent> <leader>n :silent :nohlsearch<CR>
-let mapleader = ","  " <leader> now means ',' rather than '\'
 set shortmess=atI
 set cursorline
 hi CursorLine term=none cterm=none ctermbg=DarkBlue
@@ -41,14 +42,11 @@ set laststatus=2
 set expandtab
 set smarttab
 autocmd FileType make     set noexpandtab
+set ruler
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
-set enc=utf-8
 set backspace=eol,start,indent " make backspace work
 "set hidden " no need to save to change buffers
 runtime! macros/matchit.vim
-if &t_Co > 1
-  syntax enable
-endif
 " shellslash (use a common path separator across all platforms)
 " convert all backslashes to forward slashes on expanding filenames.
 " Enables consistancy in Cream between Windows and Linux platforms,
@@ -75,6 +73,10 @@ inoremap " <c-r>=QuoteDelim('"')<CR>
 "inoremap ' <c-r>=QuoteDelim("'")<CR>
 
 inoremap <S-CR> <ESC>o
+
+" <C-e> and <C-y> scroll the viewport a single line
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 
 " Alt mapped keys (none of these work on mac)
 inoremap <m-[> [
@@ -129,4 +131,5 @@ command -bar -nargs=1 OpenURL :!open <args>
 let NERDTreeIgnore=['\~$', '^\.git', '\.swp$', '\.DS_Store$']
 let NERDTreeShowHidden=1
 
-let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
+" FuzzyFinder (and github.com/jamis/fuzzyfinder_textmate)
+map <leader>t :FuzzyFinderTextMate<CR>
