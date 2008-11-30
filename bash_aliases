@@ -6,6 +6,7 @@ alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
 # git #
 #######
 alias g='git'
+alias gnp='git --no-pager'
 alias ga="git add"
 alias gb='git branch --verbose'
 alias gc='git commit --verbose'
