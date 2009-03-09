@@ -39,6 +39,7 @@ shopt -s checkwinsize
 
 [ -z $DISPLAY ] && export DISPLAY=:0
 [ -z $EDITOR ] && export EDITOR=vim
+[ -z $REPLYTO ] && export REPLYTO=emailaddress
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -79,3 +80,7 @@ xterm-color)
   PS1='\h:\w \u\$ '
   ;;
 esac
+
+# mpd config
+export MPD_HOST=mpd
+export MPD_PORT=6600
