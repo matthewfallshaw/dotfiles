@@ -1,4 +1,7 @@
-# vim:filetype=ruby
+# vim: set filetype=ruby
+__END__
+# autotest and I are currently intemperately disposed towards one another
+
 %w[autotest/growl autotest/timestamp autotest/redgreen].each {|l| require l}
 
 # Ignore some dirs (speed hack)
