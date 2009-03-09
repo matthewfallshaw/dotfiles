@@ -31,3 +31,6 @@
   new = yellow
 [status]
   submodulesummary = true
+[github]
+  user = username
+  token = tokenstring
