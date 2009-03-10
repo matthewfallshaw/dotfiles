@@ -26,7 +26,7 @@ secrets = YAML.load(open(File.expand_path('~/.dotfiles_secrets')))
 
 Dir.chdir File.dirname(__FILE__) do
   Dir['*'].each do |file|
-    next if file.match(/^(install.rb|utils|vendor)$/)
+    next if file.match(/^(install.rb|vendor)$/)
     target = File.join(home, ".#{file}")
     if secrets[file]
       copy_and_replace_secrets(file, target, secrets)
