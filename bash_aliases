@@ -120,5 +120,6 @@ alias lla='ls -Al --color=auto'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
+alias pwsafe='pwsafe -E'
 
 export CDPATH=.:~/dev:~/Desktop/projects
