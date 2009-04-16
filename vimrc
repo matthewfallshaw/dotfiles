@@ -133,3 +133,4 @@ let NERDTreeShowHidden=1
 
 " FuzzyFinder (and github.com/jamis/fuzzyfinder_textmate)
 map <leader>t :FuzzyFinderTextMate<CR>
+map <leader>d :FuzzyFinderDir<CR>
