@@ -121,5 +121,4 @@ alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
 alias pwsafe='pwsafe -E'
-
-export CDPATH=.:~/dev:~/Desktop/projects
+alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'

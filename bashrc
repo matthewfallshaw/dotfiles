@@ -2,14 +2,10 @@
 
 # set PATH so it includes ports
 export PATH=/opt/local/bin:/opt/local/sbin:"${PATH}"
-# set MANPATH so it includes ports
-export MANPATH=/opt/local/share/man:"${MANPATH}"
-
 # set PATH so it includes user's private bin if it exists
 if [ -d ~/bin ] ; then
     export PATH=~/bin:"${PATH}"
 fi
-
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
 
@@ -22,14 +18,16 @@ fi
 [ -z "$PS1" ] && return
 ######################################################
 
+export CDPATH=.:~/dev:~/Desktop/projects
+# set MANPATH so it includes ports
+export MANPATH=/opt/local/share/man:"${MANPATH}"
+
 # don't put duplicate lines or lines starting with a space (good for sensitive info) in the history.
 export HISTCONTROL=ignoredups:ignorespace
-
+export HISTSIZE=10000
 # share history between terms
 shopt -s histappend
 PROMPT_COMMAND='history -a'
-
-export HISTSIZE=10000
 
 export GREP_OPTIONS="--color=auto"
 
