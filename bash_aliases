@@ -20,6 +20,10 @@ alias gp='git push'
 alias gs="git stash"
 alias gx="gitx"
 
+function gsearch {
+  for branch in `git branch | sed 's/\*//'`; do echo $branch:; git ls-tree -r --name-only $branch | grep "$1"; done
+}
+
 function gco {
   if [ -z "$1" ]; then
     git checkout master
