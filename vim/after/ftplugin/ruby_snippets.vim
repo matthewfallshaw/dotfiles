@@ -6,6 +6,7 @@ let st = g:snip_start_tag
 let et = g:snip_end_tag
 let cd = g:snip_elem_delim
 
+exec "Snippet rb #!/usr/bin/env ruby<CR>"
 exec "Snippet do do<CR>".st.et."<CR>end"
 exec "Snippet class class ".st."className".et."<CR>".st.et."<CR>end"
 exec "Snippet mod module ".st."module".et."<CR>".st.et."<CR>end"
@@ -31,3 +32,4 @@ exec "Snippet reject { |".st."element".et."| ".st."element".et.".".st.et." }"
 exec "Snippet rejecto reject do |".st."element".et."| <CR>".st."element".et.".".st.et."<CR>end"
 exec "Snippet inject inject(".st."object".et.") { |".st."injection".et.", ".st."element".et."| ".st.et." }"
 exec "Snippet select select { |".st."element".et."| ".st."element".et.".".st.et." }"
+exec "Snippet task namespace '".st."foo".et."' do<CR>namespace '".st."bar".et."' do<CR>desc '".st."Description".et."'<CR>task :".st."baz".et." do<CR>".st.et."<CR>end<CR>end<CR>end"
