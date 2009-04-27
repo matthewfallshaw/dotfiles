@@ -132,5 +132,7 @@ let NERDTreeIgnore=['\~$', '^\.git', '\.swp$', '\.DS_Store$']
 let NERDTreeShowHidden=1
 
 " FuzzyFinder (and github.com/jamis/fuzzyfinder_textmate)
+let g:fuzzy_ignore = "*.log"
+let g:fuzzy_matching_limit = 70
 map <leader>t :FuzzyFinderTextMate<CR>
 map <leader>d :FuzzyFinderDir<CR>
