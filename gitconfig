@@ -18,7 +18,7 @@
   interactive = auto
   status = auto
 [core]
-  excludesfile = /Users/matt/.gitignore
+  excludesfile = userdirectory/.gitignore
   editor = vim -c 'set ft=diff'
 [mirror]
   summary = true
