@@ -1,6 +1,6 @@
 [user]
-  name = Matthew Fallshaw
-  email = matthew.fallshaw@gmail.com
+  name = user-name
+  email = user-email
 [apply]
   whitespace = nowarn
 [alias]
@@ -32,5 +32,5 @@
 [status]
   submodulesummary = true
 [github]
-  user = username
-  token = tokenstring
+  user = github-user
+  token = github-token
