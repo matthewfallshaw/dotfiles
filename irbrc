@@ -1,7 +1,7 @@
 %w[rubygems wirble pp what_methods].each {|l| require l }
 
 # Wirble
-Wirble.init
+Wirble.init(:history_size => 10000)
 Wirble.colorize
 
 # 'foo'.what?('FOO')
@@ -55,5 +55,17 @@ if defined? Benchmark
     Benchmark.bm(label_width) do |x|
       yield Benchmark::ReportProxy.new(x, times)
     end
+  end
+end
+
+class Object
+  # Return a list of methods defined locally for a particular object.  Useful
+  # for seeing what it does whilst losing all the guff that's implemented
+  # by its parents (eg Object).
+  def local_methods(obj = self)
+    (obj.methods - obj.class.superclass.instance_methods).sort
+  end
+  def non_object_methods(obj = self)
+    (obj.methods - Object.instance_methods).sort
   end
 end

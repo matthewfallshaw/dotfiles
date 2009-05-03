@@ -35,3 +35,4 @@ task 'git:subtree:pull' do
   Readline.readline.chomp)
   `git pull -s subtree #{name} #{branch}`
 end
+# vi:filetype=ruby:

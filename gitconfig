@@ -17,12 +17,15 @@
   diff = auto
   interactive = auto
   status = auto
+  ui = auto
 [core]
   excludesfile = userdirectory/.gitignore
   editor = vim -c 'set ft=diff'
+  whitespace = fix
 [mirror]
   summary = true
 [merge]
+  summary = true
   tool = opendiff
 [branch "master"]
   remote = origin
@@ -34,3 +37,4 @@
 [github]
   user = github-user
   token = github-token
+# vi:filetype=conf

@@ -1,4 +1,3 @@
-# vim: set filetype=ruby
 __END__
 # autotest and I are currently intemperately disposed towards one another
 
@@ -23,3 +22,5 @@ Autotest.add_hook :initialize do |at|
 #     at.files_matching(/^spec\/.*_spec\.rb$/)
 #   end
 end
+#
+# vi:filetype=ruby

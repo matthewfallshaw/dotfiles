@@ -1,24 +1,30 @@
 # Some useful aliases
-# vi:filetype=sh:
 alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
 
 #######
 # git #
 #######
 alias g='git'
-alias gnp='git --no-pager'
 alias ga="git add"
 alias gb='git branch --verbose'
+alias gba='git branch --verbose -a'
 alias gc='git commit --verbose'
 alias gca='git commit --verbose --all'
-alias gco="git checkout"
-alias gd='git diff --ignore-space-change'
-alias gk='gitk &'
+if [ "$system_name" == 'Darwin' ]; then
+  alias gd='git diff --ignore-space-change | gitx'
+else
+  alias gd='git diff --ignore-space-change'
+fi
+alias gk='gitk --all &'
 alias gl='git pull'
 alias gm="git merge"
+alias gnp='git --no-pager'
 alias gp='git push'
 alias gs="git stash"
+alias gst='git status'
 alias gx="gitx"
+
+alias gitrm="git stat | grep deleted | awk '{print $3}' | xargs git rm"
 
 function gsearch {
   for branch in `git branch | sed 's/\*//'`; do echo $branch:; git ls-tree -r --name-only $branch | grep "$1"; done
@@ -93,7 +99,7 @@ alias ss='script/server' # start up the beast
 alias sr='kill -USR2 `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sst='kill `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sc='script/console'
-alias a='autotest -rails' # makes autotesting even quicker
+alias a='autotest' # makes autotesting even quicker
 
 #############
 # PASSENGER #
@@ -117,12 +123,17 @@ alias graceful='sudo apachectl graceful'
 alias h='history'
 alias j="jobs -l"
 alias l="ls -lah"
-alias ls='ls --color=auto'
-alias ll="ls -l --color=auto"
-alias la='ls -A --color=auto'
-alias lla='ls -Al --color=auto'
+alias ls='ls -h --color=auto'
+alias ll="ls -lh --color=auto"
+alias la='ls -ah --color=auto'
+alias lla='ls -alh --color=auto'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
 alias pwsafe='pwsafe -E'
 alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
+alias ..='cd ..;' # can then do .. .. .. to move up multiple directories.
+alias ...='.. ..'
+alias ....='.. .. ..'
+
+# vi:filetype=sh

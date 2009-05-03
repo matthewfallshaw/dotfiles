@@ -1,8 +1,13 @@
+*~
 .*.sw?
-.sw?
-.svn
 .DS_Store
-tags
-tmp/restart.txt
+._*
+.svn
+.sw?
+build-*
 coverage/
 db/*.sqlite3
+log/*
+pkg/*
+tags
+tmp/**/*

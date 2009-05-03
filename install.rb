@@ -8,30 +8,59 @@
 #     "search_term": replace_term
 #     "other_search_term": other_replace_term
 
-def copy_and_replace_secrets(file, target, secrets)
-  %w[rubygems facets/shellwords].each {|l| require l }
-  system %[cp #{file} #{target}]
+%w[rubygems rake yaml].each {|l| require l }
+
+def replace_file(file)
+  system %Q{rm "$HOME/.#{file}"}
+  link_file(file)
+end
+ 
+def link_file(file)
+  puts ".#{file}: linked"
+  system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file}"}
+end
+
+def copy_and_replace_secrets(file)
+  require 'facets/shellwords'
+  system %[cp "$PWD/#{file}" "$HOME/.#{file}"]
   secrets[file].each do |search_term, replace_term|
-    system %[ruby -pi -e 'gsub(/#{Shellwords.escape(search_term)}/, "#{Shellwords.escape(replace_term)}")' #{target}]
+    system %[ruby -pi -e 'gsub(/#{Shellwords.escape(search_term)}/, "#{Shellwords.escape(replace_term)}")' "$HOME/.#{file}"]
   end
-  puts "copy and update .#{file}"
-end
-def symlink(file, target)
-  system %[ln -vsf #{File.join(Dir.pwd, file)} #{target}]
+  puts ".#{file}: copied and updated with secrets"
 end
 
-home = ENV['HOME']
-require 'yaml'
-secrets = YAML.load(open(File.expand_path('~/.dotfiles_secrets')))
+def secrets
+  @secrets ||= YAML.load(open(File.expand_path('~/.dotfiles_secrets')))
+end
 
+replace_all = false
 Dir.chdir File.dirname(__FILE__) do
   Dir['*'].each do |file|
-    next if file.match(/^(install.rb|vendor)$/)
-    target = File.join(home, ".#{file}")
+    next if %w[install.rb Rakefile README vendor].include?(file)
+
+    original = File.join(ENV['HOME'], ".#{file}")
+
     if secrets[file]
-      copy_and_replace_secrets(file, target, secrets)
-    elsif !File.exist?(target)
-      symlink(file, target)
+      copy_and_replace_secrets(file)
+    elsif File.symlink?(original) && ( File.readlink(original) == File.expand_path(file) )
+      puts ".#{file}: already correctly linked"
+    elsif replace_all
+      replace_file(file)
+    elsif File.exist?(original)
+      print "overwrite ~/.#{file}? [ynaq] "
+      case $stdin.gets.chomp
+      when 'a'
+        replace_all = true
+        replace_file(file)
+      when 'y'
+        replace_file(file)
+      when 'q'
+        exit
+      else
+        puts ".#{file}: skipped"
+      end
+    else
+      link_file(file)
     end
   end
 end
