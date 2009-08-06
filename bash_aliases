@@ -99,7 +99,7 @@ alias ss='script/server' # start up the beast
 alias sr='kill -USR2 `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sst='kill `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sc='script/console'
-alias a='autotest' # makes autotesting even quicker
+alias a='autospec' # makes autotesting even quicker
 
 #############
 # PASSENGER #
@@ -135,5 +135,6 @@ alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Ve
 alias ..='cd ..;' # can then do .. .. .. to move up multiple directories.
 alias ...='.. ..'
 alias ....='.. .. ..'
+alias cdp='cd ~/Desktop/projects'
 
 # vi:filetype=sh
