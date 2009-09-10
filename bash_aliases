@@ -89,7 +89,10 @@ complete -o default -o nospace -F _gemdocomplete gemdoc
 function vimgem {
   gvim -c NERDTree $GEMDIR/gems/`ls $GEMDIR/gems | grep $1 | sort | tail -1`
 }
-complete -o default -o nospace -F _cdgemcomplete vimgem
+function mategem {
+  mate $GEMDIR/gems/`ls $GEMDIR/gems | grep $1 | sort | tail -1`
+}
+complete -o default -o nospace -F _cdgemcomplete vimgem mategem
 
 
 #########
@@ -120,21 +123,45 @@ alias graceful='sudo apachectl graceful'
 ########
 # misc #
 ########
+alias ....='.. .. ..'
+alias ...='.. ..'
+alias ..='cd ..;' # can then do .. .. .. to move up multiple directories.
+alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
+alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
 alias h='history'
 alias j="jobs -l"
 alias l="ls -lah"
-alias ls='ls -h --color=auto'
-alias ll="ls -lh --color=auto"
 alias la='ls -ah --color=auto'
+alias ll="ls -lh --color=auto"
 alias lla='ls -alh --color=auto'
+alias ls='ls -h --color=auto'
+alias m='mate'
+alias pwsafe='pwsafe -E'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
-alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
-alias pwsafe='pwsafe -E'
-alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
-alias ..='cd ..;' # can then do .. .. .. to move up multiple directories.
-alias ...='.. ..'
-alias ....='.. .. ..'
-alias cdp='cd ~/Desktop/projects'
+function cdp {
+  if [ -z "$1" ]; then
+    cd ~/Desktop/projects
+  else
+    cd ~/Desktop/projects/$1
+  fi
+}
+_cdpcomplete() {
+  COMPREPLY=($(compgen -W '$(ls ~/Desktop/projects)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _cdpcomplete cdp
+function cdd {
+  if [ -z "$1" ]; then
+    cd ~/dev
+  else
+    cd ~/dev/$1
+  fi
+}
+_cddcomplete() {
+  COMPREPLY=($(compgen -W '$(ls ~/dev)' -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o default -o nospace -F _cddcomplete cdd
 
 # vi:filetype=sh
