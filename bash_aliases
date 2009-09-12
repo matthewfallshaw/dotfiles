@@ -138,6 +138,7 @@ alias ll="ls -lh --color=auto"
 alias lla='ls -alh --color=auto'
 alias ls='ls -h --color=auto'
 alias m='mate'
+alias m.='mate .'
 alias pwsafe='pwsafe -E'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
