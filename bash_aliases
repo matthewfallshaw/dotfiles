@@ -11,7 +11,9 @@ alias gba='git branch --verbose -a'
 alias gc='git commit --verbose'
 alias gca='git commit --verbose --all'
 if [ "$system_name" == 'Darwin' ]; then
-  alias gd='git diff --ignore-space-change | gitx'
+  function gd {
+    git diff --ignore-space-change $@ | gitx
+  }
 else
   alias gd='git diff --ignore-space-change'
 fi
