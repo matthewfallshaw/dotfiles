@@ -13,7 +13,7 @@
  
 $tasks_cmd = {
   :rake => 'rake -sT',
-  :cap => 'cap -Tv'
+  :cap => 'cap -vT'
 }
 $task_files = {
   :rake => 'Rakefile',
@@ -25,12 +25,17 @@ def task_file(cmd)
 end
  
 def tasks(cmd)
-  if File.exists?(dotcache = File.join(File.expand_path('~'), ".#{cmd}tabs-#{Dir.pwd.hash}"))
+  if File.exists?(dotcache = File.join(File.expand_path('~'), ".#{cmd}tabs-#{Dir.pwd.hash}")) &&
+    dotcache_newer?(dotcache)
     return File.read(dotcache) if File.mtime(task_file(cmd)) < File.mtime(dotcache)
   end
   tasks = `#{$tasks_cmd[cmd]} | grep ^#{cmd} | cut -d' ' -f2`
   File.open(dotcache, 'w') { |f| f.puts tasks }
   tasks.split("\n")
+end
+
+def dotcache_newer?(dotcache)
+  File::Stat.new(File.expand_path('.')).mtime <= File::Stat.new(dotcache).mtime
 end
  
 def complete_tasks(cmd)
