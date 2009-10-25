@@ -1,6 +1,8 @@
 %w[autotest/growl autotest/timestamp].each {|l| require l}
 require 'autotest-fsevent' # must be last
+require 'redgreen/autotest'
 
+Autotest::Growl::show_modified_files = true #which changes prompted the autospec run
 # Ignore some dirs (speed hack)
 Autotest.add_hook :initialize do |autotest|
   %w[.svn .hg .git .DS_Store ._*].each {|exception| autotest.add_exception(exception)}
