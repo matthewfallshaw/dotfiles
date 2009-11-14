@@ -150,7 +150,7 @@ function cdp {
   fi
 }
 _cdpcomplete() {
-  COMPREPLY=($(compgen -W '$(ls ~/Desktop/projects)' -- ${COMP_WORDS[COMP_CWORD]}))
+  COMPREPLY=($(compgen -W '$(find ~/Desktop/projects -name ".git" -prune -o -type d -maxdepth 3 | cut -b 30-)' -- ${COMP_WORDS[COMP_CWORD]}))
   return 0
 }
 complete -o default -o nospace -F _cdpcomplete cdp
@@ -162,7 +162,7 @@ function cdd {
   fi
 }
 _cddcomplete() {
-  COMPREPLY=($(compgen -W '$(ls ~/dev)' -- ${COMP_WORDS[COMP_CWORD]}))
+  COMPREPLY=($(compgen -W '$(find ~/dev -name ".git" -prune -o -type d -maxdepth 3 | cut -b 17-)' -- ${COMP_WORDS[COMP_CWORD]}))
   return 0
 }
 complete -o default -o nospace -F _cddcomplete cdd
