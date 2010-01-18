@@ -2,7 +2,7 @@
 
 system_name=`uname -s`
 
-if [ "$system_name" == 'Darwin' ]; then
+if [ $system_name == 'Darwin' ]; then
   # set PATH so it includes ports
   export PATH=/opt/local/bin:/opt/local/sbin:"${PATH}"
 fi
@@ -49,7 +49,7 @@ fi
 [ -z $EDITOR ] && export EDITOR=vim
 [ -z $GREP_OPTIONS ] && export GREP_OPTIONS="--color=auto"
 [ -z $LESS ] && export LESS="--RAW-CONTROL-CHARS"
-[ -z $REPLYTO ] && export REPLYTO=emailaddress
+[ -z $REPLYTO ] && export REPLYTO=youremailaddress
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -61,7 +61,12 @@ xterm*|rxvt*)
 esac
 
 # completion
-if [ "$system_name" == 'Darwin' ]; then
+if [ -f /opt/local/etc/bash_completion ]; then
+  . /opt/local/etc/bash_completion
+elif [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
+if [ -f ~/.utils/completion_rake_cap.rb ]; then
   complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
   function clear-completion-rake {
     rm ~/.raketabs-*
@@ -70,11 +75,12 @@ if [ "$system_name" == 'Darwin' ]; then
   function clear-completion-cap {
     rm ~/.captabs-*
   }
-  source ~/.utils/completion_git.sh
-  if [ -f /opt/local/etc/bash_completion ]; then
-    . /opt/local/etc/bash_completion
-  fi
+  function clear-completion {
+    rm ~/.raketabs-*
+    rm ~/.captabs-*
+  }
 fi
+[ -f ~/.utils/completion_git.sh ] && . ~/.utils/completion_git.sh
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in

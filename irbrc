@@ -1,5 +1,10 @@
 %w[rubygems wirble pp what_methods].each {|l| require l }
 
+require "irb/completion"
+require 'irb/ext/save-history'
+IRB.conf[:SAVE_HISTORY] = 10000
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history" 
+
 # Wirble
 Wirble.init(:history_size => 10000)
 Wirble.colorize
