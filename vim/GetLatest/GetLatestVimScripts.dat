@@ -11,3 +11,5 @@ ScriptID SourceID Filename
 1868 7003 SimpleFold.vim
 1984 11852 FuzzyFinder.vim
 1318 8450 snippetsEmu.vim
+1890 11526 :AutoInstall: lusty-explorer.vim
+2050 11020 :AutoInstall: lusty-juggler.vim
