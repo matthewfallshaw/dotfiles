@@ -26,7 +26,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-export CDPATH=.:~/dev:~/Desktop/projects
 if [ "$system_name" == 'Darwin' ]; then
   # set MANPATH so it includes ports
   export MANPATH=/opt/local/share/man:"${MANPATH}"
