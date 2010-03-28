@@ -60,7 +60,7 @@ xterm*|rxvt*)
 esac
 
 # completion
-if [ -f /opt/local/etc/bash_completion ]; then
+if [ -f /opt/local/etc/bash_completion ]; then  # macports port bash-completion
   . /opt/local/etc/bash_completion
 elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
