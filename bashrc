@@ -59,27 +59,17 @@ xterm*|rxvt*)
   ;;
 esac
 
-# completion
+# bash completion
 if [ -f /opt/local/etc/bash_completion ]; then  # macports port bash-completion
   . /opt/local/etc/bash_completion
 elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
-if [ -f ~/.utils/completion_rake_cap.rb ]; then
-  complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:rake)'" -o default rake
-  function clear-completion-rake {
-    rm ~/.raketabs-*
-  }
-  complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
-  function clear-completion-cap {
-    rm ~/.captabs-*
-  }
-  function clear-completion {
-    rm ~/.raketabs-*
-    rm ~/.captabs-*
-  }
-fi
-[ -f ~/.utils/completion_git.sh ] && . ~/.utils/completion_git.sh
+# custom completions
+for i in ~/.utils/bash_completion.d/*; do
+  . $i
+done
+unset i
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in

@@ -1,4 +1,4 @@
-#!bash
+#!/bin/bash
 #
 # bash completion support for core Git.
 #

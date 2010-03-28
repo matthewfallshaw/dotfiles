@@ -142,6 +142,12 @@ alias m.='mate .'
 alias pwsafe='pwsafe -E'
 alias svnst="svn st | grep -v '^\?'"
 alias which='which -a'
+
+function clear-completion {
+  clear-completion-cap
+  clear-completion-rake
+}
+
 function cdp {
   if [ -z "$1" ]; then
     cd ~/Desktop/projects

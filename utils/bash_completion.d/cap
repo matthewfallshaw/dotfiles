@@ -1,0 +1,7 @@
+if [ -f ~/.utils/completion_rake_cap.rb ]; then
+  complete -C "ruby -r~/.utils/completion_rake_cap.rb -e 'puts complete_tasks(:cap)'" -o default cap
+  function clear-completion-cap {
+    rm ~/.captabs-*
+  }
+fi
+#vi:set filetype=sh
