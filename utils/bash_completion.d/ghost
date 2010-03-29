@@ -1,0 +1,27 @@
+#!/bin/bash
+_ghost() 
+{
+    local cur prev opts base
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    opts="add modify delete delete_matching list empty export import"
+
+    case "${prev}" in
+	add | modify | delete)
+      _known_hosts_real "$cur"
+      return 0
+      ;;
+    import)
+      COMPREPLY=( $(compgen -o filenames -- ${cur}) )
+      return 0
+      ;;
+    *)
+      ;;
+  esac
+
+   COMPREPLY=($(compgen -W "${opts}" -- ${cur}))  
+   return 0
+}
+complete -F _ghost ghost
