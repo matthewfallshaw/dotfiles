@@ -1,0 +1,14 @@
+#!/bin/bash
+complete -o bashdefault -o default -o nospace -F _git g
+complete -o bashdefault -o default -o nospace -F _git gnp
+complete -o bashdefault -o default -o nospace -F _git_add ga
+complete -o bashdefault -o default -o nospace -F _git_branch gb
+complete -o bashdefault -o default -o nospace -F _git_branch gba
+complete -o bashdefault -o default -o nospace -F _git_checkout gco
+complete -o bashdefault -o default -o nospace -F _git_commit gc
+complete -o bashdefault -o default -o nospace -F _git_commit gca
+complete -o bashdefault -o default -o nospace -F _git_diff gd
+complete -o bashdefault -o default -o nospace -F _git_merge gm
+complete -o bashdefault -o default -o nospace -F _git_pull gl
+complete -o bashdefault -o default -o nospace -F _git_push gp
+complete -o bashdefault -o default -o nospace -F _git_stash gs
