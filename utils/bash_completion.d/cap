@@ -4,4 +4,4 @@ if [ -f ~/.utils/completion_rake_cap.rb ]; then
     rm ~/.captabs-*
   }
 fi
-#vi:set filetype=sh
+# vi:filetype=sh
