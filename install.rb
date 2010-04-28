@@ -8,59 +8,79 @@
 #     "search_term": replace_term
 #     "other_search_term": other_replace_term
 
-%w[rubygems rake yaml].each {|l| require l }
+%w[shellwords fileutils rubygems rake yaml].each {|l| require l }
+
+DESTDIR = File.expand_path("~")
+SOURCEDIR = File.dirname(__FILE__)
+SECRETS = File.expand_path('~/.dotfiles_secrets')
+
+def destfile(file)
+  File.join(DESTDIR, ".#{file}")
+end
+def sourcefile(file)
+  File.join(SOURCEDIR, file)
+end
 
 def replace_file(file)
-  system %Q{rm "$HOME/.#{file}"}
+  FileUtils.rm(destfile(file)) if File.exist?(destfile(file))
   link_file(file)
 end
  
 def link_file(file)
-  puts ".#{file}: linked"
-  system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file}"}
+  FileUtils.ln_s(sourcefile(file), destfile(file))
+  puts "#{destfile(file)}: linked"
 end
 
 def copy_and_replace_secrets(file)
-  require 'facets/shellwords'
-  system %[cp "$PWD/#{file}" "$HOME/.#{file}"]
+  FileUtils.rm(destfile(file)) if File.exist?(destfile(file))
+  FileUtils.chmod(0755, sourcefile(file))
+  FileUtils.cp(sourcefile(file), destfile(file))
   secrets[file].each do |search_term, replace_term|
-    system %[ruby -pi -e 'gsub(/#{Shellwords.escape(search_term)}/, "#{Shellwords.escape(replace_term)}")' "$HOME/.#{file}"]
+    system %[ruby -pi -e 'gsub(/#{search_term.shellescape}/, "#{replace_term.shellescape}")' "#{destfile(file)}"]
   end
-  puts ".#{file}: copied and updated with secrets"
+  puts "#{destfile(file)}: copied and updated with secrets"
 end
 
 def secrets
-  @secrets ||= YAML.load(open(File.expand_path('~/.dotfiles_secrets')))
+  @secrets ||= YAML.load(open(SECRETS))
 end
 
-replace_all = false
-Dir.chdir File.dirname(__FILE__) do
-  Dir['*'].each do |file|
-    next if %w[install.rb Rakefile README vendor].include?(file)
-
-    original = File.join(ENV['HOME'], ".#{file}")
-
-    if secrets[file]
-      copy_and_replace_secrets(file)
-    elsif File.symlink?(original) && ( File.readlink(original) == File.expand_path(file) )
-      puts ".#{file}: already correctly linked"
-    elsif replace_all
+def process(file)
+  if secrets[file]
+    copy_and_replace_secrets(file)
+  elsif File.symlink?(destfile(file)) && ( File.readlink(destfile(file)) == File.expand_path(file) )
+    puts "#{destfile(file)}: already correctly linked"
+  elsif @replace_all
+    replace_file(file)
+  elsif File.exist?(destfile(file))
+    print "overwrite #{destfile(file)}? [ynaq] "
+    case $stdin.gets.chomp
+    when 'a'
+      @replace_all = true
       replace_file(file)
-    elsif File.exist?(original)
-      print "overwrite ~/.#{file}? [ynaq] "
-      case $stdin.gets.chomp
-      when 'a'
-        replace_all = true
-        replace_file(file)
-      when 'y'
-        replace_file(file)
-      when 'q'
-        exit
-      else
-        puts ".#{file}: skipped"
-      end
+    when 'y'
+      replace_file(file)
+    when 'q'
+      exit
     else
-      link_file(file)
+      puts "#{destfile(file)}: skipped"
     end
+  else
+    link_file(file)
+  end
+end
+
+@replace_all = false
+if ARGV.empty?
+  Dir.chdir(SOURCEDIR) do
+    Dir['*'].each do |file|
+      next if %w[install.rb Rakefile README vendor].include?(file)
+
+      process(file)
+    end
+  end
+else
+  ARGV.each do |file|
+    process(file)
   end
 end
