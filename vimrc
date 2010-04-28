@@ -131,3 +131,6 @@ command -bar -nargs=1 OpenURL :!open <args>
 " NERDTree
 let NERDTreeIgnore=['\~$', '^\.git', '\.swp$', '\.DS_Store$']
 let NERDTreeShowHidden=1
+
+" Command-T
+"let g:CommandTExcludes = '*.o,*.obj,.git,vendor'
