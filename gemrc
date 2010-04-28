@@ -7,3 +7,4 @@
 :sources: 
 - http://rubygems.org
 - http://gems.github.com
+rdoc: --inline-source --line-numbers --format=html --template=hanna
