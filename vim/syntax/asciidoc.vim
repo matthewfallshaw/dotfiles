@@ -1,0 +1,1 @@
+/opt/local/share/vim/vimfiles/syntax/asciidoc.vim
