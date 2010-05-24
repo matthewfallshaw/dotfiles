@@ -26,6 +26,7 @@ alias gp='git push'
 alias gs="git stash"
 alias gst='git status'
 alias gx="gitx"
+alias gxc="gitx -c"
 
 alias gitrm="git stat | grep deleted | awk '{print $3}' | xargs git rm"
 
