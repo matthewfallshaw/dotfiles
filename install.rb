@@ -42,7 +42,17 @@ def copy_and_replace_secrets(file)
 end
 
 def secrets
-  @secrets ||= YAML.load(open(SECRETS))
+  @secrets ||= begin
+                 if File.exist?(SECRETS)
+                   YAML.load(open(SECRETS))
+                 else
+                   warn <<-WARN
+I can't find a ~/.dotfiles_secrets file... unless you're sure you don't have any secrets
+  (and who can be sure of that?), this probably isn't going to work.
+WARN
+                   {}
+                 end
+               end
 end
 
 def process(file)
