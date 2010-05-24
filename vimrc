@@ -140,3 +140,6 @@ let NERDTreeShowHidden=1
 
 " Command-T
 "let g:CommandTExcludes = '*.o,*.obj,.git,vendor'
+
+" Ruby Block Delimiter Conversion
+" vmap <Leader>B :call <SID>RubyBlockSwitchDelimiters()<cr>
