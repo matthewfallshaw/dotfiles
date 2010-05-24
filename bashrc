@@ -12,3 +12,6 @@ if [ -d ~/bin ] ; then
 fi
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
+
+# RVM
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]  ; then source "$HOME/.rvm/scripts/rvm" ; fi
