@@ -1,6 +1,3 @@
-[submodule "vendor/fuzzyfinder_textmate"]
-	path = vendor/fuzzyfinder_textmate
-	url = git://github.com/jamis/fuzzyfinder_textmate.git
 [submodule "vendor/gist-vim"]
 	path = vendor/gist-vim
 	url = git://github.com/mattn/gist-vim.git
