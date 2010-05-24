@@ -61,6 +61,12 @@ set grepformat=%f:%l:%m
 set wildmenu
 set wildmode=list:longest
 
+" Restore cursor position
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
 " Mappings
 inoremap ( ()<Left>
 inoremap [ []<Left>

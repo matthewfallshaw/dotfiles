@@ -1,4 +1,4 @@
-%w[rubygems wirble pp].each {|l| require l }
+%w[rubygems wirble pp ap interactive_editor].each {|l| require l }
 
 # require "irb/completion"
 # require 'irb/ext/save-history'
