@@ -1,15 +1,13 @@
 ScriptID SourceID Filename
 --------------------------
 1075 11979 :AutoInstall: netrw.vim
-1567 11920 :AutoInstall: rails.vim
-1697 8283 :AutoInstall: surround.vim
+1567 12622 :AutoInstall: rails.vim
+1697 12566 :AutoInstall: surround.vim
 1502 11981 :AutoInstall: vimball.vim
 642 8136 :AutoInstall: getscript.vim
-2423 12283 :AutoInstall: gist.vim
+2423 13105 :AutoInstall: gist.vim
 1658 11834 NERD_tree.vim
 23 8319 EnhCommentify.vim
 1868 7003 SimpleFold.vim
 1984 11852 FuzzyFinder.vim
 1318 8450 snippetsEmu.vim
-1890 11526 :AutoInstall: lusty-explorer.vim
-2050 11020 :AutoInstall: lusty-juggler.vim
