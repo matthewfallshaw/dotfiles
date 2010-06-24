@@ -1,0 +1,20 @@
+#!/bin/bash
+_cheat() 
+{
+  local cur prev opts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  opts="--edit --add --versions --diff --new"
+
+  if [[ ${cur} == -* ]] ; then
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
+  else
+    local sheets=$(echo "recent sheets" $(cheat sheets | sed '1,1d'))
+    COMPREPLY=( $(compgen -W "${sheets}" -- ${cur}) )
+    return 0
+  fi
+}
+complete -F _cheat cheat
