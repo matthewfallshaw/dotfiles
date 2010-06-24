@@ -153,7 +153,7 @@ function cdp {
   fi
 }
 _cdpcomplete() {
-  COMPREPLY=($(compgen -W '$(find ~/projects -name ".git" -prune -o -type d -maxdepth 3 | cut -b 30-)' -- ${COMP_WORDS[COMP_CWORD]}))
+  COMPREPLY=($(compgen -W '$(find ~/projects -name ".git" -prune -o -type d -maxdepth 3 | cut -d / -f 5-)' -- ${COMP_WORDS[COMP_CWORD]}))
   return 0
 }
 complete -o default -o nospace -F _cdpcomplete -S / cdp
