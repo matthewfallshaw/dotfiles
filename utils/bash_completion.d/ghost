@@ -9,17 +9,17 @@ _ghost()
     opts="add modify delete delete_matching list empty export import"
 
     case "${prev}" in
-	add | modify | delete)
-      _known_hosts_real "$cur"
-      return 0
-      ;;
-    import)
-      COMPREPLY=( $(compgen -o filenames -- ${cur}) )
-      return 0
-      ;;
-    *)
-      ;;
-  esac
+      add | modify | delete)
+        _known_hosts_real "$cur"
+        return 0
+        ;;
+      import)
+        COMPREPLY=( $(compgen -o filenames -- ${cur}) )
+        return 0
+        ;;
+      *)
+        ;;
+    esac
 
    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))  
    return 0

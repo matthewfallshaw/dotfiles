@@ -1,0 +1,26 @@
+#!/bin/bash
+_rails() 
+{
+  local cur prev opts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  opts="new generate console server dbconsole destroy benchmarker profiler plugin runner"
+
+  case "${prev}" in
+    new)
+      COMPREPLY=()
+      return 0
+      ;;
+    generate)
+      local generators=$(rails generate | grep -P '^  \w+$')
+      COMPREPLY=( $(compgen -W "${generators}" -- ${cur}) )
+      ;;
+    *)
+      COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+      return 0
+      ;;
+  esac
+}
+complete -F _rails rails
