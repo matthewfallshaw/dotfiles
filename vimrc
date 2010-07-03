@@ -80,6 +80,7 @@ inoremap " <c-r>=QuoteDelim('"')<CR>
 "inoremap ' <c-r>=QuoteDelim("'")<CR>
 
 inoremap <S-CR> <ESC>o
+inoremap <C-CR> <ESC><S-o>
 
 " <C-e> and <C-y> scroll the viewport a single line
 nnoremap <C-e> 3<C-e>
