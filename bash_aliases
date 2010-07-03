@@ -106,7 +106,7 @@ alias ss='script/server' # start up the beast
 alias sr='kill -USR2 `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sst='kill `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sc='script/console'
-alias a='autospec' # makes autotesting even quicker
+alias a='autotest' # makes autotesting even quicker
 
 #############
 # PASSENGER #
