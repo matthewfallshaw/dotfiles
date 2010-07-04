@@ -4,12 +4,13 @@
 # (I took this from git://github.com/mislav/dotfiles.git)
 # modified to support secrets appended after install
 #   secrets in ~/.dotfiles_secrets like
-#   gitconfig:
+#   filename:
 #     "search_term": replace_term
 #     "other_search_term": other_replace_term
 
 %w[shellwords fileutils rubygems rake yaml].each {|l| require l }
 
+IGNORE_LIST = %w[install.rb Rakefile README vendor]
 DESTDIR = File.expand_path("~")
 SOURCEDIR = File.dirname(__FILE__)
 SECRETS = File.expand_path('~/.dotfiles_secrets')
@@ -84,13 +85,17 @@ end
 if ARGV.empty?
   Dir.chdir(SOURCEDIR) do
     Dir['*'].each do |file|
-      next if %w[install.rb Rakefile README vendor].include?(file)
+      next if IGNORE_LIST.include?(file)
 
       process(file)
     end
   end
 else
   ARGV.each do |file|
-    process(file)
+    if File.exist?(file)
+      process(file)
+    else
+      puts "What is this #{file} of which you speak? I see it not."
+    end
   end
 end
