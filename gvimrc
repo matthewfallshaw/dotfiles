@@ -18,6 +18,9 @@ if version >= 500
 endif
 
 if has("gui_macvim")
-  macmenu &File.New\ Tab key=<nop>
-  map <D-t> <Plug>PeepOpen
+  macmenu &File.Print key=<nop>
+  map <D-p> <Plug>PeepOpen
 end
+
+" Hide top buttons
+set guioptions-=T
