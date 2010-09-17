@@ -59,7 +59,7 @@ end
 def process(file)
   if secrets[file]
     copy_and_replace_secrets(file)
-  elsif File.symlink?(destfile(file)) && ( File.readlink(destfile(file)) == File.expand_path(file) )
+  elsif File.symlink?(destfile(file)) && ( File.expand_path(File.readlink(destfile(file))) == File.expand_path(file) )
     puts "#{destfile(file)}: already correctly linked"
   elsif @replace_all
     replace_file(file)
