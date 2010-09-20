@@ -1,25 +1,12 @@
-#!/usr/bin/ruby
-%w[ rubygems activerecord ].each {|l| require l }
-# log to
-def l(stream = STDOUT)
-  ActiveRecord::Base.logger = Logger.new(stream)
-  ActiveRecord::Base.clear_active_connections!
-  "logger reset!"
+# Hat tip: Iain Hecker, http://github.com/iain/osx_settings/blob/master/.irbrc
+
+$: << File.expand_path(File.dirname( File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__ ))
+require "lib/irb_helpers"
+
+console_extensions __FILE__ do
+  extend_console 'sql', true, false do
+    def sql(query)
+      ActiveRecord::Base.connection.select_all(query)
+    end 
+  end
 end
-l
-# Rails script/console logger ot STDOUT
-#script_console_running = ENV.include?('RAILS_ENV') && IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers')
-#rails_running = ENV.include?('RAILS_ENV') && !(IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers'))
-#irb_standalone_running = !script_console_running && !rails_running
-#if script_console_running
-#  require 'logger'
-#  Object.const_set(:RAILS_DEFAULT_LOGGER, Logger.new(STDOUT))
-#end
-
-# def method_missing(method, *args, &block)
-#   User.find_by_login(method.to_s) || super
-# end 
-
-def sql(query)
-  ActiveRecord::Base.connection.select_all(query)
-end 
