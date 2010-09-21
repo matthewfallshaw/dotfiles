@@ -110,4 +110,4 @@ console_extensions __FILE__ do
 end
 
 # .railsrc
-load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV']
+load File.dirname(__FILE__) + '/.railsrc' if ( ENV['RAILS_ENV'] || defined?(RAILS_ENV) || defined?(Rails) )
