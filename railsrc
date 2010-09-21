@@ -4,9 +4,51 @@ $: << File.expand_path(File.dirname( File.symlink?(__FILE__) ? File.readlink(__F
 require "lib/irb_helpers"
 
 console_extensions __FILE__ do
+
   extend_console 'sql', true, false do
     def sql(query)
       ActiveRecord::Base.connection.select_all(query)
     end 
   end
+
+  extend_console '(Rails2)#log_to', (ENV.include?('RAILS_ENV')), false do
+    %[logger activerecord].each {|l| require l }
+
+    def log_to(stream, colorize=true)
+      ActiveRecord::Base.logger = Logger.new(stream)
+      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.colorize_logging = colorize
+      stream
+    end
+
+    log_to STDOUT
+  end
+
+  extend_console '(Rails3)#log_to', defined?(ActiveSupport::Notifications), false do
+
+    def log_to(stream, colorize=true)
+      case stream
+      when nil
+        ActiveSupport::Notifications.unsubscribe('sql.active_record')
+      else
+        $odd_or_even_queries = false
+        ActiveSupport::Notifications.unsubscribe('sql.active_record')
+        ActiveSupport::Notifications.subscribe('sql.active_record') do |*args|
+          $odd_or_even_queries = !$odd_or_even_queries
+          color = $odd_or_even_queries ? ANSI[:CYAN] : ANSI[:MAGENTA]
+          event = ActiveSupport::Notifications::Event.new(*args)
+          time  = "%.1fms" % event.duration
+          name  = event.payload[:name]
+          sql   = event.payload[:sql].gsub("\n", " ").squeeze(" ")
+
+          stream.puts "  #{ANSI[:UNDERLINE]}#{color}#{name} (#{time})#{ANSI[:RESET]}  #{sql}"
+        end
+      end
+      stream
+    end
+
+    log_to STDOUT
+  end
+
 end
+# vi: filetype=ruby
