@@ -99,6 +99,14 @@ console_extensions __FILE__ do
     end
   end
 
+  extend_console "#log_to" do
+    def log_to(stream, colorize=true)
+      ActiveRecord::Base.logger = Logger.new(stream)
+      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.colorize_logging = colorize
+    end
+  end
+
 end
 
 # .railsrc
