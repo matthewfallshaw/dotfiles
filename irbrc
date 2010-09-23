@@ -21,17 +21,18 @@ console_extensions __FILE__ do
     :WHITE     => "\e[37m",
   }
 
-  extend_console 'colorful-prompt', true, false do
-    # Build a simple colorful IRB prompt
-    IRB.conf[:PROMPT][:SIMPLE_COLOR] = {
-      :PROMPT_I => "#{ANSI[:BLUE]}>>#{ANSI[:RESET]} ",
-      :PROMPT_N => "#{ANSI[:BLUE]}>>#{ANSI[:RESET]} ",
-      :PROMPT_C => "#{ANSI[:RED]}?>#{ANSI[:RESET]} ",
-      :PROMPT_S => "#{ANSI[:YELLOW]}?>#{ANSI[:RESET]} ",
-      :RETURN   => "#{ANSI[:GREEN]}=>#{ANSI[:RESET]} %s\n",
-      :AUTO_INDENT => true }
-    IRB.conf[:PROMPT_MODE] = :SIMPLE_COLOR
-  end
+#   extend_console 'colorful-prompt', true, false do
+#     # Build a simple colorful IRB prompt
+#     IRB.conf[:PROMPT][:SIMPLE_COLOR] = {
+#       :PROMPT_I => "#{ANSI[:BLUE]}>>#{ANSI[:RESET]} ",
+#       :PROMPT_N => "#{ANSI[:BLUE]}>>#{ANSI[:RESET]} ",
+#       :PROMPT_C => "#{ANSI[:RED]}?>#{ANSI[:RESET]} ",
+#       :PROMPT_S => "#{ANSI[:YELLOW]}?>#{ANSI[:RESET]} ",
+#       :RETURN   => "#{ANSI[:GREEN]}=>#{ANSI[:RESET]} %s\n",
+#       :AUTO_INDENT => true }
+#     }
+#     IRB.conf[:PROMPT_MODE] = :SIMPLE_COLOR
+#   end
 
   %w[rubygems interactive_editor].each {|l| extend_console l }
 
