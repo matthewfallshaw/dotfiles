@@ -1,5 +1,20 @@
 # Hat tip: Iain Hecker, http://github.com/iain/osx_settings/blob/master/.irbrc
 
+ANSI = {
+  :RESET     => "\e[0m",
+  :BOLD      => "\e[1m",
+  :UNDERLINE => "\e[4m",
+  :LGRAY     => "\e[0;37m",
+  :GRAY      => "\e[1;30m",
+  :RED       => "\e[31m",
+  :GREEN     => "\e[32m",
+  :YELLOW    => "\e[33m",
+  :BLUE      => "\e[34m",
+  :MAGENTA   => "\e[35m",
+  :CYAN      => "\e[36m",
+  :WHITE     => "\e[37m",
+}
+
 # Loading extensions of the console. This is wrapped
 # because some might not be included in your Gemfile
 # and errors will be raised
