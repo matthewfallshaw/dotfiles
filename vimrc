@@ -45,6 +45,13 @@ set smarttab
 autocmd FileType make     set noexpandtab
 set ruler
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
+" Syntastic plugin
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+" /Syntastic
 set backspace=eol,start,indent " make backspace work
 "set hidden " no need to save to change buffers
 runtime! macros/matchit.vim
