@@ -1,11 +1,12 @@
-# Hat tip: Iain Hecker, http://github.com/iain/osx_settings/blob/master/.irbrc
+# Hat tip: Iain Hecker, for console_extensions, http://github.com/iain/osx_settings/blob/master/.irbrc
 
 $: << File.expand_path(File.dirname( File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__ ))
 require "lib/irb_helpers"
 
 console_extensions __FILE__ do
 
-  %w[rubygems interactive_editor].each {|l| extend_console l }
+  extend_console "rubygems"
+  extend_console "interactive_editor"
 
   extend_console 'wirble' do
     Wirble.init(:history_size => 10000)
@@ -35,32 +36,32 @@ console_extensions __FILE__ do
   end
 
   extend_console '#time' do
-    def time(times = 1)
+    require 'benchmark'
+
+    def time(times = 1, &block)
       ret = nil
       Benchmark.bm { |x| x.report { times.times { ret = yield } } }
       ret
     end
 
-    if defined? Benchmark
-      class Benchmark::ReportProxy
-        def initialize(bm, iterations)
-          @bm = bm
-          @iterations = iterations
-          @queue = []
-        end
-        
-        def method_missing(method, *args, &block)
-          args.unshift(method.to_s + ':')
-          @bm.report(*args) do
-            @iterations.times { block.call }
-          end
+    class Benchmark::ReportProxy
+      def initialize(bm, iterations)
+        @bm = bm
+        @iterations = iterations
+        @queue = []
+      end
+      
+      def method_missing(method, *args, &block)
+        args.unshift(method.to_s + ':')
+        @bm.report(*args) do
+          @iterations.times { block.call }
         end
       end
+    end
 
-      def compare(times = 1, label_width = 12)
-        Benchmark.bm(label_width) do |x|
-          yield Benchmark::ReportProxy.new(x, times)
-        end
+    def compare(times = 1, label_width = 12)
+      Benchmark.bm(label_width) do |x|
+        yield Benchmark::ReportProxy.new(x, times)
       end
     end
   end
