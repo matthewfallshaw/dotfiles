@@ -148,3 +148,16 @@ let NERDTreeShowHidden=1
 
 " Ruby Block Delimiter Conversion
 " vmap <Leader>B :call <SID>RubyBlockSwitchDelimiters()<cr>
+
+" Visual mode copy to pastebuffer
+" kudos to Brad: http://xtargets.com/2010/10/13/cutting-and-pasting-source-code-from-vim-to-skype/
+function! CopyWithLineNumbers() range
+    redir @*
+    sil echomsg "----------------------"
+    sil echomsg expand("%")
+    sil echomsg "----------------------"
+    exec 'sil!' . a:firstline . ',' . a:lastline . '#'
+    redir END
+endf
+com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
+
