@@ -12,7 +12,7 @@ console_extensions __FILE__ do
   end
 
   extend_console '(Rails2)#log_to', (ENV.include?('RAILS_ENV')), false do
-    %[logger activerecord].each {|l| require l }
+    %w[logger activerecord].each {|l| require l }
 
     def log_to(stream, colorize=true)
       ActiveRecord::Base.logger = Logger.new(stream)
