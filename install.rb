@@ -10,7 +10,7 @@
 
 %w[shellwords fileutils rubygems rake yaml].each {|l| require l }
 
-IGNORE_LIST = %w[install.rb Rakefile README vendor]
+IGNORE_LIST = %w[install.rb Rakefile README vendor lib]
 DESTDIR = File.expand_path("~")
 SOURCEDIR = File.dirname(__FILE__)
 SECRETS = File.expand_path('~/.dotfiles_secrets')
@@ -19,12 +19,12 @@ def destfile(file)
   File.join(DESTDIR, ".#{file}")
 end
 def sourcefile(file)
-  File.join(SOURCEDIR, file)
+  File.expand_path(File.join(SOURCEDIR, file))
 end
 
 def replace_file(file)
   FileUtils.rm(destfile(file)) if File.exist?(destfile(file))
-  link_file(file)
+  link_file(sourcefile(file))
 end
  
 def link_file(file)
@@ -59,7 +59,7 @@ end
 def process(file)
   if secrets[file]
     copy_and_replace_secrets(file)
-  elsif File.symlink?(destfile(file)) && ( File.expand_path(File.readlink(destfile(file))) == File.expand_path(file) )
+  elsif File.symlink?(destfile(file)) && ( File.readlink(destfile(file)) == File.expand_path(sourcefile(file)) )
     puts "#{destfile(file)}: already correctly linked"
   elsif @replace_all
     replace_file(file)
