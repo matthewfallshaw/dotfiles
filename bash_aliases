@@ -153,21 +153,23 @@ function cdp {
   fi
 }
 _cdpcomplete() {
-  COMPREPLY=($(compgen -W '$(find ~/projects -name ".git" -prune -o -type d -maxdepth 3 | cut -d / -f 5-)' -- ${COMP_WORDS[COMP_CWORD]}))
-  return 0
+  local cur
+  cur=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( $( compgen -S/ -d ~/projects/$cur | grep -v '\.git/$' | cut -b 22- ) )
 }
-complete -o default -o nospace -F _cdpcomplete -S / cdp
+complete -o nospace -F _cdpcomplete cdp
 function cdd {
   if [ -z "$1" ]; then
-    cd ~/dev
+    cd ~/code
   else
-    cd ~/dev/$1
+    cd ~/code/$1
   fi
 }
 _cddcomplete() {
-  COMPREPLY=($(compgen -W '$(find ~/dev -name ".git" -prune -o -type d -maxdepth 3 | cut -b 17-)' -- ${COMP_WORDS[COMP_CWORD]}))
-  return 0
+  local cur
+  cur=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( $( compgen -S/ -d ~/code/$cur | grep -v '\.git/$' | cut -b 18- ) )
 }
-complete -o default -o nospace -F _cddcomplete -S / cdd
+complete -o nospace -F _cddcomplete cdd
 
 # vi:filetype=sh
