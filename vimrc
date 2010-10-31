@@ -52,6 +52,9 @@ set statusline+=%*
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
 " /Syntastic
+" GetLatestVimScripts plugin
+let g:GetLatestVimScripts_allowautoinstall=1
+" /GetLatestVimScripts
 set backspace=eol,start,indent " make backspace work
 "set hidden " no need to save to change buffers
 runtime! macros/matchit.vim
