@@ -127,9 +127,9 @@ alias graceful='sudo apachectl graceful'
 ########
 # misc #
 ########
-alias ....='.. .. ..'
-alias ...='.. ..'
 alias ..='cd ..;' # can then do .. .. .. to move up multiple directories.
+alias ...='.. ..'
+alias ....='.. .. ..'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
 alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
 alias h='history'
