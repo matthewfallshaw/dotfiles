@@ -79,7 +79,13 @@ if [ "$system_name" == 'Darwin' ]; then
   export MPD_PORT=6600
 fi
 
+# Autotest
 export AUTOFEATURE=true
 export RSPEC=true
+
+# Node version manager
+NVM_DIR=$HOME/.nvm
+. $NVM_DIR/nvm.sh
+nvm use
 
 # vi:filetype=sh
