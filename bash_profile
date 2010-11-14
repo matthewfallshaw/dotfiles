@@ -86,4 +86,12 @@ NVM_DIR=$HOME/.nvm
 . $NVM_DIR/nvm.sh
 nvm use
 
+# OSX specific config
+if [ "$system_name" == 'Darwin' ]; then
+
+  # MacVim
+  export VIM_APP_DIR=/Applications/MacPorts
+
+fi
+
 # vi:filetype=sh
