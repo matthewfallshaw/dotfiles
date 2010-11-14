@@ -90,7 +90,7 @@ nvm use
 if [ "$system_name" == 'Darwin' ]; then
 
   # MacVim
-  export VIM_APP_DIR=/Applications/MacPorts
+  export VIM_APP_DIR=/Applications
 
 fi
 
