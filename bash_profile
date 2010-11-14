@@ -73,11 +73,9 @@ xterm-color)
   ;;
 esac
 
-if [ "$system_name" == 'Darwin' ]; then
-  # mpd config
-  export MPD_HOST=mpd
-  export MPD_PORT=6600
-fi
+# mpd config
+export MPD_HOST=mpd
+export MPD_PORT=6600
 
 # Autotest
 export AUTOFEATURE=true
