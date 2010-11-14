@@ -17,7 +17,7 @@ set breakat=\ ^I!@*-+;:,./?   " when wrapping, break at these characters
 set showbreak=>               " character to show that a line is wrapped
 set ignorecase    " ignore case when searching
 set smartcase     " override ignorecase when there are uppercase characters
-set showmatch       " when inserting a bracket briefly flash its match
+set showmatch     " when inserting a bracket briefly flash its match
 set modeline
 set mouse=a
 set history=500
@@ -45,6 +45,22 @@ set smarttab
 autocmd FileType make     set noexpandtab
 set ruler
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
+" Setup automatic text formatting/wrapping:
+set formatoptions=
+set formatoptions-=t " Don't autowrap text
+set formatoptions+=c " Do autowrap comments
+set formatoptions+=r " Automatically continue comments
+set formatoptions+=o " Automatically continue comments when hitting 'o' or 'O'
+set formatoptions+=q " Allow formatting of comments with 'gq'
+set formatoptions+=n " Recognize numbered lists
+set formatoptions+=l " Don't break long lines that were already there
+set textwidth=78     " From settings above, this is only for comments
+if has("colorcolumn")
+  set colorcolumn=+3   " Highlight column 81
+end
+" Make window splitting behave
+set noequalalways
+set splitbelow
 " Syntastic plugin
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -163,4 +179,3 @@ function! CopyWithLineNumbers() range
     redir END
 endf
 com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
-
