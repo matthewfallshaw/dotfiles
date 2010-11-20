@@ -1,6 +1,4 @@
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-
-[ -f ~/.bashrc ]    && . ~/.bashrc
+[ -f ~/.bashrc ] && . ~/.bashrc
 
 if [ -f ~/.terminal ]; then
   source ~/.terminal
@@ -80,13 +78,6 @@ export MPD_PORT=6600
 # Autotest
 export AUTOFEATURE=true
 export RSPEC=true
-
-# Node version manager
-NVM_DIR=$HOME/.nvm
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-  . $NVM_DIR/nvm.sh
-  nvm use
-fi
 
 # OSX specific config
 if [ "$system_name" == 'Darwin' ]; then
