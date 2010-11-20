@@ -83,8 +83,10 @@ export RSPEC=true
 
 # Node version manager
 NVM_DIR=$HOME/.nvm
-. $NVM_DIR/nvm.sh
-nvm use
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  . $NVM_DIR/nvm.sh
+  nvm use
+fi
 
 # OSX specific config
 if [ "$system_name" == 'Darwin' ]; then
