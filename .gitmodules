@@ -1,3 +1,15 @@
 [submodule "vendor/gist-vim"]
 	path = vendor/gist-vim
 	url = git://github.com/mattn/gist-vim.git
+[submodule "vim/bundle/vim-coffee-script"]
+	path = vim/bundle/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "vim/bundle/ack.vim"]
+	path = vim/bundle/ack.vim
+	url = http://github.com/mileszs/ack.vim.git
+[submodule "vim/bundle/markdown.vim"]
+	path = vim/bundle/markdown.vim
+	url = git@github.com:matthewfallshaw/markdown.vim.git
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = http://github.com/scrooloose/syntastic.git

@@ -2,6 +2,10 @@ set nocompatible      " We're running Vim, not Vi
 
 let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
 
+" pathogen.vim
+filetype off    " filetype plugins will be reenabled below
+call pathogen#runtime_append_all_bundles()
+
 set encoding=utf8 nobomb " BOM often causes trouble
 let mapleader = ","  " <leader> now means ',' rather than '\'
 if &t_Co > 1
