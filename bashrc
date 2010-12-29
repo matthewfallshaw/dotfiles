@@ -13,9 +13,6 @@ if [ -d ~/bin ] ; then export PATH=~/bin:"${PATH}" ; fi
 # set PATH so it includes .cabal bin if it exists
 if [ -d ~/.cabal/bin ] ; then export PATH=~/.cabal/bin:"${PATH}" ; fi
 
-# remove duplicates from PATH
-export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
-
 # Ruby version manager
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then source "$HOME/.rvm/scripts/rvm" ; fi
 
@@ -25,3 +22,6 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
   . $NVM_DIR/nvm.sh
   nvm use
 fi
+
+# remove duplicates from PATH
+export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
