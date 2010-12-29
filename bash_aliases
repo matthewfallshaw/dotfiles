@@ -117,7 +117,7 @@ alias passenger-restart='touch tmp/restart.txt'
 
 # You'll be adding to your vhosts configuration everytime you introduce a new Rails app.
 # Might as well make it a shortcut
-alias passenger-host='sudo gvim -p ~/apache2/vhosts.conf /etc/hosts > /dev/null'
+alias passenger-host='sudo gvim -p ~/code/utils/apache2/vhosts.conf /etc/hosts > /dev/null'
 
 # You'll need to restart apache whenever you make a change to vhosts.
 # You can also click System Preference->Sharing->Web Sharing, but this is quicker.
