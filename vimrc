@@ -47,6 +47,7 @@ set laststatus=2
 set expandtab
 set smarttab
 autocmd FileType make     set noexpandtab
+set cm=blowfish  " when encrypting files with :X, use blowfish instead of hopelessly insecure zip
 set ruler
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
 " Setup automatic text formatting/wrapping:
