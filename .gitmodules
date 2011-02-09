@@ -22,3 +22,9 @@
 [submodule "vim/bundle/gist-vim"]
 	path = vim/bundle/gist-vim
 	url = https://github.com/mattn/gist-vim.git
+[submodule "vim/bundle/rsense"]
+	path = vim/bundle/rsense
+	url = http://cx4a.org/repo/rsense.git/
+[submodule "vim/bundle/vim-ruby-refactoring"]
+	path = vim/bundle/vim-ruby-refactoring
+	url = https://github.com/ecomba/vim-ruby-refactoring.git
