@@ -62,12 +62,11 @@ xterm-color)
   red="\[\e[0;31m\]"
   blue="\[\e[0;34m\]"
   fgcolor="\[\e[0m\]"
-  #export PS1="${yellow}\h${fgcolor}:${green}\W${red}\$(__git_ps1)${fgcolor}\$ "
-  export PS1="${yellow}\h${fgcolor}:${blue}\w${fgcolor} ${green}\u${fgcolor}\$(__git_ps1 \" (%s)\")$ "
+  export PS1="${yellow}\u@\h${fgcolor}:${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")$ "
   unset yellow green red blue fgcolor
   ;;
   *)
-  PS1='\h:\w \u\$ '
+  PS1='\u@\h:\w\$ '
   ;;
 esac
 
