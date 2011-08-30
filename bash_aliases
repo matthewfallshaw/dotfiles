@@ -27,6 +27,8 @@ alias gs="git stash"
 alias gst='git status'
 alias gx="gitx"
 alias gxc="gitx -c"
+alias gsu="git submodule update"
+alias gsui="git submodule update --init"
 
 alias gitrm="git stat | grep deleted | awk '{print $3}' | xargs git rm"
 

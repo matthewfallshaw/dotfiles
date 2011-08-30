@@ -40,7 +40,7 @@ hi CursorLine term=none cterm=none ctermbg=DarkBlue
 autocmd InsertLeave * hi CursorLine term=none cterm=none ctermbg=DarkBlue
 autocmd InsertEnter * hi CursorLine term=none cterm=none ctermbg=DarkBlue
 set autoindent
-set tabstop=4
+set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set laststatus=2
@@ -66,6 +66,7 @@ end
 " Make window splitting behave
 set noequalalways
 set splitbelow
+
 " Syntastic plugin
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -76,6 +77,7 @@ let g:syntastic_auto_loc_list=1
 " GetLatestVimScripts plugin
 let g:GetLatestVimScripts_allowautoinstall=1
 " /GetLatestVimScripts
+
 set backspace=eol,start,indent " make backspace work
 "set hidden " no need to save to change buffers
 runtime! macros/matchit.vim
@@ -155,9 +157,10 @@ function QuoteDelim(char)
   endif
 endf
 
-" rails.vim settings
+" rails.vim plugin
 let g:rails_level=4
 let g:rails_subversion=1
+" /rails.vim
 
 " Don't write backup file if vim is being called by "crontab -e"
 au BufWrite /private/tmp/crontab.* set nowritebackup
@@ -166,9 +169,10 @@ au BufWrite /private/tmp/crontab.* set nobackup
 let g:rct_completion_use_fri = 0
 command -bar -nargs=1 OpenURL :!open <args>
 
-" NERDTree
+" NERDTree plugin
 let NERDTreeIgnore=['\~$', '^\.git', '\.swp$', '\.DS_Store$']
 let NERDTreeShowHidden=1
+" /NERDTree
 
 " Ruby Block Delimiter Conversion
 " vmap <Leader>B :call <SID>RubyBlockSwitchDelimiters()<cr>

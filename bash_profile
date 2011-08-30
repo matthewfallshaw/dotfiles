@@ -58,7 +58,7 @@ unset i
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-xterm-color)
+xterm-color | xterm-256color)
   yellow="\[\e[0;33m\]"
   green="\[\e[0;32m\]"
   red="\[\e[0;31m\]"
@@ -67,8 +67,8 @@ xterm-color)
   export PS1="${yellow}\u@\h${fgcolor}:${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")$ "
   unset yellow green red blue fgcolor
   ;;
-  *)
-  PS1='\u@\h:\w\$ '
+*)
+  PS1="\u@\h:\w\$(__git_ps1 \" (%s)\")$ "
   ;;
 esac
 
