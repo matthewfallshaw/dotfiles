@@ -138,7 +138,7 @@ alias l="ls -lah"
 alias la='ls -ah --color=auto'
 alias ll="ls -lh --color=auto"
 alias lla='ls -alh --color=auto'
-alias ls='ls -h --color=auto'
+alias ls='ls -h'
 alias m='mate'
 alias m.='mate .'
 alias pwsafe='pwsafe -E'

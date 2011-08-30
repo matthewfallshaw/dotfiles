@@ -9,10 +9,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ "$system_name" == 'Darwin' ]; then
-  # set MANPATH so it includes ports
-  export MANPATH=/opt/local/share/man:"${MANPATH}"
-fi
+#if [ "$system_name" == 'Darwin' ]; then
+#  # set MANPATH so it includes ports
+#  export MANPATH=/opt/local/share/man:"${MANPATH}"
+#fi
 
 # don't put duplicate lines or lines starting with a space (good for sensitive info) in the history.
 export HISTCONTROL=ignoredups:ignorespace
@@ -43,7 +43,9 @@ xterm*|rxvt*)
 esac
 
 # bash completion
-if [ -f /opt/local/etc/bash_completion ]; then  # macports port bash-completion
+if [ -f `brew --prefix`/etc/bash_completion ]; then  # homebrew bash-completion
+  . `brew --prefix`/etc/bash_completion
+elif [ -f /opt/local/etc/bash_completion ]; then  # macports port bash-completion
   . /opt/local/etc/bash_completion
 elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
@@ -79,11 +81,8 @@ export AUTOFEATURE=true
 export RSPEC=true
 
 # OSX specific config
-if [ "$system_name" == 'Darwin' ]; then
+#if [ "$system_name" == 'Darwin' ]; then
 
-  # MacVim
-  export VIM_APP_DIR=/Applications/MacPorts
-
-fi
+#fi
 
 # vi:filetype=sh
