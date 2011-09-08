@@ -1,6 +1,6 @@
 set nocompatible      " We're running Vim, not Vi
 
-let $PATH = '~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
+let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
 
 " pathogen.vim
 call pathogen#infect()

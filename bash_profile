@@ -9,11 +9,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-#if [ "$system_name" == 'Darwin' ]; then
-#  # set MANPATH so it includes ports
-#  export MANPATH=/opt/local/share/man:"${MANPATH}"
-#fi
-
 # don't put duplicate lines or lines starting with a space (good for sensitive info) in the history.
 export HISTCONTROL=ignoredups:ignorespace
 export HISTSIZE=100000

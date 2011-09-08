@@ -6,8 +6,6 @@ export DOTPROFILE=1
 # the default umask is set in /etc/login.defs
 #umask 022
 
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-
 # include .bashrc if it exists
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc

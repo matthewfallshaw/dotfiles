@@ -2,11 +2,6 @@
 
 system_name=`uname -s`
 
-if [ $system_name == 'Darwin' ]; then
-  # set PATH so it includes ports
-  export PATH=/opt/local/bin:/opt/local/sbin:/opt/local/libexec/gnubin:"${PATH}"
-fi
-
 # set PATH so it includes user's private bin if it exists
 if [ -d ~/bin ] ; then export PATH=~/bin:"${PATH}" ; fi
 
