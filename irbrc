@@ -80,6 +80,10 @@ console_extensions __FILE__ do
     end
   end
 
+  extend_console '#methods_for #method_lookup_path' do
+    require 'method_locator'
+  end
+
 end
 
 # .railsrc
