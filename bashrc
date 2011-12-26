@@ -52,8 +52,8 @@ fi
 
 
 # bash completion
-if [ -f `brew --prefix`/etc/bash_completion ]; then  # homebrew bash-completion
-  . `brew --prefix`/etc/bash_completion
+if [ -f `/usr/local/bin/brew --prefix`/etc/bash_completion ]; then  # homebrew bash-completion
+  . `/usr/local/bin/brew --prefix`/etc/bash_completion
 elif [ -f /opt/local/etc/bash_completion ]; then  # macports port bash-completion
   . /opt/local/etc/bash_completion
 elif [ -f /etc/bash_completion ]; then
@@ -98,6 +98,10 @@ export MPD_PORT=6600
 export AUTOFEATURE=true
 export RSPEC=true
 
+# Autojump
+if [ -f `/usr/local/bin/brew --prefix`/etc/autojump ]; then
+  . `/usr/local/bin/brew --prefix`/etc/autojump
+fi
 
 # Alias definitions.
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
