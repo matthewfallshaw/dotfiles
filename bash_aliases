@@ -151,6 +151,7 @@ alias lla='ls -alh --color=auto'
 alias m='mate'
 alias m.='mate .'
 alias svnst="svn st | grep -v '^\?'"
+alias ql='qlmanage -p 2>/dev/null'
 
 function cdp {
   if [ -z "$1" ]; then
