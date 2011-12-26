@@ -126,6 +126,14 @@ alias passenger-host='sudo gvim -p ~/code/utils/apache2/vhosts.conf /etc/hosts >
 alias graceful='sudo apachectl graceful'
 
 
+#########################################
+# default options for standard commands #
+#########################################
+alias ls='ls -h'
+alias pwsafe='pwsafe -E'
+alias which='which -a'
+
+
 ########
 # misc #
 ########
@@ -140,12 +148,9 @@ alias l="ls -lah"
 alias la='ls -ah --color=auto'
 alias ll="ls -lh --color=auto"
 alias lla='ls -alh --color=auto'
-alias ls='ls -h'
 alias m='mate'
 alias m.='mate .'
-alias pwsafe='pwsafe -E'
 alias svnst="svn st | grep -v '^\?'"
-alias which='which -a'
 
 function cdp {
   if [ -z "$1" ]; then
