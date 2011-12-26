@@ -19,7 +19,6 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then source "$HOME/.rvm/scripts/rvm" ; fi
 NVM_DIR=$HOME/.nvm
 if [ -s "$NVM_DIR/nvm.sh" ]; then
   . $NVM_DIR/nvm.sh
-  nvm use
 fi
 
 # remove duplicates from PATH
