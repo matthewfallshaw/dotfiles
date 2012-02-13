@@ -37,4 +37,6 @@
 [github]
   user = github-user
   token = github-token
+[push]
+	default = tracking
 # vi:filetype=conf
