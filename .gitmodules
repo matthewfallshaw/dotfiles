@@ -3,13 +3,13 @@
 	url = https://github.com/kchmck/vim-coffee-script.git
 [submodule "vim/bundle/ack.vim"]
 	path = vim/bundle/ack.vim
-	url = http://github.com/mileszs/ack.vim.git
+	url = https://github.com/mileszs/ack.vim.git
 [submodule "vim/bundle/markdown.vim"]
 	path = vim/bundle/markdown.vim
 	url = git@github.com:matthewfallshaw/markdown.vim.git
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
-	url = http://github.com/scrooloose/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule "vim/bundle/exim.vim"]
 	path = vim/bundle/exim.vim
 	url = https://github.com/vim-scripts/exim.vim.git
@@ -28,3 +28,6 @@
 [submodule "vim/bundle/vim-ruby-refactoring"]
 	path = vim/bundle/vim-ruby-refactoring
 	url = https://github.com/ecomba/vim-ruby-refactoring.git
+[submodule "vim/bundle/snipmate"]
+	path = vim/bundle/snipmate
+	url = https://github.com/MarcWeber/snipmate.vim.git
