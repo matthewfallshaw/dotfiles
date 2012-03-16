@@ -6,7 +6,8 @@ system_name=`uname -s`
 # set PATH so it includes .cabal bin if it exists
 if [ -d ~/.cabal/bin ] ; then export PATH=~/.cabal/bin:"${PATH}" ; fi
 
-# set PATH so it includes /usr/local/bin early if it exists
+# set PATH so it includes /usr/local/bin and sbin early if they exist
+if [ -d /usr/local/sbin ] ; then export PATH=/usr/local/sbin:"${PATH}" ; fi
 if [ -d /usr/local/bin ] ; then export PATH=/usr/local/bin:"${PATH}" ; fi
 
 # set PATH so it includes user's private bin if it exists
