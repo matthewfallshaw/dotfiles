@@ -67,6 +67,11 @@ done
 unset i
 
 
+# rvm in prompt
+function rvm_current {
+  if [ -f .rvmrc ]; then echo "($(rvm-prompt i v g s))"; fi
+}
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
@@ -83,11 +88,11 @@ xterm-color | xterm-256color)
   red="\[\e[0;31m\]"
   blue="\[\e[0;34m\]"
   fgcolor="\[\e[0m\]"
-  export PS1="${yellow}\u@\h${fgcolor}:${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")$ "
+  export PS1="${yellow}\u@\h${fgcolor}:${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")\$(rvm_current)$ "
   unset yellow green red blue fgcolor
   ;;
 *)
-  PS1="\u@\h:\w\$(__git_ps1 \" (%s)\")$ "
+  PS1="\u@\h:\w\$(__git_ps1 \" (%s)\")\$(rvm_current)$ "
   ;;
 esac
 
