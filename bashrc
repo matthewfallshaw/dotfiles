@@ -4,23 +4,21 @@ system_name=`uname -s`
 
 
 # set PATH so it includes .cabal bin if it exists
-if [ -d ~/.cabal/bin ] ; then export PATH=~/.cabal/bin:"${PATH}" ; fi
+[ -d ~/.cabal/bin ] && export PATH=~/.cabal/bin:"${PATH}"
 
 # set PATH so it includes /usr/local/bin and sbin early if they exist
-if [ -d /usr/local/sbin ] ; then export PATH=/usr/local/sbin:"${PATH}" ; fi
-if [ -d /usr/local/bin ] ; then export PATH=/usr/local/bin:"${PATH}" ; fi
+[ -d /usr/local/sbin ] && export PATH=/usr/local/sbin:"${PATH}"
+[ -d /usr/local/bin ] && export PATH=/usr/local/bin:"${PATH}"
 
 # set PATH so it includes user's private bin if it exists
-if [ -d ~/bin ] ; then export PATH=~/bin:"${PATH}" ; fi
+[ -d ~/bin ] && export PATH=~/bin:"${PATH}"
 
 # Ruby version manager
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then source "$HOME/.rvm/scripts/rvm" ; fi
+[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 
 # Node version manager
 NVM_DIR=$HOME/.nvm
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-  . $NVM_DIR/nvm.sh
-fi
+[ -s "$NVM_DIR/nvm.sh" ] && source $NVM_DIR/nvm.sh
 
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
