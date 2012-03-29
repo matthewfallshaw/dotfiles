@@ -7,3 +7,4 @@
 :sources: 
 - http://rubygems.org
 - http://gems.github.com
+custom_shebang: $env ruby_bundler_wrapper

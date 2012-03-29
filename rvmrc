@@ -1,3 +1,4 @@
 rvm_project_rvmrc_default=1
 rvm_archflags="-arch x86_64"
 rvm_make_flags="-j3"
+export USE_BUNDLER=try
