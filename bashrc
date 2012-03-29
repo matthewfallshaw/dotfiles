@@ -20,6 +20,9 @@ system_name=`uname -s`
 NVM_DIR=$HOME/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && source $NVM_DIR/nvm.sh
 
+# AWS credentials
+[ -a "$HOME/.aws/bashrc" ] && source "$HOME/.aws/bashrc"
+
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
 
