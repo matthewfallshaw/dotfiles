@@ -113,5 +113,7 @@ fi
 # Alias definitions.
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
 
-# include Homebrew coreutils aliases (after bash completion) 
-source /usr/local/Cellar/coreutils/8.12/aliases
+# set PATH so it includes homebrew coreutils if they exists
+if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
+fi
