@@ -2,9 +2,6 @@ set nocompatible      " We're running Vim, not Vi
 
 let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
 
-" pathogen.vim
-call pathogen#infect()
-
 set encoding=utf8 nobomb " BOM often causes trouble
 let mapleader = ","  " <leader> now means ',' rather than '\'
 if &t_Co > 1
@@ -62,24 +59,13 @@ set textwidth=78     " From settings above, this is only for comments
 if has("colorcolumn")
   set colorcolumn=+3   " Highlight column 81
 end
+
 " Make window splitting behave
 set noequalalways
 set splitbelow
 
-" Syntastic plugin
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-" /Syntastic
-" GetLatestVimScripts plugin
-let g:GetLatestVimScripts_allowautoinstall=1
-" /GetLatestVimScripts
-
 set backspace=eol,start,indent " make backspace work
 "set hidden " no need to save to change buffers
-runtime! macros/matchit.vim
 " shellslash (use a common path separator across all platforms)
 " convert all backslashes to forward slashes on expanding filenames.
 " Enables consistancy in Cream between Windows and Linux platforms,
@@ -98,6 +84,10 @@ autocmd BufReadPost *
   \ if line("'\"") > 1 && line("'\"") <= line("$") |
   \   exe "normal! g`\"" |
   \ endif
+
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup
+au BufWrite /private/tmp/crontab.* set nobackup
 
 " Mappings
 inoremap ( ()<Left>
@@ -161,10 +151,6 @@ let g:rails_level=4
 let g:rails_subversion=1
 " /rails.vim
 
-" Don't write backup file if vim is being called by "crontab -e"
-au BufWrite /private/tmp/crontab.* set nowritebackup
-au BufWrite /private/tmp/crontab.* set nobackup
-
 let g:rct_completion_use_fri = 0
 command -bar -nargs=1 OpenURL :!open <args>
 
@@ -187,3 +173,20 @@ function! CopyWithLineNumbers() range
     redir END
 endf
 com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
+
+" Syntastic plugin
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+" /Syntastic
+
+" GetLatestVimScripts plugin
+let g:GetLatestVimScripts_allowautoinstall=1
+" /GetLatestVimScripts
+
+" pathogen.vim
+call pathogen#infect()
+
+runtime! macros/matchit.vim
