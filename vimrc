@@ -47,15 +47,15 @@ set cm=blowfish  " when encrypting files with :X, use blowfish instead of hopele
 set ruler
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
 " Setup automatic text formatting/wrapping:
-set formatoptions=
-set formatoptions-=t " Don't autowrap text
-set formatoptions+=c " Do autowrap comments
-set formatoptions+=r " Automatically continue comments
-set formatoptions+=o " Automatically continue comments when hitting 'o' or 'O'
-set formatoptions+=q " Allow formatting of comments with 'gq'
-set formatoptions+=n " Recognize numbered lists
-set formatoptions+=l " Don't break long lines that were already there
-set textwidth=78     " From settings above, this is only for comments
+"set formatoptions=
+"set formatoptions-=t " Don't autowrap text
+"set formatoptions+=c " Do autowrap comments
+"set formatoptions+=r " Automatically continue comments
+"set formatoptions+=o " Automatically continue comments when hitting 'o' or 'O'
+"set formatoptions+=q " Allow formatting of comments with 'gq'
+"set formatoptions+=n " Recognize numbered lists
+"set formatoptions+=l " Don't break long lines that were already there
+"set textwidth=78     " From settings above, this is only for comments
 if has("colorcolumn")
   set colorcolumn=+3   " Highlight column 81
 end
