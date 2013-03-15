@@ -13,6 +13,11 @@ system_name=`uname -s`
 # set PATH so it includes user's private bin if it exists
 [ -d ~/bin ] && export PATH=~/bin:"${PATH}"
 
+# set PATH so it includes homebrew coreutils if they exist
+if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
+fi
+
 # Ruby version manager
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 
@@ -32,7 +37,7 @@ export HISTCONTROL=ignoredups:ignorespace
 export HISTSIZE=100000
 # share history between terms
 shopt -s histappend
-PROMPT_COMMAND='history -a'
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
 
 
 shopt -s cdspell
@@ -112,8 +117,3 @@ fi
 
 # Alias definitions.
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
-
-# set PATH so it includes homebrew coreutils if they exists
-if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
-fi
