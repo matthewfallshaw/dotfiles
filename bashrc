@@ -111,8 +111,8 @@ export AUTOFEATURE=true
 export RSPEC=true
 
 # Autojump
-if [ -f `/usr/local/bin/brew --prefix`/etc/autojump ]; then
-  . `/usr/local/bin/brew --prefix`/etc/autojump
+if [ -f `/usr/local/bin/brew --prefix`/etc/autojump.bash ]; then
+  . `/usr/local/bin/brew --prefix`/etc/autojump.bash
 fi
 
 # Alias definitions.
