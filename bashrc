@@ -19,7 +19,10 @@ if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
 fi
 
 # Ruby version manager
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+if [ -d "$HOME/.rvm" ] ; then
+  [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+  PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+fi
 
 # Node version manager
 NVM_DIR=$HOME/.nvm
