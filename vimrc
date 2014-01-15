@@ -115,6 +115,8 @@ inoremap <m--> {
 inoremap <m-"> "
 inoremap <m-'> '
 
+command -range=% Tidy :<line1>,<line2>!tidy -quiet -indent -clean -bare -wrap 0 --show-errors 0 --show-body-only auto
+
 function ClosePair(char)
   if getline('.')[col('.') - 1] == a:char
     return "\<Right>"
