@@ -143,7 +143,6 @@ alias ....='.. .. ..'
 alias cleanvimswaps="find . | grep \.sw[po]$ | xargs rm"
 alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
 alias h='history'
-alias j="jobs -l"
 alias l="ls -lah"
 alias la='ls -ah --color=auto'
 alias ll="ls -lh --color=auto"
