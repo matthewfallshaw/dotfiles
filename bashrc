@@ -16,6 +16,7 @@ system_name=`uname -s`
 # set PATH so it includes homebrew coreutils if they exist
 if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
+  export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
 fi
 
 # Ruby version manager
