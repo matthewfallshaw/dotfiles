@@ -7,4 +7,4 @@
 :sources: 
 - http://rubygems.org
 - http://gems.github.com
-custom_shebang: $env ruby_bundler_wrapper
+# custom_shebang: $env ruby_executable_hooks
