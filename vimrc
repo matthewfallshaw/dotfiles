@@ -19,6 +19,7 @@ set ignorecase    " ignore case when searching
 set smartcase     " override ignorecase when there are uppercase characters
 set showmatch     " when inserting a bracket briefly flash its match
 set modeline
+set number        " display line numbers
 set mouse=a
 set history=500
 set showcmd
