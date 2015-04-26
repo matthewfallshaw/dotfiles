@@ -57,7 +57,7 @@ fi
 
 
 [ -z $EDITOR ] && export EDITOR=vim
-[ -z $GREP_OPTIONS ] && export GREP_OPTIONS="--color=auto"
+#[ -z $GREP_OPTIONS ] && export GREP_OPTIONS="--color=auto"
 [ -z $LESS ] && export LESS="--RAW-CONTROL-CHARS"
 [ -z $REPLYTO ] && export REPLYTO=youremailaddress
 
