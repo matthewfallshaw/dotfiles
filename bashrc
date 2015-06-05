@@ -19,18 +19,18 @@ if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
   export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
 fi
 
-# Ruby version manager
-if [ -d "$HOME/.rvm" ] ; then
-  [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-  PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-fi
-
 # Node version manager
 NVM_DIR=$HOME/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && source $NVM_DIR/nvm.sh
 
 # AWS credentials
 [ -a "$HOME/.aws/bashrc" ] && source "$HOME/.aws/bashrc"
+
+# Ruby version manager
+if [ -d "$HOME/.rvm" ] ; then
+  [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
 
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
