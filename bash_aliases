@@ -1,5 +1,5 @@
 # Some useful aliases
-alias aliases='vim ~/.bash_aliases && source ~/.bash_aliases'
+alias aliases='echo "waiting for MacVim to close…"; mvim -f ~/.bash_aliases && source ~/.bash_aliases'
 
 #######
 # git #
