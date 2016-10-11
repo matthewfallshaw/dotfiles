@@ -116,8 +116,6 @@ inoremap <m--> {
 inoremap <m-"> "
 inoremap <m-'> '
 
-command -range=% Tidy :<line1>,<line2>!tidy -quiet -indent -clean -bare -wrap 0 --show-errors 0 --show-body-only auto
-
 function ClosePair(char)
   if getline('.')[col('.') - 1] == a:char
     return "\<Right>"
@@ -125,7 +123,6 @@ function ClosePair(char)
     return a:char
   endif
 endf
-
 function CloseBracket()
   if match(getline(line('.') + 1), '\s*}') < 0
     return "\<CR>}"
@@ -133,7 +130,6 @@ function CloseBracket()
     return "\<ESC>j0f}a"
   endif
 endf
-
 function QuoteDelim(char)
   let line = getline('.')
   let col = col('.')
@@ -154,6 +150,7 @@ let g:rails_level=4
 let g:rails_subversion=1
 " /rails.vim
 
+" ??
 let g:rct_completion_use_fri = 0
 command -bar -nargs=1 OpenURL :!open <args>
 
@@ -164,18 +161,6 @@ let NERDTreeShowHidden=1
 
 " Ruby Block Delimiter Conversion
 " vmap <Leader>B :call <SID>RubyBlockSwitchDelimiters()<cr>
-
-" Visual mode copy to pastebuffer
-" kudos to Brad: http://xtargets.com/2010/10/13/cutting-and-pasting-source-code-from-vim-to-skype/
-function! CopyWithLineNumbers() range
-    redir @*
-    sil echomsg "----------------------"
-    sil echomsg expand("%")
-    sil echomsg "----------------------"
-    exec 'sil!' . a:firstline . ',' . a:lastline . '#'
-    redir END
-endf
-com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
 
 " Syntastic plugin
 set statusline+=%#warningmsg#
@@ -191,5 +176,26 @@ let g:GetLatestVimScripts_allowautoinstall=1
 
 " pathogen.vim
 call pathogen#infect()
+
+" Commands
+" ########
+
+" Tidy
+command -range=% Tidy :<line1>,<line2>!tidy -quiet -indent -clean -bare -wrap 0 --show-errors 0 --show-body-only auto
+
+" Visual mode copy to pastebuffer
+" kudos to Brad: http://xtargets.com/2010/10/13/cutting-and-pasting-source-code-from-vim-to-skype/
+function! CopyWithLineNumbers() range
+    redir @*
+    sil echomsg "----------------------"
+    sil echomsg expand("%")
+    sil echomsg "----------------------"
+    exec 'sil!' . a:firstline . ',' . a:lastline . '#'
+    redir END
+endf
+com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
+
+" w!! to save with root permissions
+cmap w!! w !sudo tee % > /dev/null
 
 runtime! macros/matchit.vim
