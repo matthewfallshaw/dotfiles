@@ -137,9 +137,6 @@ alias which='which -a'
 ########
 # misc #
 ########
-alias ..='cd ..;' # can then do .. .. .. to move up multiple directories.
-alias ...='.. ..'
-alias ....='.. .. ..'
 alias cleanvimswaps="find . -iregex '.*\.sw[po]$' -delete"
 alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
 alias h='history'
@@ -152,19 +149,6 @@ alias m.='mate .'
 alias svnst="svn st | grep -v '^\?'"
 alias ql='qlmanage -p 2>/dev/null'
 
-function cdp {
-  if [ -z "$1" ]; then
-    cd ~/projects
-  else
-    cd ~/projects/$1
-  fi
-}
-_cdpcomplete() {
-  local cur
-  cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $( compgen -S/ -d ~/projects/$cur | grep -v '\.git/$' | cut -b 22- ) )
-}
-complete -o nospace -F _cdpcomplete cdp
 function cdd {
   if [ -z "$1" ]; then
     cd ~/code
@@ -178,5 +162,41 @@ _cddcomplete() {
   COMPREPLY=( $( compgen -S/ -d ~/code/$cur | grep -v '\.git/$' | cut -b 18- ) )
 }
 complete -o nospace -F _cddcomplete cdd
+
+# Make a directory and cd into it
+function mcd() {
+  mkdir -P "$1" && cd "$1"
+}
+# Make a temp directory and cd into it
+function mtd() {
+    local dir
+    dir=$(mktemp -d)
+    if test -n "$dir"
+    then
+        if test -d "$dir"
+        then
+            echo "$dir"
+            cd "$dir"
+        else
+            echo "mktemp directory $dir does not exist"
+        fi
+    else
+        echo "mktemp didn't work"
+    fi
+}
+
+# cd up n directories
+function cdup {
+ups=""
+for i in $(seq 1 $1)
+do
+  ups=$ups"../"
+done
+cd $ups
+}
+alias    ..='cd ..;' # can then do .. .. .. to move up multiple directories.
+alias   ...='cdup 2'
+alias  ....='cdup 3'
+alias .....='cdup 4'
 
 # vi:filetype=sh
