@@ -26,11 +26,8 @@ NVM_DIR=$HOME/.nvm
 # AWS credentials
 [ -a "$HOME/.aws/bashrc" ] && source "$HOME/.aws/bashrc"
 
-# Ruby version manager
-if [ -d "$HOME/.rvm" ] ; then
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-fi
+# Renv
+eval "$(rbenv init -)"
 
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
@@ -77,11 +74,6 @@ done
 unset i
 
 
-# rvm in prompt
-function rvm_current {
-  if [ -f .rvmrc ]; then echo "($(rvm-prompt i v g s))"; fi
-}
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
@@ -98,11 +90,11 @@ xterm-color | xterm-256color)
   red="\[\e[0;31m\]"
   blue="\[\e[0;34m\]"
   fgcolor="\[\e[0m\]"
-  export PS1="${yellow}\u@\h${fgcolor}:${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")\$(rvm_current)$ "
+  export PS1="${yellow}\u@\h${fgcolor}:${blue}\w${fgcolor}\$(__git_ps1 \" (%s)\")$ "
   unset yellow green red blue fgcolor
   ;;
 *)
-  PS1="\u@\h:\w\$(__git_ps1 \" (%s)\")\$(rvm_current)$ "
+  PS1="\u@\h:\w\$(__git_ps1 \" (%s)\")$ "
   ;;
 esac
 
