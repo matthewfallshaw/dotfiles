@@ -145,14 +145,38 @@ function QuoteDelim(char)
   endif
 endf
 
+" Plugins
+" #######
+
+" vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+call plug#begin('~/.vim/bundle')
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
+Plug 'scrooloose/syntastic' " Syntastic: Code linting errors
+Plug 'shemerey/vim-peepopen' " Fuzzy search of filenames and paths
+Plug 'mileszs/ack.vim' " File search with ack
+Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
+Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
+Plug 'tpope/vim-commentary' " Comment toggle
+Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
+" vim-plug filetypes
+Plug 'tpope/vim-git', { 'for': 'git' }
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+call plug#end()
+
+
 " rails.vim plugin
 let g:rails_level=4
 let g:rails_subversion=1
 " /rails.vim
-
-" ??
-let g:rct_completion_use_fri = 0
-command -bar -nargs=1 OpenURL :!open <args>
 
 " NERDTree plugin
 let NERDTreeIgnore=['\~$', '^\.git', '\.swp$', '\.DS_Store$']
@@ -170,12 +194,9 @@ let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
 " /Syntastic
 
-" GetLatestVimScripts plugin
-let g:GetLatestVimScripts_allowautoinstall=1
-" /GetLatestVimScripts
-
-" pathogen.vim
-call pathogen#infect()
+" ??
+let g:rct_completion_use_fri = 0
+command -bar -nargs=1 OpenURL :!open <args>
 
 " Commands
 " ########
