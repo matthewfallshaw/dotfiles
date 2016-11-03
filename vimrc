@@ -1,6 +1,6 @@
 set nocompatible      " We're running Vim, not Vi
 
-let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:' . $PATH
+let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:' . $PATH
 
 set encoding=utf8 nobomb " BOM often causes trouble
 let mapleader = ","  " <leader> now means ',' rather than '\'
@@ -157,7 +157,6 @@ endif
 call plug#begin('~/.vim/bundle')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
 Plug 'scrooloose/syntastic' " Syntastic: Code linting errors
-Plug 'shemerey/vim-peepopen' " Fuzzy search of filenames and paths
 Plug 'mileszs/ack.vim' " File search with ack
 Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
 Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
@@ -168,6 +167,7 @@ Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
+Plug 'jgdavey/vim-blockle', { 'for': 'ruby' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 call plug#end()
@@ -183,8 +183,8 @@ let NERDTreeIgnore=['\~$', '^\.git', '\.swp$', '\.DS_Store$']
 let NERDTreeShowHidden=1
 " /NERDTree
 
-" Ruby Block Delimiter Conversion
-" vmap <Leader>B :call <SID>RubyBlockSwitchDelimiters()<cr>
+" Blockle plugin
+" <leader>b to change block style from { … } to do … end
 
 " Syntastic plugin
 set statusline+=%#warningmsg#
