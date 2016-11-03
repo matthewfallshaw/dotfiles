@@ -100,6 +100,8 @@ function mategem {
 }
 complete -o default -o nospace -F _cdgemcomplete vimgem mategem
 
+alias rtags='ctags -R --languages=ruby --exclude=.git --exclude=log .'
+
 
 #########
 # RAILS #
