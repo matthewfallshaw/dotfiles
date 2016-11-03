@@ -62,8 +62,6 @@ fi
 # bash completion
 if [ -f `/usr/local/bin/brew --prefix`/etc/bash_completion ]; then  # homebrew bash-completion
   . `/usr/local/bin/brew --prefix`/etc/bash_completion
-elif [ -f /opt/local/etc/bash_completion ]; then  # macports port bash-completion
-  . /opt/local/etc/bash_completion
 elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
