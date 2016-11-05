@@ -1,6 +1,12 @@
 # Some useful aliases
 alias aliases='echo "waiting for MacVim to close…"; mvim -f ~/.bash_aliases && source ~/.bash_aliases'
 
+##########
+# MacVim #
+##########
+alias gvim='mvim --remote-tab-silent'
+alias mvim='mvim -p'
+
 #######
 # git #
 #######
