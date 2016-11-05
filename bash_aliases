@@ -52,13 +52,6 @@ function st {
   fi
 }
 
-#######
-# SVN #
-#######
-alias sup='svn up' # trust me 3 chars makes a difference
-alias svnclear='find . -name .svn -print0 | xargs -0 rm -rf' # removes all .svn folders from directory recursively
-alias svnaddall='svn status | grep "^\?" | awk "{print \$2}" | xargs svn add' # adds all unadded files
-
 ########
 # RUBY #
 ########
