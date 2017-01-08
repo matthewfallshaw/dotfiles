@@ -45,4 +45,7 @@
 	required = true
 [credential]
 	helper = osxkeychain
+[diff "scpt"]
+  textconv = osadecompile
+  binary=true
 # vi:filetype=conf
