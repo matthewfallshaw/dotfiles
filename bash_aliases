@@ -31,8 +31,8 @@ alias gnp='git --no-pager'
 alias gp='git push'
 alias gs="git stash"
 alias gst='git status'
-alias gx="gitx"
-alias gxc="gitx -c"
+alias gx="github"
+alias gxc="github"  # because my fingers remember GitX.app
 alias gsu="git submodule update"
 alias gsui="git submodule update --init"
 
