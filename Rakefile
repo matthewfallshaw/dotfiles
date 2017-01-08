@@ -63,6 +63,23 @@ dotfiles_without_secrets.each do |dotfile|
         ln_sf File.expand_path(dotfile), target(dotfile)
         puts "#{dotfile} fixed: erroneously linked to #{old_target}, fixed."
       end
+    elsif File.exist?(target(dotfile))
+      print "#{dotfile}: exists, should be a symlink but is a real file, overwrite #{target(dotfile)}? [ynaq] "
+      case $stdin.gets.chomp
+      when "q"
+        exit 1
+      when "n"
+        puts "      #{dotfile} not linked!!"
+      when "y"
+        ln_sf File.expand_path(dotfile), target(dotfile)
+        puts "      #{dotfile} linked."
+      when "a"
+        ln_sf File.expand_path(dotfile), target(dotfile)
+        puts "      #{dotfile} linked."
+        @always_update = true
+      else
+        raise "I asked for [ynaq] and you give me that?! I quit."
+      end
     else
       # Not linked
       ln_sf File.expand_path(dotfile), target(dotfile)
