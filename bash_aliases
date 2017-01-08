@@ -166,7 +166,7 @@ complete -o nospace -F _cddcomplete cdd
 
 # Make a directory and cd into it
 function mcd() {
-  mkdir -P "$1" && cd "$1"
+  mkdir -p "$1" && cd "$1"
 }
 # Make a temp directory and cd into it
 function mtd() {
