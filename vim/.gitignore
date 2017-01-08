@@ -3,3 +3,4 @@
 /vim*
 .DS_Store
 .*.sw*
+.netrwhist

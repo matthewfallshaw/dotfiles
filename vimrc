@@ -162,12 +162,17 @@ Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
 Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
 Plug 'tpope/vim-commentary' " Comment toggle
 Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
+Plug 'tpope/vim-endwise' " Auto close if, do, def, etc.
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fzf fuzzy finder
+Plug 'junegunn/fzf.vim'
 " vim-plug filetypes
 Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
-Plug 'jgdavey/vim-blockle', { 'for': 'ruby' }
+Plug 'jgdavey/vim-blockle', { 'for': 'ruby' } " <leader>b to toggle Ruby block style
+Plug 'tpope/vim-rake', { 'for': 'ruby' }
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 call plug#end()
@@ -219,4 +224,4 @@ com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
 " w!! to save with root permissions
 cmap w!! w !sudo tee % > /dev/null
 
-runtime! macros/matchit.vim
+runtime macros/matchit.vim
