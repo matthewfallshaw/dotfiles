@@ -111,3 +111,6 @@ fi
 
 # Alias definitions.
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
+
+# fzf shell extensions
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
