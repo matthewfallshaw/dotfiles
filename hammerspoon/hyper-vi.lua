@@ -8,7 +8,7 @@ pressedF19 = function()
   k:enter()
 end
 
--- Leave Hyper Mode when F19 is pressed,
+-- Leave Hyper Mode when F19 is released,
 --   send ESCAPE if no other keys are pressed.
 releasedF19 = function()
   k:exit()
