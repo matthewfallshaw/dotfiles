@@ -126,6 +126,12 @@ alias passenger-host='sudo gvim -p ~/code/utils/apache2/vhosts.conf /etc/hosts >
 # You can also click System Preference->Sharing->Web Sharing, but this is quicker.
 alias graceful='sudo apachectl graceful'
 
+##############
+# TENSORFLOW #
+##############
+alias tf='cd ~/code/tensorflow; source bin/activate'
+alias tfq='deactivate'
+
 
 #########################################
 # default options for standard commands #
