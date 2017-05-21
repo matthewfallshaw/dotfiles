@@ -19,7 +19,7 @@ alias gc='git commit --verbose'
 alias gca='git commit --verbose --all'
 if [ "$system_name" == 'Darwin' ]; then
   function gd {
-    git diff --ignore-space-change $@ | gitx
+    git diff --ignore-space-change $@
   }
 else
   alias gd='git diff --ignore-space-change'
