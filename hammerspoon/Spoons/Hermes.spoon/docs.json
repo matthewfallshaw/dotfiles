@@ -1,0 +1,955 @@
+[
+  {
+    "Constant" : [
+      {
+        "doc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is paused",
+        "def" : "Hermes:state_paused",
+        "stripped_doc" : [
+          "Returned by `Hermes:getPlaybackState()` to indicates Hermes is paused"
+        ],
+        "desc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is paused",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:state_paused",
+        "type" : "Constant",
+        "returns" : [
+
+        ],
+        "name" : "state_paused",
+        "parameters" : [
+
+        ]
+      },
+      {
+        "doc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is playing",
+        "def" : "Hermes:state_playing",
+        "stripped_doc" : [
+          "Returned by `Hermes:getPlaybackState()` to indicates Hermes is playing"
+        ],
+        "desc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is playing",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:state_playing",
+        "type" : "Constant",
+        "returns" : [
+
+        ],
+        "name" : "state_playing",
+        "parameters" : [
+
+        ]
+      },
+      {
+        "doc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is stopped",
+        "def" : "Hermes:state_stopped",
+        "stripped_doc" : [
+          "Returned by `Hermes:getPlaybackState()` to indicates Hermes is stopped"
+        ],
+        "desc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is stopped",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:state_stopped",
+        "type" : "Constant",
+        "returns" : [
+
+        ],
+        "name" : "state_stopped",
+        "parameters" : [
+
+        ]
+      }
+    ],
+    "submodules" : [
+
+    ],
+    "Function" : [
+      {
+        "doc" : "Gets the name of the current Artist\n\nParameters:\n * None\n\nReturns:\n * A string containing the Artist of the current track, or nil if an error occurred",
+        "def" : "Hermes:getCurrentArtist() -> string or nil",
+        "stripped_doc" : [
+          "Gets the name of the current Artist",
+          ""
+        ],
+        "desc" : "Gets the name of the current Artist",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getCurrentArtist() -> string or nil",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing the Artist of the current track, or nil if an error occurred"
+        ],
+        "name" : "getCurrentArtist",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the name of the current Album\n\nParameters:\n * None\n\nReturns:\n * A string containing the Album of the current track, or nil if an error occurred",
+        "def" : "Hermes:getCurrentAlbum() -> string or nil",
+        "stripped_doc" : [
+          "Gets the name of the current Album",
+          ""
+        ],
+        "desc" : "Gets the name of the current Album",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getCurrentAlbum() -> string or nil",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing the Album of the current track, or nil if an error occurred"
+        ],
+        "name" : "getCurrentAlbum",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the name of the current track\n\nParameters:\n * None\n\nReturns:\n * A string containing the name of the current track, or nil if an error occurred",
+        "def" : "Hermes:getCurrentTrack() -> string or nil",
+        "stripped_doc" : [
+          "Gets the name of the current track",
+          ""
+        ],
+        "desc" : "Gets the name of the current track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getCurrentTrack() -> string or nil",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing the name of the current track, or nil if an error occurred"
+        ],
+        "name" : "getCurrentTrack",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the current playback state of Hermes\n\nParameters:\n * None\n\nReturns:\n * A string containing one of the following constants:\n   - `Hermes:state_stopped`\n   - `Hermes:state_paused`\n   - `Hermes:state_playing`",
+        "def" : "Hermes:getPlaybackState()",
+        "stripped_doc" : [
+          "Gets the current playback state of Hermes",
+          ""
+        ],
+        "desc" : "Gets the current playback state of Hermes",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getPlaybackState()",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing one of the following constants:",
+          "   - `Hermes:state_stopped`",
+          "   - `Hermes:state_paused`",
+          "   - `Hermes:state_playing`"
+        ],
+        "name" : "getPlaybackState",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Returns whether Hermes is currently open. Most other functions in Hermes.spoon will automatically start the application, so this function can be used to guard against that.\n\nParameters:\n * None\n\nReturns:\n * A boolean value indicating whether the Hermes application is running.",
+        "def" : "Hermes:isRunning()",
+        "stripped_doc" : [
+          "Returns whether Hermes is currently open. Most other functions in Hermes.spoon will automatically start the application, so this function can be used to guard against that.",
+          ""
+        ],
+        "desc" : "Returns whether Hermes is currently open. Most other functions in Hermes.spoon will automatically start the application, so this function can be used to guard against that.",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:isRunning()",
+        "type" : "Function",
+        "returns" : [
+          " * A boolean value indicating whether the Hermes application is running."
+        ],
+        "name" : "isRunning",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Returns whether Hermes is currently playing\n\nParameters:\n * None\n\nReturns:\n * A boolean value indicating whether Hermes is currently playing a track, or nil if an error occurred (unknown player state). Also returns false if the application is not running",
+        "def" : "Hermes:isPlaying()",
+        "stripped_doc" : [
+          "Returns whether Hermes is currently playing",
+          ""
+        ],
+        "desc" : "Returns whether Hermes is currently playing",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:isPlaying()",
+        "type" : "Function",
+        "returns" : [
+          " * A boolean value indicating whether Hermes is currently playing a track, or nil if an error occurred (unknown player state). Also returns false if the application is not running"
+        ],
+        "name" : "isPlaying",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the current Hermes volume setting\n\nParameters:\n * None\n\nReturns:\n * A number, between 1 and 100, containing the current Hermes playback volume",
+        "def" : "Hermes:getVolume()",
+        "stripped_doc" : [
+          "Gets the current Hermes volume setting",
+          ""
+        ],
+        "desc" : "Gets the current Hermes volume setting",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getVolume()",
+        "type" : "Function",
+        "returns" : [
+          " * A number, between 1 and 100, containing the current Hermes playback volume"
+        ],
+        "name" : "getVolume",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the playback position (in seconds) of the current song\n\nParameters:\n * None\n\nReturns:\n * A number indicating the current position in the song",
+        "def" : "Hermes:getPosition()",
+        "stripped_doc" : [
+          "Gets the playback position (in seconds) of the current song",
+          ""
+        ],
+        "desc" : "Gets the playback position (in seconds) of the current song",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getPosition()",
+        "type" : "Function",
+        "returns" : [
+          " * A number indicating the current position in the song"
+        ],
+        "name" : "getPosition",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the duration (in seconds) of the current song\n\nParameters:\n * None\n\nReturns:\n * The number of seconds long the current song is, 0 if no song is playing",
+        "def" : "Hermes:getDuration()",
+        "stripped_doc" : [
+          "Gets the duration (in seconds) of the current song",
+          ""
+        ],
+        "desc" : "Gets the duration (in seconds) of the current song",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getDuration()",
+        "type" : "Function",
+        "returns" : [
+          " * The number of seconds long the current song is, 0 if no song is playing"
+        ],
+        "name" : "getDuration",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      }
+    ],
+    "Variable" : [
+
+    ],
+    "stripped_doc" : [
+
+    ],
+    "Deprecated" : [
+
+    ],
+    "type" : "Module",
+    "desc" : "Controls for Hermes music player",
+    "Constructor" : [
+
+    ],
+    "doc" : "Controls for Hermes music player",
+    "Field" : [
+
+    ],
+    "Command" : [
+
+    ],
+    "Method" : [
+      {
+        "doc" : "Toggles play\/pause of current Hermes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:playpause()",
+        "stripped_doc" : [
+          "Toggles play\/pause of current Hermes track",
+          ""
+        ],
+        "desc" : "Toggles play\/pause of current Hermes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:playpause()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "playpause",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Plays the current Hermes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:play()",
+        "stripped_doc" : [
+          "Plays the current Hermes track",
+          ""
+        ],
+        "desc" : "Plays the current Hermes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:play()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "play",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Pauses the current Hermes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:pause()",
+        "stripped_doc" : [
+          "Pauses the current Hermes track",
+          ""
+        ],
+        "desc" : "Pauses the current Hermes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:pause()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "pause",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Skips to the next itunes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:next()",
+        "stripped_doc" : [
+          "Skips to the next itunes track",
+          ""
+        ],
+        "desc" : "Skips to the next itunes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:next()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "next",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Displays information for current track on screen\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:displayCurrentTrack()",
+        "stripped_doc" : [
+          "Displays information for current track on screen",
+          ""
+        ],
+        "desc" : "Displays information for current track on screen",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:displayCurrentTrack()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "displayCurrentTrack",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Sets the Hermes playback volume\n\nParameters:\n * vol - A number, between 1 and 100\n\nReturns:\n * None",
+        "def" : "Hermes:setVolume(vol)",
+        "stripped_doc" : [
+          "Sets the Hermes playback volume",
+          ""
+        ],
+        "desc" : "Sets the Hermes playback volume",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:setVolume(vol)",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "setVolume",
+        "parameters" : [
+          " * vol - A number, between 1 and 100",
+          ""
+        ]
+      },
+      {
+        "doc" : "Increases the Hermes playback volume by 5\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:volumeUp()",
+        "stripped_doc" : [
+          "Increases the Hermes playback volume by 5",
+          ""
+        ],
+        "desc" : "Increases the Hermes playback volume by 5",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:volumeUp()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "volumeUp",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Decreases the Hermes playback volume by 5\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:volumeDown()",
+        "stripped_doc" : [
+          "Decreases the Hermes playback volume by 5",
+          ""
+        ],
+        "desc" : "Decreases the Hermes playback volume by 5",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:volumeDown()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "volumeDown",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Binds hotkeys for Hermes\n\nParameters:\n * mapping - A table containing hotkey modifier\/key details for the following items:\n  * show - This will cause the mouse circle to be drawn",
+        "def" : "Hermes:bindHotkeys(mapping)",
+        "stripped_doc" : [
+          "Binds hotkeys for Hermes",
+          ""
+        ],
+        "desc" : "Binds hotkeys for Hermes",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:bindHotkeys(mapping)",
+        "type" : "Method",
+        "returns" : [
+
+        ],
+        "name" : "bindHotkeys",
+        "parameters" : [
+          " * mapping - A table containing hotkey modifier\/key details for the following items:",
+          "  * show - This will cause the mouse circle to be drawn"
+        ]
+      }
+    ],
+    "items" : [
+      {
+        "doc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is paused",
+        "def" : "Hermes:state_paused",
+        "stripped_doc" : [
+          "Returned by `Hermes:getPlaybackState()` to indicates Hermes is paused"
+        ],
+        "desc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is paused",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:state_paused",
+        "type" : "Constant",
+        "returns" : [
+
+        ],
+        "name" : "state_paused",
+        "parameters" : [
+
+        ]
+      },
+      {
+        "doc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is playing",
+        "def" : "Hermes:state_playing",
+        "stripped_doc" : [
+          "Returned by `Hermes:getPlaybackState()` to indicates Hermes is playing"
+        ],
+        "desc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is playing",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:state_playing",
+        "type" : "Constant",
+        "returns" : [
+
+        ],
+        "name" : "state_playing",
+        "parameters" : [
+
+        ]
+      },
+      {
+        "doc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is stopped",
+        "def" : "Hermes:state_stopped",
+        "stripped_doc" : [
+          "Returned by `Hermes:getPlaybackState()` to indicates Hermes is stopped"
+        ],
+        "desc" : "Returned by `Hermes:getPlaybackState()` to indicates Hermes is stopped",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:state_stopped",
+        "type" : "Constant",
+        "returns" : [
+
+        ],
+        "name" : "state_stopped",
+        "parameters" : [
+
+        ]
+      },
+      {
+        "doc" : "Gets the name of the current Album\n\nParameters:\n * None\n\nReturns:\n * A string containing the Album of the current track, or nil if an error occurred",
+        "def" : "Hermes:getCurrentAlbum() -> string or nil",
+        "stripped_doc" : [
+          "Gets the name of the current Album",
+          ""
+        ],
+        "desc" : "Gets the name of the current Album",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getCurrentAlbum() -> string or nil",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing the Album of the current track, or nil if an error occurred"
+        ],
+        "name" : "getCurrentAlbum",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the name of the current Artist\n\nParameters:\n * None\n\nReturns:\n * A string containing the Artist of the current track, or nil if an error occurred",
+        "def" : "Hermes:getCurrentArtist() -> string or nil",
+        "stripped_doc" : [
+          "Gets the name of the current Artist",
+          ""
+        ],
+        "desc" : "Gets the name of the current Artist",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getCurrentArtist() -> string or nil",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing the Artist of the current track, or nil if an error occurred"
+        ],
+        "name" : "getCurrentArtist",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the name of the current track\n\nParameters:\n * None\n\nReturns:\n * A string containing the name of the current track, or nil if an error occurred",
+        "def" : "Hermes:getCurrentTrack() -> string or nil",
+        "stripped_doc" : [
+          "Gets the name of the current track",
+          ""
+        ],
+        "desc" : "Gets the name of the current track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getCurrentTrack() -> string or nil",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing the name of the current track, or nil if an error occurred"
+        ],
+        "name" : "getCurrentTrack",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the duration (in seconds) of the current song\n\nParameters:\n * None\n\nReturns:\n * The number of seconds long the current song is, 0 if no song is playing",
+        "def" : "Hermes:getDuration()",
+        "stripped_doc" : [
+          "Gets the duration (in seconds) of the current song",
+          ""
+        ],
+        "desc" : "Gets the duration (in seconds) of the current song",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getDuration()",
+        "type" : "Function",
+        "returns" : [
+          " * The number of seconds long the current song is, 0 if no song is playing"
+        ],
+        "name" : "getDuration",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the current playback state of Hermes\n\nParameters:\n * None\n\nReturns:\n * A string containing one of the following constants:\n   - `Hermes:state_stopped`\n   - `Hermes:state_paused`\n   - `Hermes:state_playing`",
+        "def" : "Hermes:getPlaybackState()",
+        "stripped_doc" : [
+          "Gets the current playback state of Hermes",
+          ""
+        ],
+        "desc" : "Gets the current playback state of Hermes",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getPlaybackState()",
+        "type" : "Function",
+        "returns" : [
+          " * A string containing one of the following constants:",
+          "   - `Hermes:state_stopped`",
+          "   - `Hermes:state_paused`",
+          "   - `Hermes:state_playing`"
+        ],
+        "name" : "getPlaybackState",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the playback position (in seconds) of the current song\n\nParameters:\n * None\n\nReturns:\n * A number indicating the current position in the song",
+        "def" : "Hermes:getPosition()",
+        "stripped_doc" : [
+          "Gets the playback position (in seconds) of the current song",
+          ""
+        ],
+        "desc" : "Gets the playback position (in seconds) of the current song",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getPosition()",
+        "type" : "Function",
+        "returns" : [
+          " * A number indicating the current position in the song"
+        ],
+        "name" : "getPosition",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Gets the current Hermes volume setting\n\nParameters:\n * None\n\nReturns:\n * A number, between 1 and 100, containing the current Hermes playback volume",
+        "def" : "Hermes:getVolume()",
+        "stripped_doc" : [
+          "Gets the current Hermes volume setting",
+          ""
+        ],
+        "desc" : "Gets the current Hermes volume setting",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:getVolume()",
+        "type" : "Function",
+        "returns" : [
+          " * A number, between 1 and 100, containing the current Hermes playback volume"
+        ],
+        "name" : "getVolume",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Returns whether Hermes is currently playing\n\nParameters:\n * None\n\nReturns:\n * A boolean value indicating whether Hermes is currently playing a track, or nil if an error occurred (unknown player state). Also returns false if the application is not running",
+        "def" : "Hermes:isPlaying()",
+        "stripped_doc" : [
+          "Returns whether Hermes is currently playing",
+          ""
+        ],
+        "desc" : "Returns whether Hermes is currently playing",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:isPlaying()",
+        "type" : "Function",
+        "returns" : [
+          " * A boolean value indicating whether Hermes is currently playing a track, or nil if an error occurred (unknown player state). Also returns false if the application is not running"
+        ],
+        "name" : "isPlaying",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Returns whether Hermes is currently open. Most other functions in Hermes.spoon will automatically start the application, so this function can be used to guard against that.\n\nParameters:\n * None\n\nReturns:\n * A boolean value indicating whether the Hermes application is running.",
+        "def" : "Hermes:isRunning()",
+        "stripped_doc" : [
+          "Returns whether Hermes is currently open. Most other functions in Hermes.spoon will automatically start the application, so this function can be used to guard against that.",
+          ""
+        ],
+        "desc" : "Returns whether Hermes is currently open. Most other functions in Hermes.spoon will automatically start the application, so this function can be used to guard against that.",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:isRunning()",
+        "type" : "Function",
+        "returns" : [
+          " * A boolean value indicating whether the Hermes application is running."
+        ],
+        "name" : "isRunning",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Binds hotkeys for Hermes\n\nParameters:\n * mapping - A table containing hotkey modifier\/key details for the following items:\n  * show - This will cause the mouse circle to be drawn",
+        "def" : "Hermes:bindHotkeys(mapping)",
+        "stripped_doc" : [
+          "Binds hotkeys for Hermes",
+          ""
+        ],
+        "desc" : "Binds hotkeys for Hermes",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:bindHotkeys(mapping)",
+        "type" : "Method",
+        "returns" : [
+
+        ],
+        "name" : "bindHotkeys",
+        "parameters" : [
+          " * mapping - A table containing hotkey modifier\/key details for the following items:",
+          "  * show - This will cause the mouse circle to be drawn"
+        ]
+      },
+      {
+        "doc" : "Displays information for current track on screen\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:displayCurrentTrack()",
+        "stripped_doc" : [
+          "Displays information for current track on screen",
+          ""
+        ],
+        "desc" : "Displays information for current track on screen",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:displayCurrentTrack()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "displayCurrentTrack",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Skips to the next itunes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:next()",
+        "stripped_doc" : [
+          "Skips to the next itunes track",
+          ""
+        ],
+        "desc" : "Skips to the next itunes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:next()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "next",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Pauses the current Hermes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:pause()",
+        "stripped_doc" : [
+          "Pauses the current Hermes track",
+          ""
+        ],
+        "desc" : "Pauses the current Hermes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:pause()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "pause",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Plays the current Hermes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:play()",
+        "stripped_doc" : [
+          "Plays the current Hermes track",
+          ""
+        ],
+        "desc" : "Plays the current Hermes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:play()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "play",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Toggles play\/pause of current Hermes track\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:playpause()",
+        "stripped_doc" : [
+          "Toggles play\/pause of current Hermes track",
+          ""
+        ],
+        "desc" : "Toggles play\/pause of current Hermes track",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:playpause()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "playpause",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Sets the Hermes playback volume\n\nParameters:\n * vol - A number, between 1 and 100\n\nReturns:\n * None",
+        "def" : "Hermes:setVolume(vol)",
+        "stripped_doc" : [
+          "Sets the Hermes playback volume",
+          ""
+        ],
+        "desc" : "Sets the Hermes playback volume",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:setVolume(vol)",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "setVolume",
+        "parameters" : [
+          " * vol - A number, between 1 and 100",
+          ""
+        ]
+      },
+      {
+        "doc" : "Decreases the Hermes playback volume by 5\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:volumeDown()",
+        "stripped_doc" : [
+          "Decreases the Hermes playback volume by 5",
+          ""
+        ],
+        "desc" : "Decreases the Hermes playback volume by 5",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:volumeDown()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "volumeDown",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      },
+      {
+        "doc" : "Increases the Hermes playback volume by 5\n\nParameters:\n * None\n\nReturns:\n * None",
+        "def" : "Hermes:volumeUp()",
+        "stripped_doc" : [
+          "Increases the Hermes playback volume by 5",
+          ""
+        ],
+        "desc" : "Increases the Hermes playback volume by 5",
+        "notes" : [
+
+        ],
+        "signature" : "Hermes:volumeUp()",
+        "type" : "Method",
+        "returns" : [
+          " * None"
+        ],
+        "name" : "volumeUp",
+        "parameters" : [
+          " * None",
+          ""
+        ]
+      }
+    ],
+    "name" : "Hermes"
+  }
+]

@@ -29,4 +29,28 @@ function reloadConfig(files)
     end
 end
 local myWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.hammerspoon/', reloadConfig):start()
+
+
+-- Spoons
+hs.loadSpoon("URLDispatcher")
+spoon.URLDispatcher.default_handler = "com.google.Chrome"
+spoon.URLDispatcher.url_patterns = {
+  { "url pattern", "application bundle ID" },
+  { "https?://www.pivotaltracker.com/.*", "com.fluidapp.FluidApp.PivotalTracker" },
+  { "https?://morty.trikeapps.com/.*", "org.epichrome.app.Morty" },
+  { "https?://app.asana.com/.*", "org.epichrome.app.Asana" },
+}
+spoon.URLDispatcher:start()
+
+hs.loadSpoon("Emojis")
+spoon.Emojis:bindHotkeys({ toggle={{"⌘", "⌥", "⌃", "⇧"}, "space"}, })
+
+hs.loadSpoon("MouseCircle")
+spoon.MouseCircle:bindHotkeys({show={{"⌘", "⌥", "⌃", "⇧"}, "m"}})
+
+hs.loadSpoon("Caffeine")
+spoon.Caffeine:bindHotkeys({toggle={{"⌘", "⌥", "⌃", "⇧"}, "c"}})
+spoon.Caffeine:start()
+
+hs.loadSpoon("Hermes")
 hs.alert.show('Config loaded')
