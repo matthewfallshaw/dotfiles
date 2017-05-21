@@ -90,6 +90,12 @@ autocmd BufReadPost *
 au BufWrite /private/tmp/crontab.* set nowritebackup
 au BufWrite /private/tmp/crontab.* set nobackup
 
+" Reload this vimrc when it changes
+augroup myvimrc
+  au!
+  au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
+
 " Mappings
 inoremap ( ()<Left>
 inoremap [ []<Left>
@@ -175,6 +181,7 @@ Plug 'tpope/vim-rake', { 'for': 'ruby' }
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'vim-scripts/vim-coffee-script', { 'for': 'coffee' }
 call plug#end()
 
 
@@ -198,6 +205,11 @@ set statusline+=%*
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
 " /Syntastic
+
+" vim-surround plugin
+nmap <leader>c <Plug>CommentaryLine
+nmap <leader>C <Plug>CommentaryLine
+" /vim-surround
 
 " ??
 let g:rct_completion_use_fri = 0
