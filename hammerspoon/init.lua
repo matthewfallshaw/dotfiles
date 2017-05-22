@@ -55,26 +55,28 @@ spoon.Hammer:bindHotkeys({
 })
 spoon.Hammer:start()
 
+-- hs.loadSpoon("HeadphoneWatcher")
+-- spoon.HeadphoneWatcher.controlfns = {
+--   ["hermes"] = {
+--     appname   = "Hermes",
+--     isPlaying = function() return spoon.Hermes.isPlaying() end,
+--     play      = spoon.Hermes.play,
+--     pause     = spoon.Hermes.pause
+--   },
+--   ["itunes"]  = spoon.HeadphoneWatcher.controlfns["itunes"],
+--   ["spotify"] = spoon.HeadphoneWatcher.controlfns["spotify"],
+-- }
+-- spoon.HeadphoneWatcher:start()
+
+hs.loadSpoon("ToggleSkypeMute")
+spoon.ToggleSkypeMute:bindHotkeys( {
+  toggle_skype={{"⌘", "⌥", "⌃", "⇧"}, "v"},
+})
+
 
 -- oh my hammerspoon
 require("oh-my-hammerspoon")
-omh_go({
-      -- "apps.hammerspoon_toggle_console",
-      -- "apps.hammerspoon_install_cli",
-      -- "apps.hammerspoon_config_reload",
-      -- "windows.manipulation",
-      -- "windows.grid",
-      "apps.skype_mute",
-      -- "mouse.locator",
-      "audio.headphones_watcher",
-      -- "misc.clipboard",
-      -- "misc.colorpicker",
-      -- "keyboard.menubar_indicator",
-      -- "apps.universal_archive",
-      -- "apps.universal_omnifocus",
-      -- "windows.screen_rotate",
-      "apps.evernote",
-       })
+omh_go({ "audio.headphones_watcher" })
 
 
 
