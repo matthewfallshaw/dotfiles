@@ -1,6 +1,11 @@
+hs.logger.setGlobalLogLevel('info')
+hs.logger.defaultLogLevel = 'info'
+local logger = hs.logger.new("Init")
+
 require 'hyper-vi'
 
 -- ScanSnap
+logger.i("Loading ScanSnap USB watcher")
 local usbWatcher = nil
 function usbDeviceCallback(data)
     if (data["productName"] == "ScanSnap S1300i") then
@@ -13,10 +18,12 @@ function usbDeviceCallback(data)
     end
 end
 usbWatcher = hs.usb.watcher.new(usbDeviceCallback)
+logger.i("Starting ScanSnap USB watcher")
 usbWatcher:start()
 
 
 -- Jettison
+logger.i("Loading Jettison sleep watcher")
 function sleepWatcherCallback(event)
   if event == hs.caffeinate.watcher.systemWillSleep then
     logger.i("Ejecting drives before sleep…")
@@ -27,6 +34,7 @@ function sleepWatcherCallback(event)
   end
 end
 sleepWatcher = hs.caffeinate.watcher.new(sleepWatcherCallback)
+logger.i("Starting Jettison sleep watcher")
 sleepWatcher:start()
 
 
@@ -89,6 +97,7 @@ spoon.ToggleSkypeMute:bindHotkeys( {
 
 
 -- oh my hammerspoon
+logger.i("Loading oh-my-hammerspoon")
 require("oh-my-hammerspoon")
 omh_go({ "audio.headphones_watcher" })
 

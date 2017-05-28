@@ -1,3 +1,6 @@
+local logger = hs.logger.new("HyperVI")
+logger.i("Loading HyperVI")
+
 -- A global variable for the sub-key Hyper Mode
 k = hs.hotkey.modal.new({}, 'F18')
 
@@ -18,6 +21,7 @@ releasedF19 = function()
 end
 
 -- Bind the Hyper key
+logger.i("Binding F19")
 f19 = hs.hotkey.bind({}, 'F19', pressedF19, releasedF19)
 cmdf19 = hs.hotkey.bind({'cmd','fn'}, 'F19', pressedF19, releasedF19)
 altf19 = hs.hotkey.bind({'alt','fn'}, 'F19', pressedF19, releasedF19)
@@ -29,6 +33,7 @@ movements = {
  { 'k', 'UP'},
  { 'l', 'RIGHT'},
 }
+logger.i("Binding Vi keys")
 modifiers = { {''}, {'shift'}, {'alt'}, {'cmd'}, {'shift','alt'}, {'shift','cmd'}, }
 for i,bnd in ipairs(movements) do
   for i,mod in ipairs(modifiers) do
