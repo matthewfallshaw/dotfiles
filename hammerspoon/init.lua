@@ -16,6 +16,20 @@ usbWatcher = hs.usb.watcher.new(usbDeviceCallback)
 usbWatcher:start()
 
 
+-- Jettison
+function sleepWatcherCallback(event)
+  if event == hs.caffeinate.watcher.systemWillSleep then
+    logger.i("Ejecting drives before sleep…")
+    hs.alert.show("Ejecting drives before sleep…")
+    hs.osascript.applescript("tell application \"Finder\" to eject (every disk whose ejectable is true)")
+    logger.i("… ejected.")
+    hs.alert.show("… ejected.")
+  end
+end
+sleepWatcher = hs.caffeinate.watcher.new(sleepWatcherCallback)
+sleepWatcher:start()
+
+
 -- Spoons
 hs.loadSpoon("URLDispatcher")
 spoon.URLDispatcher.default_handler = "com.google.Chrome"
