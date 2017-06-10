@@ -6,71 +6,6 @@ local obj = {}
 obj.cachedLocation = ''
 obj.locationFacts = {}
 
--- On certain events update locationFacts and trigger a location check
-
--- Network configuration change (iPhone)
-function obj.networkConfCallback(_, keys)
-  logger.i("Network config changed (" .. hs.inspect(keys) .. ")")
-  -- Work out which network we're on
-  local pi4, pi6 = hs.network.primaryInterfaces() -- use pi4, ignore pi6
-  logger.i("Primary interface is ".. pi4)
-  if hs.network.interfaceDetails(pi4).Link and hs.network.interfaceDetails(pi4).Link.Expensive then
-    logger.i("recording network = iPhone")
-    obj.locationFacts['network'] = 'iPhone'
-  elseif hs.fnutils.contains({'blacknode5', 'blacknode2.4'}, hs.wifi.currentNetwork()) then
-    logger.i("recording network = Canning")
-    obj.locationFacts['network'] = 'Canning'
-  elseif hs.wifi.currentNetwork() == 'bellroy' then
-    logger.i("recording network = Fitzroy")
-    obj.locationFacts['network'] = 'Fitzroy'
-  else
-    logger.i("recording network = nil")
-    obj.locationFacts['network'] = nil
-  end
-  obj.actions()
-end
-obj.networkConfWatcher = hs.network.configuration.open():setCallback(obj.networkConfCallback):monitorKeys({
-  "State:/Network/Interface",
-  "State:/Network/Global/IPv4",
-  "State:/Network/Global/IPv6",
-  "State:/Network/Global/DNS",
-}):start()
-
--- Attached power supply change (Canning, Fitzroy)
-function obj.powerCallback()
-  logger.i("Power changed")
-  if hs.battery.psuSerial() == 3136763 then
-    logger.i("recording psu = Canning")
-    obj.locationFacts['psu'] = 'Canning'
-  elseif hs.battery.psuSerial() == 9999 then  -- TODO: Fixme
-    logger.i("recording psu = Fitzroy")
-    obj.locationFacts['psu'] = 'Fitzroy'
-  else
-    logger.i("recording psu = nil")
-    obj.locationFacts['psu'] = nil
-  end
-  obj.actions()
-end
-obj.batteryWatcher = hs.battery.watcher.new(obj.powerCallback):start()
-
--- Attached monitor change (Canning, Fitzroy)
-function obj.screenCallback()
-  logger.i("Monitor changed")
-  if hs.screen.find(188814579) then
-    logger.i("recording monitor = Canning")
-    obj.locationFacts['monitor'] = 'Canning'
-  elseif hs.screen.find(9999) then  -- TODO: Fixme
-    logger.i("recording monitor = Fitzroy")
-    obj.locationFacts['monitor'] = 'Fitzroy'
-  else
-    logger.i("recording monitor = nil")
-    obj.locationFacts['monitor'] = nil
-  end
-  obj.actions()
-end
-obj.screenWatcher = hs.screen.watcher.new(obj.screenCallback):start()
-
-
 function obj.killApp(appname)
   local app = hs.application.get(appname)
   if app then
@@ -130,8 +65,80 @@ function obj:start()
     if type(v) == 'function' and string.find(k, "Callback$") then
       v()
     end
+    if type(v) == 'userdata' and string.find(k, "Watcher$") then
+      logger.i("Starting " .. k)
+      v:start()
+    end
   end
 end
+
+-- ## Watchers & Callbacks ##
+
+-- On certain events update locationFacts and trigger a location check
+
+-- Network configuration change (iPhone)
+function obj.networkConfCallback(_, keys)
+  logger.i("Network config changed (" .. hs.inspect(keys) .. ")")
+  -- Work out which network we're on
+  local pi4, pi6 = hs.network.primaryInterfaces() -- use pi4, ignore pi6
+  logger.i("Primary interface is ".. pi4)
+  if hs.network.interfaceDetails(pi4).Link and hs.network.interfaceDetails(pi4).Link.Expensive then
+    logger.i("recording network = iPhone")
+    obj.locationFacts['network'] = 'iPhone'
+  elseif hs.fnutils.contains({'blacknode5', 'blacknode2.4'}, hs.wifi.currentNetwork()) then
+    logger.i("recording network = Canning")
+    obj.locationFacts['network'] = 'Canning'
+  elseif hs.wifi.currentNetwork() == 'bellroy' then
+    logger.i("recording network = Fitzroy")
+    obj.locationFacts['network'] = 'Fitzroy'
+  else
+    logger.i("recording network = nil")
+    obj.locationFacts['network'] = nil
+  end
+  obj.actions()
+end
+obj.networkConfWatcher = hs.network.configuration.open():setCallback(obj.networkConfCallback):monitorKeys({
+  "State:/Network/Interface",
+  "State:/Network/Global/IPv4",
+  "State:/Network/Global/IPv6",
+  "State:/Network/Global/DNS",
+})
+
+-- Attached power supply change (Canning, Fitzroy)
+function obj.powerCallback()
+  logger.i("Power changed")
+  if hs.battery.psuSerial() == 3136763 then
+    logger.i("recording psu = Canning")
+    obj.locationFacts['psu'] = 'Canning'
+  elseif hs.battery.psuSerial() == 9999 then  -- TODO: Fixme
+    logger.i("recording psu = Fitzroy")
+    obj.locationFacts['psu'] = 'Fitzroy'
+  else
+    logger.i("recording psu = nil")
+    obj.locationFacts['psu'] = nil
+  end
+  obj.actions()
+end
+obj.batteryWatcher = hs.battery.watcher.new(obj.powerCallback)
+
+-- Attached monitor change (Canning, Fitzroy)
+function obj.screenCallback()
+  logger.i("Monitor changed")
+  if hs.screen.find(188814579) then
+    logger.i("recording monitor = Canning")
+    obj.locationFacts['monitor'] = 'Canning'
+  elseif hs.screen.find(9999) then  -- TODO: Fixme
+    logger.i("recording monitor = Fitzroy")
+    obj.locationFacts['monitor'] = 'Fitzroy'
+  else
+    logger.i("recording monitor = nil")
+    obj.locationFacts['monitor'] = nil
+  end
+  obj.actions()
+end
+obj.screenWatcher = hs.screen.watcher.new(obj.screenCallback)
+
+-- ## Entry & Exit Actions ##
 
 -- iPhone
 function obj.iPhoneEntryActions()
