@@ -2,7 +2,15 @@ hs.logger.setGlobalLogLevel('info')
 hs.logger.defaultLogLevel = 'info'
 local logger = hs.logger.new("Init")
 
-require 'hyper-vi'
+-- Load Spoon.Hammer first, since it gives us config reload & etc.
+hs.loadSpoon("Hammer")
+spoon.Hammer:bindHotkeys({
+  config_reload ={{"⌘", "⌥", "⌃", "⇧"}, "r"},
+  toggle_console={{"⌘", "⌥", "⌃", "⇧"}, "h"},
+})
+spoon.Hammer:start()
+
+hypervi      = require 'hyper-vi'
 
 -- ScanSnap
 logger.i("Loading ScanSnap USB watcher")
@@ -38,7 +46,7 @@ logger.i("Starting Jettison sleep watcher")
 sleepWatcher:start()
 
 
--- Spoons
+-- Spoons (other than Spoon.Hammer)
 hs.loadSpoon("URLDispatcher")
 spoon.URLDispatcher.default_handler = "com.google.Chrome"
 spoon.URLDispatcher.url_patterns = {
@@ -50,32 +58,25 @@ spoon.URLDispatcher.url_patterns = {
 spoon.URLDispatcher:start()
 
 hs.loadSpoon("Emojis")
-spoon.Emojis:bindHotkeys({ toggle=  {{"⌘", "⌥", "⌃", "⇧"}, "space"}, })
+spoon.Emojis:bindHotkeys({ toggle    = {{"⌘", "⌥", "⌃", "⇧"}, "space"}})
 
 hs.loadSpoon("MouseCircle")
-spoon.MouseCircle:bindHotkeys({show={{"⌘", "⌥", "⌃", "⇧"}, "m"}})
+spoon.MouseCircle:bindHotkeys({ show = {{"⌘", "⌥", "⌃", "⇧"}, "m"}})
 
 hs.loadSpoon("Caffeine")
-spoon.Caffeine:bindHotkeys({toggle= {{"⌘", "⌥", "⌃", "⇧"}, "c"}})
+spoon.Caffeine:bindHotkeys({ toggle  = {{"⌘", "⌥", "⌃", "⇧"}, "c"}})
 spoon.Caffeine:start()
 
 hs.loadSpoon("Hermes")
 spoon.Hermes:bindHotkeys( {
-  playpause={{"⌥", "⌃", "⇧"}, "p"},
-  next=     {{"⌥", "⌃", "⇧"}, "n"},
-  like=     {{"⌥", "⌃", "⇧"}, "l"},
-  dislike=  {{"⌥", "⌃", "⇧"}, "d"},
-  tired=    {{"⌥", "⌃", "⇧"}, "t"},
-  hide=     {{"⌥", "⌃", "⇧"}, "h"},
-  quit=     {{"⌥", "⌃", "⇧"}, "q"},
+  playpause = {{"⌥", "⌃", "⇧"}, "p"},
+  next      = {{"⌥", "⌃", "⇧"}, "n"},
+  like      = {{"⌥", "⌃", "⇧"}, "l"},
+  dislike   = {{"⌥", "⌃", "⇧"}, "d"},
+  tired     = {{"⌥", "⌃", "⇧"}, "t"},
+  hide      = {{"⌥", "⌃", "⇧"}, "h"},
+  quit      = {{"⌥", "⌃", "⇧"}, "q"},
 })
-
-hs.loadSpoon("Hammer")
-spoon.Hammer:bindHotkeys({
-  config_reload= {{"⌘", "⌥", "⌃", "⇧"}, "r"},
-  toggle_console={{"⌘", "⌥", "⌃", "⇧"}, "h"},
-})
-spoon.Hammer:start()
 
 -- hs.loadSpoon("HeadphoneWatcher")
 -- spoon.HeadphoneWatcher.controlfns = {
