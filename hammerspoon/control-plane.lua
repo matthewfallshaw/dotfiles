@@ -1,0 +1,187 @@
+local logger = hs.logger.new("ControlPlane")
+logger.i("Loading ControlPlane")
+
+local obj = {}
+
+obj.cachedLocation = ''
+obj.locationFacts = {}
+
+-- On certain events update locationFacts and trigger a location check
+
+-- Network configuration change (iPhone)
+function obj.networkConfCallback(_, keys)
+  logger.i("Network config changed (" .. hs.inspect(keys) .. ")")
+  -- Work out which network we're on
+  local pi4, pi6 = hs.network.primaryInterfaces() -- use pi4, ignore pi6
+  logger.i("Primary interface is ".. pi4)
+  if hs.network.interfaceDetails(pi4).Link and hs.network.interfaceDetails(pi4).Link.Expensive then
+    logger.i("recording network = iPhone")
+    obj.locationFacts['network'] = 'iPhone'
+  elseif hs.fnutils.contains({'blacknode5', 'blacknode2.4'}, hs.wifi.currentNetwork()) then
+    logger.i("recording network = Canning")
+    obj.locationFacts['network'] = 'Canning'
+  elseif hs.wifi.currentNetwork() == 'bellroy' then
+    logger.i("recording network = Fitzroy")
+    obj.locationFacts['network'] = 'Fitzroy'
+  else
+    logger.i("recording network = nil")
+    obj.locationFacts['network'] = nil
+  end
+  obj.actions()
+end
+obj.networkConfWatcher = hs.network.configuration.open():setCallback(obj.networkConfCallback):monitorKeys({
+  "State:/Network/Interface",
+  "State:/Network/Global/IPv4",
+  "State:/Network/Global/IPv6",
+  "State:/Network/Global/DNS",
+}):start()
+
+-- Attached power supply change (Canning, Fitzroy)
+function obj.powerCallback()
+  logger.i("Power changed")
+  if hs.battery.psuSerial() == 3136763 then
+    logger.i("recording psu = Canning")
+    obj.locationFacts['psu'] = 'Canning'
+  elseif hs.battery.psuSerial() == 9999 then  -- TODO: Fixme
+    logger.i("recording psu = Fitzroy")
+    obj.locationFacts['psu'] = 'Fitzroy'
+  else
+    logger.i("recording psu = nil")
+    obj.locationFacts['psu'] = nil
+  end
+  obj.actions()
+end
+obj.batteryWatcher = hs.battery.watcher.new(obj.powerCallback):start()
+
+-- Attached monitor change (Canning, Fitzroy)
+function obj.screenCallback()
+  logger.i("Monitor changed")
+  if hs.screen.find(188814579) then
+    logger.i("recording monitor = Canning")
+    obj.locationFacts['monitor'] = 'Canning'
+  elseif hs.screen.find(9999) then  -- TODO: Fixme
+    logger.i("recording monitor = Fitzroy")
+    obj.locationFacts['monitor'] = 'Fitzroy'
+  else
+    logger.i("recording monitor = nil")
+    obj.locationFacts['monitor'] = nil
+  end
+  obj.actions()
+end
+obj.screenWatcher = hs.screen.watcher.new(obj.screenCallback):start()
+
+
+function obj.killApp(appname)
+  local app = hs.application.get(appname)
+  if app then
+    logger.i("Closing " .. appname)
+    app:kill()
+    if app:isRunning() then app:kill9() end
+  end
+end
+
+function obj.resumeApp(appname)
+  local app = hs.application.get(appname)
+  if app and app:isRunning() then
+    -- no action
+  else
+    return hs.application.open(appname)
+  end
+end
+
+function obj.location()
+  if obj.locationFacts['network'] and obj.locationFacts['network'] == 'iPhone' then
+    -- At top because iPhone network is expensive; other network inferences below
+    logger.i("Inferring iPhone from network")
+    return obj.locationFacts['network']
+  elseif obj.locationFacts['monitor'] then
+    logger.i("Inferring ".. obj.locationFacts['monitor'] .." from monitor")
+    return obj.locationFacts['monitor']
+  elseif obj.locationFacts['psu'] then
+    logger.i("Inferring ".. obj.locationFacts['psu'] .." from psu")
+    return obj.locationFacts['psu']
+  elseif hs.fnutils.contains({"Canning", "Fitzroy", "iPhone"}, obj.locationFacts['network']) then
+    logger.i("Inferring ".. obj.locationFacts['network'] .. " from network")
+    return obj.locationFacts['network']
+  else
+    logger.i("Inferring … well, failing to infer, so 'Roaming'")
+    return 'Roaming'
+  end
+end
+
+function obj.actions()
+  local newLocation = obj.location()
+  if obj.cachedLocation ~= newLocation then
+    logger.i("Actions for cachedLocation: ".. obj.cachedLocation ..", newLocation: ".. newLocation)
+    if obj.cachedLocation ~= '' then
+      logger.i(obj.cachedLocation .. " Exit")
+      obj[obj.cachedLocation .. 'ExitActions']()  -- Exit actions for current location
+    end
+    logger.i(newLocation .. " Entry")
+    obj[newLocation .. 'EntryActions']()     -- Entry actions for new location
+    obj.cachedLocation = newLocation
+  else
+    logger.i("(location unchanged: ".. obj.cachedLocation ..")")
+  end
+end
+
+function obj:start()
+  for k,v in pairs(obj) do
+    if type(v) == 'function' and string.find(k, "Callback$") then
+      v()
+    end
+  end
+end
+
+-- iPhone
+function obj.iPhoneEntryActions()
+  logger.i("Pausing Crashplan, closing Dropbox & GDrive")
+  local output, status = hs.execute("/Users/matt/bin/crashplan-pause")
+  if not status then
+    logger.e("Crashplan may have failed to exit")
+  end
+  obj.killApp("Dropbox")
+  obj.killApp("Google Drive")
+  obj.killApp("Transmission")
+end
+
+function obj.iPhoneExitActions()
+  logger.i("Resuming Crashplan, opening Dropbox & GDrive")
+  local output, status = hs.execute("/Users/matt/bin/crashplan-resume")
+  if not status then
+    logger.e("Crashplan may have failed to resume")
+  end
+  obj.resumeApp("Dropbox")
+  obj.resumeApp("Google Drive")
+end
+
+-- Fitzroy
+function obj.FitzroyEntryActions()
+  obj.killApp("Transmission")
+end
+
+function obj.FitzroyExitActions()
+  logger.i("Wifi On")
+  hs.wifi.setPower(true)
+end
+
+-- Canning
+function obj.CanningEntryActions()
+end
+
+function obj.CanningExitActions()
+  obj.killApp("Transmission")
+
+  logger.i("Wifi On")
+  hs.wifi.setPower(true)
+end
+
+-- Roaming
+function obj.RoamingEntryActions()
+  obj.killApp("Transmission")
+end
+
+function obj.RoamingExitActions()
+end
+
+return obj
