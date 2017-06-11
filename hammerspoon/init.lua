@@ -80,6 +80,9 @@ spoon.Hermes:bindHotkeys( {
   tired     = {{"⌥", "⌃", "⇧"}, "t"},
   hide      = {{"⌥", "⌃", "⇧"}, "h"},
   quit      = {{"⌥", "⌃", "⇧"}, "q"},
+  mute      = {{"⌥", "⌃", "⇧"}, "f10"},
+  volumeDown= {{"⌥", "⌃", "⇧"}, "f11"},
+  volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
 })
 
 -- hs.loadSpoon("HeadphoneWatcher")
