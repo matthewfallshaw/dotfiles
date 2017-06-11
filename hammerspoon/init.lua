@@ -13,6 +13,8 @@ spoon.Hammer:start()
 hypervi      = require 'hyper-vi'
 controlplane = require 'control-plane'
 controlplane:start()
+stay         = require 'stay'
+stay:start()
 
 -- ScanSnap
 logger.i("Loading ScanSnap USB watcher")
