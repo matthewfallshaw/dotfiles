@@ -80,18 +80,29 @@ end
 function obj.networkConfCallback(_, keys)
   logger.i("Network config changed (" .. hs.inspect(keys) .. ")")
   -- Work out which network we're on
-  local pi4, pi6 = hs.network.primaryInterfaces() -- use pi4, ignore pi6
-  logger.i("Primary interface is ".. pi4)
-  if hs.network.interfaceDetails(pi4).Link and hs.network.interfaceDetails(pi4).Link.Expensive then
-    logger.i("recording network = iPhone")
-    obj.locationFacts['network'] = 'iPhone'
-  elseif hs.fnutils.contains({'blacknode5', 'blacknode2.4'}, hs.wifi.currentNetwork()) then
-    logger.i("recording network = Canning")
-    obj.locationFacts['network'] = 'Canning'
-  elseif hs.wifi.currentNetwork() == 'bellroy' then
-    logger.i("recording network = Fitzroy")
-    obj.locationFacts['network'] = 'Fitzroy'
+  if (hs.network.reachability.internet():status() & hs.network.reachability.flags.reachable) > 0 then
+    local pi4, pi6 = hs.network.primaryInterfaces() -- use pi4, ignore pi6
+    if pi4 then
+      logger.i("Primary interface is ".. pi4)
+    else
+      logger.i("hs.network.reachability.internet():status() == ".. hs.network.reachability.internet():status() .." but hs.network.primaryInterfaces() == false… which is confusing")
+    end
+    if hs.network.interfaceDetails(pi4).Link and hs.network.interfaceDetails(pi4).Link.Expensive then
+      logger.i("recording network = iPhone")
+      obj.locationFacts['network'] = 'iPhone'
+    elseif hs.fnutils.contains({'blacknode5', 'blacknode2.4'}, hs.wifi.currentNetwork()) then
+      logger.i("recording network = Canning")
+      obj.locationFacts['network'] = 'Canning'
+    elseif hs.wifi.currentNetwork() == 'bellroy' then
+      logger.i("recording network = Fitzroy")
+      obj.locationFacts['network'] = 'Fitzroy'
+    else
+      logger.i("Unknown network")
+      logger.i("recording network = nil")
+      obj.locationFacts['network'] = nil
+    end
   else
+    logger.i("No primary interface")
     logger.i("recording network = nil")
     obj.locationFacts['network'] = nil
   end
