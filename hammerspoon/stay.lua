@@ -15,6 +15,7 @@ function obj:start()
     end
     obj.hotkeys["Restore windows"] = hs.hotkey.bind({"⌘", "⌥", "⌃", "⇧"}, "s", obj.screenCallback)
   end
+  return obj
 end
 
 function obj.screenCallback()

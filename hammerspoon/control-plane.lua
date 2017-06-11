@@ -70,6 +70,7 @@ function obj:start()
       v:start()
     end
   end
+  return obj
 end
 
 -- ## Watchers & Callbacks ##
