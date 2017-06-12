@@ -69,6 +69,7 @@ applicationWatcher:start()
 
 
 -- Spoons (other than Spoon.Hammer)
+-- ## All hosts
 hs.loadSpoon("URLDispatcher")
 spoon.URLDispatcher.default_handler = "com.google.Chrome"
 spoon.URLDispatcher.url_patterns = {
@@ -116,10 +117,15 @@ spoon.Hermes:bindHotkeys( {
 -- }
 -- spoon.HeadphoneWatcher:start()
 
-hs.loadSpoon("ToggleSkypeMute")
-spoon.ToggleSkypeMute:bindHotkeys( {
-  toggle_skype={{"⌘", "⌥", "⌃", "⇧"}, "v"},
-})
+-- ## notnux only
+if hs.host.localizedName() == "notnux" then
+
+  hs.loadSpoon("ToggleSkypeMute")
+  spoon.ToggleSkypeMute:bindHotkeys( {
+    toggle_skype={{"⌘", "⌥", "⌃", "⇧"}, "v"},
+  })
+
+end
 
 
 -- oh my hammerspoon

@@ -13,8 +13,8 @@ function obj:start()
       logger.i("Starting " .. k)
       v:start()
     end
-    obj.hotkeys["Restore windows"] = hs.hotkey.bind({"⌘", "⌥", "⌃", "⇧"}, "s", obj.screenCallback)
   end
+  obj.hotkeys["Restore windows"] = hs.hotkey.bind({"⌘", "⌥", "⌃", "⇧"}, "s", obj.screenCallback)
   return obj
 end
 
