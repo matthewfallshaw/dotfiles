@@ -39,7 +39,7 @@ function obj.location()
     logger.i("Inferring ".. obj.locationFacts['network'] .. " from network")
     return obj.locationFacts['network']
   else
-    logger.i("Inferring … well, failing to infer, so 'Roaming'")
+    logger.i("Inferring … well, failing to infer, so falling back to 'Roaming'")
     return 'Roaming'
   end
 end
@@ -50,10 +50,14 @@ function obj.actions()
     logger.i("Actions for cachedLocation: ".. obj.cachedLocation ..", newLocation: ".. newLocation)
     if obj.cachedLocation ~= '' then
       logger.i(obj.cachedLocation .. " Exit")
-      obj[obj.cachedLocation .. 'ExitActions']()  -- Exit actions for current location
+      if obj[obj.cachedLocation .. 'ExitActions'] then
+        obj[obj.cachedLocation .. 'ExitActions']()  -- Exit actions for current location
+      end
     end
     logger.i(newLocation .. " Entry")
-    obj[newLocation .. 'EntryActions']()     -- Entry actions for new location
+    if obj[newLocation .. 'EntryActions'] then
+      obj[newLocation .. 'EntryActions']()     -- Entry actions for new location
+    end
     obj.cachedLocation = newLocation
   else
     logger.i("(location unchanged: ".. obj.cachedLocation ..")")
@@ -70,6 +74,7 @@ function obj:start()
       v:start()
     end
   end
+  obj.actions()
   return obj
 end
 
@@ -107,9 +112,8 @@ function obj.networkConfCallback(_, keys)
     logger.i("recording network = nil")
     obj.locationFacts['network'] = nil
   end
-  obj.actions()
 end
-obj.networkConfWatcher = hs.network.configuration.open():setCallback(obj.networkConfCallback):monitorKeys({
+obj.networkConfWatcher = hs.network.configuration.open():setCallback( function(_, keys) obj.networkConfCallback(_, keys); obj.actions() end ):monitorKeys({
   "State:/Network/Interface",
   "State:/Network/Global/IPv4",
   "State:/Network/Global/IPv6",
@@ -129,9 +133,8 @@ function obj.powerCallback()
     logger.i("recording psu = nil")
     obj.locationFacts['psu'] = nil
   end
-  obj.actions()
 end
-obj.batteryWatcher = hs.battery.watcher.new(obj.powerCallback)
+obj.batteryWatcher = hs.battery.watcher.new( function() obj.powerCallback(); obj.actions() end )
 
 -- Attached monitor change (Canning, Fitzroy)
 function obj.screenCallback()
@@ -142,13 +145,15 @@ function obj.screenCallback()
   elseif hs.screen.find(9999) then  -- TODO: Fixme
     logger.i("recording monitor = Fitzroy")
     obj.locationFacts['monitor'] = 'Fitzroy'
+  elseif hs.screen.find(69992768) then
+    logger.i("recording monitor = CanningServer")
+    obj.locationFacts['monitor'] = "CanningServer"
   else
     logger.i("recording monitor = nil")
     obj.locationFacts['monitor'] = nil
   end
-  obj.actions()
 end
-obj.screenWatcher = hs.screen.watcher.new(obj.screenCallback)
+obj.screenWatcher = hs.screen.watcher.new( function() obj.screenCallback(); obj.actions() end )
 
 -- ## Entry & Exit Actions ##
 
@@ -185,9 +190,6 @@ function obj.FitzroyExitActions()
 end
 
 -- Canning
-function obj.CanningEntryActions()
-end
-
 function obj.CanningExitActions()
   obj.killApp("Transmission")
 
@@ -198,9 +200,6 @@ end
 -- Roaming
 function obj.RoamingEntryActions()
   obj.killApp("Transmission")
-end
-
-function obj.RoamingExitActions()
 end
 
 return obj
