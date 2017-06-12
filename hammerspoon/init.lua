@@ -16,6 +16,7 @@ controlplane:start()
 stay         = require 'stay'
 stay:start()
 
+
 -- ScanSnap
 logger.i("Loading ScanSnap USB watcher")
 local usbWatcher = nil
@@ -48,6 +49,23 @@ end
 sleepWatcher = hs.caffeinate.watcher.new(sleepWatcherCallback)
 logger.i("Starting Jettison sleep watcher")
 sleepWatcher:start()
+
+
+-- Transmission safety
+logger.i("Loading Transmission VPN Guard")
+function applicationWatcherCallback(appname, event, app)
+  if appname == "Transmission" and event == hs.application.watcher.launching then
+    logger.i("Transmission launch detected…")
+    if not hs.application.get("Private Internet Access") then
+      logger.i("… launching PIA")
+      hs.application.open("Private Internet Access")
+    else
+      logger.i("… but PIA already running")
+    end
+  end
+end
+applicationWatcher = hs.application.watcher.new(applicationWatcherCallback)
+applicationWatcher:start()
 
 
 -- Spoons (other than Spoon.Hammer)
