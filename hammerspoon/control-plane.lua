@@ -126,7 +126,7 @@ function obj.powerCallback()
   if hs.battery.psuSerial() == 3136763 then
     logger.i("recording psu = Canning")
     obj.locationFacts['psu'] = 'Canning'
-  elseif hs.battery.psuSerial() == 9999 then  -- TODO: Fixme
+  elseif hs.battery.psuSerial() == 7411505 then
     logger.i("recording psu = Fitzroy")
     obj.locationFacts['psu'] = 'Fitzroy'
   else
@@ -142,7 +142,7 @@ function obj.screenCallback()
   if hs.screen.find(188814579) then
     logger.i("recording monitor = Canning")
     obj.locationFacts['monitor'] = 'Canning'
-  elseif hs.screen.find(9999) then  -- TODO: Fixme
+  elseif hs.screen.find(69731906) then
     logger.i("recording monitor = Fitzroy")
     obj.locationFacts['monitor'] = 'Fitzroy'
   elseif hs.screen.find(69992768) then

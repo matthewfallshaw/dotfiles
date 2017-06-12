@@ -32,19 +32,22 @@ obj.screenWatcher = hs.screen.watcher.new(obj.screenCallback)
 function obj.commonRestore()
   hs.layout.apply({
     -- Application name, window title, screen name, unit rect, frame rect, full-frame rect
+    {"Morty", nil, "Color LCD", hs.geometry.unitrect(0,0,0.7,1), nil, nil},
+  }, string.match)
+end
+function obj.canningRestore()
+  logger.i("Restoring Canning screens")
+  obj.commonRestore()
+  hs.layout.apply({
+    -- Application name, window title, screen name, unit rect, frame rect, full-frame rect
     {"Terminal", nil, "SyncMaster", hs.layout.right50, nil, nil},
     {"MacVim", nil, "SyncMaster", hs.layout.left50, nil, nil},
     {"FreeMindStarter", nil, "SyncMaster", hs.layout.right50, nil, nil}, -- Freemind
     {"PivotalTracker", nil, "SyncMaster", hs.layout.maximized, nil, nil},
     {"Google Calendar", nil, "SyncMaster", hs.layout.maximized, nil, nil},
     {"Calendar", nil, "SyncMaster", hs.layout.maximized, nil, nil},
-    {"Morty", nil, "Color LCD", hs.geometry.unitrect(0,0,0.7,1), nil, nil},
     {"Asana", nil, "SyncMaster", hs.geometry.unitrect(0,0,0.66,1), nil, nil},
   }, string.match)
-end
-function obj.canningRestore()
-  logger.i("Restoring Canning screens")
-  obj.commonRestore()
   -- Chrome
   bool, object, descriptor = hs.osascript.applescript([[
 -- restoreChromeWindow(target_url_start, target_title_end, target_tab_name, target_position, target_size, target_url_exclude)
@@ -58,6 +61,16 @@ end
 function obj.fitzroyRestore()
   logger.i("Restoring Fitzroy screens")
   obj.commonRestore()
+  hs.layout.apply({
+    -- Application name, window title, screen name, unit rect, frame rect, full-frame rect
+    {"Terminal", nil, "DELL 2408WFP", hs.layout.right50, nil, nil},
+    {"MacVim", nil, "DELL 2408WFP", hs.layout.left50, nil, nil},
+    {"FreeMindStarter", nil, "DELL 2408WFP", hs.layout.right50, nil, nil}, -- Freemind
+    {"PivotalTracker", nil, "DELL 2408WFP", hs.layout.maximized, nil, nil},
+    {"Google Calendar", nil, "DELL 2408WFP", hs.layout.maximized, nil, nil},
+    {"Calendar", nil, "DELL 2408WFP", hs.layout.maximized, nil, nil},
+    {"Asana", nil, "DELL 2408WFP", hs.geometry.unitrect(0,0,0.66,1), nil, nil},
+  }, string.match)
   -- Chrome
   bool, object, descriptor = hs.osascript.applescript([[
 -- restoreChromeWindow(target_url_start, target_title_end, target_tab_name, target_position, target_size, target_url_exclude)
@@ -70,6 +83,7 @@ end tell
 end
 function obj.roamingRestore()
   logger.i("Restoring Roaming screens")
+  obj.commonRestore()
   hs.layout.apply({
     -- Application name, window title, screen name, unit rect, frame rect, full-frame rect
     {"Terminal", nil, "Color LCD", hs.layout.right50, nil, nil},
@@ -78,7 +92,6 @@ function obj.roamingRestore()
     {"PivotalTracker", nil, "Color LCD", hs.layout.maximized, nil, nil},
     {"Google Calendar", nil, "Color LCD", hs.layout.maximized, nil, nil},
     {"Calendar", nil, "Color LCD", hs.layout.maximized, nil, nil},
-    {"Morty", nil, "Color LCD", hs.geometry.unitrect(0,0,0.7,1), nil, nil},
     {"Asana", nil, "Color LCD", hs.geometry.unitrect(0,0,0.66,1), nil, nil},
   }, string.match)
   -- Chrome
