@@ -92,7 +92,7 @@ function obj.roamingRestore()
     {"PivotalTracker", nil, "Color LCD", hs.layout.maximized, nil, nil},
     {"Google Calendar", nil, "Color LCD", hs.layout.maximized, nil, nil},
     {"Calendar", nil, "Color LCD", hs.layout.maximized, nil, nil},
-    {"Asana", nil, "Color LCD", hs.geometry.unitrect(0,0,0.66,1), nil, nil},
+    {"Asana", nil, "Color LCD", hs.layout.maximized, nil, nil},
   }, string.match)
   -- Chrome
   bool, object, descriptor = hs.osascript.applescript([[
