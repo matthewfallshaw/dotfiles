@@ -2,6 +2,13 @@ hs.logger.setGlobalLogLevel('info')
 hs.logger.defaultLogLevel = 'info'
 local logger = hs.logger.new("Init")
 
+-- Load spoons
+-- hs.loadSpoon("SpoonInstall")
+-- spoon.SpoonInstall.repos.zzspoons = {
+--    url = "https://github.com/zzamboni/zzSpoons",
+--    desc = "zzamboni's spoon repository",
+-- }
+
 -- Load spoon.Hammer first, since it gives us config reload & etc.
 hs.loadSpoon("Hammer")
 spoon.Hammer:bindHotkeys({
@@ -106,27 +113,26 @@ spoon.Hermes:bindHotkeys( {
   volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
 })
 
-hs.loadSpoon("HeadphoneWatcher")
-spoon.HeadphoneWatcher.control['vox'] = false
-spoon.HeadphoneWatcher.control['deezer'] = false
-spoon.HeadphoneWatcher.control['hermes'] = true
-spoon.HeadphoneWatcher.controlfns['hermes'] = {
+hs.loadSpoon("HeadphoneAutoPause")
+spoon.HeadphoneAutoPause.control['vox'] = false
+spoon.HeadphoneAutoPause.control['deezer'] = false
+spoon.HeadphoneAutoPause.control['hermes'] = true
+spoon.HeadphoneAutoPause.controlfns['hermes'] = {
   appname   = 'Hermes',
   isPlaying = function() return spoon.Hermes.isPlaying() end,
   play      = spoon.Hermes.play,
   pause     = spoon.Hermes.pause,
 }
-spoon.HeadphoneWatcher:start()
+spoon.HeadphoneAutoPause:start()
 
 -- ## notnux only
 if hs.host.localizedName() == "notnux" then
 
-  hs.loadSpoon("ToggleSkypeMute")
-  spoon.ToggleSkypeMute:bindHotkeys( {
-    toggle_skype={{"⌘", "⌥", "⌃", "⇧"}, "v"},
-  })
+  -- hs.loadSpoon("ToggleSkypeMute")
+  -- spoon.ToggleSkypeMute:bindHotkeys( {
+  --   toggle_skype={{"⌘", "⌥", "⌃", "⇧"}, "v"},
+  -- })
 
 end
 
-
-hs.alert.show('Config loaded')
+hs.loadSpoon("FadeLogo"):start()
