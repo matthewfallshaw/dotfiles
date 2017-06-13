@@ -35,9 +35,6 @@ function obj.location()
   elseif obj.locationFacts['psu'] then
     logger.i("Inferring ".. obj.locationFacts['psu'] .." from psu")
     return obj.locationFacts['psu']
-  elseif hs.fnutils.contains({"Canning", "Fitzroy", "iPhone"}, obj.locationFacts['network']) then
-    logger.i("Inferring ".. obj.locationFacts['network'] .. " from network")
-    return obj.locationFacts['network']
   else
     logger.i("Inferring … well, failing to infer, so falling back to 'Roaming'")
     return 'Roaming'
