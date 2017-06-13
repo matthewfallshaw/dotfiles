@@ -2,13 +2,14 @@ hs.logger.setGlobalLogLevel('info')
 hs.logger.defaultLogLevel = 'info'
 local logger = hs.logger.new("Init")
 
--- Load Spoon.Hammer first, since it gives us config reload & etc.
+-- Load spoon.Hammer first, since it gives us config reload & etc.
 hs.loadSpoon("Hammer")
 spoon.Hammer:bindHotkeys({
   config_reload ={{"⌘", "⌥", "⌃", "⇧"}, "r"},
   toggle_console={{"⌘", "⌥", "⌃", "⇧"}, "h"},
 })
 spoon.Hammer:start()
+
 
 hypervi      = require 'hyper-vi'
 controlplane = require 'control-plane'
@@ -65,6 +66,7 @@ function applicationWatcherCallback(appname, event, app)
   end
 end
 applicationWatcher = hs.application.watcher.new(applicationWatcherCallback)
+logger.i("Starting Transmission VPN Guard")
 applicationWatcher:start()
 
 
@@ -104,18 +106,17 @@ spoon.Hermes:bindHotkeys( {
   volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
 })
 
--- hs.loadSpoon("HeadphoneWatcher")
--- spoon.HeadphoneWatcher.controlfns = {
---   ["hermes"] = {
---     appname   = "Hermes",
---     isPlaying = function() return spoon.Hermes.isPlaying() end,
---     play      = spoon.Hermes.play,
---     pause     = spoon.Hermes.pause
---   },
---   ["itunes"]  = spoon.HeadphoneWatcher.controlfns["itunes"],
---   ["spotify"] = spoon.HeadphoneWatcher.controlfns["spotify"],
--- }
--- spoon.HeadphoneWatcher:start()
+hs.loadSpoon("HeadphoneWatcher")
+spoon.HeadphoneWatcher.control['vox'] = false
+spoon.HeadphoneWatcher.control['deezer'] = false
+spoon.HeadphoneWatcher.control['hermes'] = true
+spoon.HeadphoneWatcher.controlfns['hermes'] = {
+  appname   = 'Hermes',
+  isPlaying = function() return spoon.Hermes.isPlaying() end,
+  play      = spoon.Hermes.play,
+  pause     = spoon.Hermes.pause,
+}
+spoon.HeadphoneWatcher:start()
 
 -- ## notnux only
 if hs.host.localizedName() == "notnux" then
@@ -126,13 +127,6 @@ if hs.host.localizedName() == "notnux" then
   })
 
 end
-
-
--- oh my hammerspoon
-logger.i("Loading oh-my-hammerspoon")
-require("oh-my-hammerspoon")
-omh_go({ "audio.headphones_watcher" })
-
 
 
 hs.alert.show('Config loaded')
