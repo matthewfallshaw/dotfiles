@@ -12,7 +12,10 @@
                   "key_code": "h",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
+                    ],
+                    "optional": [
+                      "any"
                     ]
                   }
                 },
@@ -29,7 +32,10 @@
                   "key_code": "j",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
+                    ],
+                    "optional": [
+                      "any"
                     ]
                   }
                 },
@@ -46,7 +52,10 @@
                   "key_code": "k",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
+                    ],
+                    "optional": [
+                      "any"
                     ]
                   }
                 },
@@ -63,7 +72,10 @@
                   "key_code": "l",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
+                    ],
+                    "optional": [
+                      "any"
                     ]
                   }
                 },
@@ -80,7 +92,7 @@
                   "key_code": "0",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
                     ]
                   }
                 },
@@ -100,7 +112,7 @@
                   "key_code": "4",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
                     ]
                   }
                 },
@@ -120,7 +132,7 @@
                   "key_code": "b",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
                     ]
                   }
                 },
@@ -140,7 +152,7 @@
                   "key_code": "w",
                   "modifiers": {
                     "mandatory": [
-                      "caps_lock"
+                      "right_control"
                     ]
                   }
                 },
@@ -159,6 +171,9 @@
         ]
       },
       "name" : "Default profile",
+      "simple_modifications": {
+        "caps_lock": "right_control"
+      },
       "fn_function_keys" : {
         "f12" : "volume_up",
         "f9" : "vk_consumer_next",
