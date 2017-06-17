@@ -139,7 +139,7 @@ function obj.screenCallback()
   if hs.screen.find(188814579) then
     logger.i("recording monitor = Canning")
     obj.locationFacts['monitor'] = 'Canning'
-  elseif hs.screen.find(69731906) then
+  elseif hs.screen.find(724061396) then
     logger.i("recording monitor = Fitzroy")
     obj.locationFacts['monitor'] = 'Fitzroy'
   elseif hs.screen.find(69992768) then
