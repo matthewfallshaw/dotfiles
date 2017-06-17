@@ -113,8 +113,10 @@ spoon.Hermes:bindHotkeys( {
 })
 
 hs.loadSpoon("HeadphoneAutoPause")
-spoon.HeadphoneAutoPause.control['vox'] = false
-spoon.HeadphoneAutoPause.control['deezer'] = false
+spoon.HeadphoneAutoPause.control['vox'] = nil
+spoon.HeadphoneAutoPause.control['deezer'] = nil
+spoon.HeadphoneAutoPause.controlfns['vox'] = nil
+spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
 spoon.HeadphoneAutoPause.control['hermes'] = true
 spoon.HeadphoneAutoPause.controlfns['hermes'] = {
   appname   = 'Hermes',
