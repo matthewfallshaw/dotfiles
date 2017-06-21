@@ -24,15 +24,12 @@ if [ "$system_name" == 'Darwin' ]; then
 else
   alias gd='git diff --ignore-space-change'
 fi
-alias gk='gitk --all &'
 alias gl='git pull'
 alias gm="git merge"
 alias gnp='git --no-pager'
 alias gp='git push'
 alias gs="git stash"
 alias gst='git status'
-alias gx="github"
-alias gxc="github"  # because my fingers remember GitX.app
 alias gsu="git submodule update"
 alias gsui="git submodule update --init"
 
@@ -57,6 +54,10 @@ function st {
     git status
   fi
 }
+
+# Gitx.app (http://rowanj.github.io/gitx/)
+alias gx="gitx"
+alias gxc="gitx -c"
 
 ########
 # RUBY #
