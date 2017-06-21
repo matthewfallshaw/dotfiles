@@ -115,6 +115,9 @@ inoremap <C-CR> <ESC><S-o>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
+" Substitute the word under the cursor
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+
 " Alt mapped keys (none of these work on mac)
 inoremap <m-[> [
 inoremap <m-9> (
