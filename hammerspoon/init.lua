@@ -17,6 +17,8 @@ spoon.Hammer:bindHotkeys({
 })
 spoon.Hammer:start()
 
+hs.application.enableSpotlightForNameSearches(true)
+hs.allowAppleScript(true)
 
 controlplane = require 'control-plane'
 controlplane:start()
@@ -26,14 +28,18 @@ controlplane:start()
 logger.i("Loading ScanSnap USB watcher")
 local usbWatcher = nil
 function usbDeviceCallback(data)
-    if (data["productName"] == "ScanSnap S1300i") then
-        if (data["eventType"] == "added") then
-            hs.application.launchOrFocus("ScanSnap Manager")
-        elseif (data["eventType"] == "removed") then
-            local app = hs.appfinder.appFromName("ScanSnap Manager")
-            app:kill()
-        end
+  if (data["productName"]:match("^ScanSnap")) then
+    if (data["eventType"] == "added") then
+      logger.i(data["productName"].. " added, launching ScanSnap Manager")
+      hs.application.launchOrFocus("ScanSnap Manager")
+    elseif (data["eventType"] == "removed") then
+      local app = hs.application.find("ScanSnap Manager")
+      if app then
+        logger.i(data["productName"].. " removed, closing ScanSnap Manager")
+        app:kill()
+      end
     end
+  end
 end
 usbWatcher = hs.usb.watcher.new(usbDeviceCallback)
 logger.i("Starting ScanSnap USB watcher")
@@ -44,11 +50,16 @@ usbWatcher:start()
 logger.i("Loading Jettison sleep watcher")
 function sleepWatcherCallback(event)
   if event == hs.caffeinate.watcher.systemWillSleep then
-    logger.i("Ejecting drives before sleep…")
-    hs.alert.show("Ejecting drives before sleep…")
-    hs.osascript.applescript("tell application \"Finder\" to eject (every disk whose ejectable is true)")
-    logger.i("… ejected.")
-    hs.alert.show("… ejected.")
+    local result, output = hs.osascript.applescript('tell application "Finder" to return (URL of every disk whose ejectable is true)')
+    if output then
+      hs.caffeinate.declareUserActivity()  -- prevent sleep to give us time to eject drives
+      logger.i("Ejecting drives before sleep…")
+      hs.alert.show("Ejecting drives before sleep…")
+      hs.osascript.applescript('tell application "Finder" to eject (every disk whose ejectable is true)')
+      logger.i("… drives ejected.")
+      hs.alert.show("… drives ejected.")
+      hs.caffeinate.systemSleep()
+    end
   end
 end
 sleepWatcher = hs.caffeinate.watcher.new(sleepWatcherCallback)
@@ -67,6 +78,14 @@ function applicationWatcherCallback(appname, event, app)
     else
       logger.i("… but PIA already running")
     end
+  elseif appname == "Private Internet Access" and event == hs.application.watcher.terminated then
+    logger.i("PIA termination detected…")
+    if hs.application.get("Transmission") then
+      logger.i("… killing Transmission")
+      hs.application.get("Transmission"):kill9()
+    else
+      logger.i("… Transmission not running, so no action")
+    end
   end
 end
 applicationWatcher = hs.application.watcher.new(applicationWatcherCallback)
@@ -74,7 +93,7 @@ logger.i("Starting Transmission VPN Guard")
 applicationWatcher:start()
 
 
--- Spoons (other than Spoon.Hammer)
+-- Spoons (other than spoon.Hammer)
 -- ## All hosts
 hs.loadSpoon("URLDispatcher")
 spoon.URLDispatcher.default_handler = "com.google.Chrome"
@@ -93,7 +112,7 @@ hs.loadSpoon("MouseCircle")
 spoon.MouseCircle:bindHotkeys({ show = {{"⌘", "⌥", "⌃", "⇧"}, "m"}})
 
 hs.loadSpoon("Caffeine")
-spoon.Caffeine:bindHotkeys({ toggle  = {{"⌘", "⌥", "⌃", "⇧"}, "c"}})
+spoon.Caffeine:bindHotkeys({ toggle  = {{"⌥", "⌃", "⇧"}, "c"}})
 spoon.Caffeine:start()
 
 hs.loadSpoon("Hermes")
