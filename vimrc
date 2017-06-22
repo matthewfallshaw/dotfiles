@@ -212,6 +212,8 @@ let g:syntastic_auto_loc_list=1
 " vim-surround plugin
 nmap <leader>c <Plug>CommentaryLine
 nmap <leader>C <Plug>CommentaryLine
+vmap <leader>c gc
+vmap <leader>C gc
 " /vim-surround
 
 " ??
