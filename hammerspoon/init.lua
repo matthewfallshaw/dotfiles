@@ -93,6 +93,20 @@ logger.i("Starting Transmission VPN Guard")
 applicationWatcher:start()
 
 
+-- Garmin auto ejector
+logger.i("Loading Garmin volume auto-ejector")
+function garminEjectWatcherCallback(event, info)
+  if event == hs.fs.volume.didMount and info.path:match("/Volumes/GARMIN") then
+    logger.i("Garmin volume mounted… go away pesky Garmin volume")
+    hs.alert.show("Garmin volume mounted… go away pesky Garmin volume")
+    hs.fs.volume.eject(info.path)
+  end
+end
+garminEjectWatcher = hs.fs.volume.new(garminEjectWatcherCallback)
+logger.i("Starting Garmin volume auto-ejector")
+garminEjectWatcher:start()
+
+
 -- Spoons (other than spoon.Hammer)
 -- ## All hosts
 hs.loadSpoon("URLDispatcher")
