@@ -38,6 +38,7 @@ function usbDeviceCallback(data)
         logger.i(data["productName"].. " removed, closing ScanSnap Manager")
         app:kill()
       end
+      if hs.application.get("AOUMonitor") then hs.application.get("AOUMonitor"):kill9() end
     end
   end
 end
