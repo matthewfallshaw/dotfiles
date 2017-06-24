@@ -167,7 +167,7 @@ spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
 spoon.HeadphoneAutoPause.control['hermes'] = true
 spoon.HeadphoneAutoPause.controlfns['hermes'] = {
   appname   = 'Hermes',
-  isPlaying = function() return spoon.Hermes.isPlaying() end,
+  isPlaying = spoon.Hermes.isPlaying,
   play      = spoon.Hermes.play,
   pause     = spoon.Hermes.pause,
 }
