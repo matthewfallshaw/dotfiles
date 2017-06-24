@@ -179,6 +179,7 @@ spoon.RestoreWindows.appLayouts = {
   ["*"] = {
          -- {window title, screen name, unit rect, frame rect, full-frame rect}
     Morty = {nil, "Color LCD", hs.geometry.unitrect(0,0,0.7,1), nil, nil},
+    GitX = {nil, "Color LCD", hs.layout.maximized, nil, nil},
   },
   Canning = {
     MacVim = {nil, "SyncMaster", hs.layout.left50, nil, nil},
