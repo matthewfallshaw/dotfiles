@@ -108,6 +108,21 @@ logger.i("Starting Garmin volume auto-ejector")
 garminEjectWatcher:start()
 
 
+-- URLs from hammerspoon:// schema
+local hex_to_char = function(x)
+  return string.char(tonumber(x, 16))
+end
+local unescape = function(url)
+  return url:gsub("%%(%x%x)", hex_to_char)
+end
+function URLDispatcherCallback(eventName, params)
+  local fullUrl = unescape(params.uri)
+  local parts = hs.http.urlParts(fullUrl)
+  spoon.URLDispatcher:dispatchURL(parts.scheme, parts.host, parts.parameterString, fullUrl)
+end
+hs.urlevent.bind("URLDispatcher", URLDispatcherCallback)
+
+
 -- Spoons (other than spoon.Hammer)
 -- ## All hosts
 hs.loadSpoon("URLDispatcher")
