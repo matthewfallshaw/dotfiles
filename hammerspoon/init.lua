@@ -211,7 +211,7 @@ end tell
 
 tell script "Raise in Chrome Library.scpt"
   restoreChromeWindow("https://mail.google.com/mail/u/0/", " - Gmail", "Gmail", {0, 23}, {1111, 873}, "ui=2")
-  restoreChromeWindow("https://drive.google.com/drive/u/0/", " - Google Drive", "Personal Docs", {-1526, -300}, {1190, 1200}, "")
+  restoreChromeWindow("https://drive.google.com/drive/u/0/", " - Google Drive", "Personal Docs", {-1526, -447}, {1190, 1200}, "")
 end tell
   ]],
   },
