@@ -174,7 +174,7 @@ spoon.HeadphoneAutoPause.controlfns['hermes'] = {
 spoon.HeadphoneAutoPause:start()
 
 hs.loadSpoon("RestoreWindows")
-spoon.RestoreWindows.locationFunction = controlplane.location
+spoon.RestoreWindows.locationFunction = function() return controlplane.cachedLocation end
 spoon.RestoreWindows.appLayouts = {
   ["*"] = {
          -- {window title, screen name, unit rect, frame rect, full-frame rect}
