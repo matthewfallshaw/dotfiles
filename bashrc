@@ -34,7 +34,7 @@ export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}
 
 
 # don't put duplicate lines or lines starting with a space (good for sensitive info) in the history.
-export HISTCONTROL=ignoredups:ignorespace
+export HISTCONTROL=ignoreboth:erasedups
 export HISTSIZE=100000
 # share history between terms
 shopt -s histappend
