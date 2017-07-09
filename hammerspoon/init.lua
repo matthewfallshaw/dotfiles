@@ -26,7 +26,7 @@ controlplane:start()
 
 -- ScanSnap
 logger.i("Loading ScanSnap USB watcher")
-local usbWatcher = nil
+usbWatcher = nil
 function usbDeviceCallback(data)
   if (data["productName"]:match("^ScanSnap")) then
     if (data["eventType"] == "added") then
