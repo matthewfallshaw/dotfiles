@@ -161,6 +161,22 @@ end
 obj.screenWatcher = hs.screen.watcher.new( function() obj.screenCallback() end )
 
 
+-- ## Utility functions ##
+function obj.slackStatus(location)
+  if location == "" then
+    logger.i("Slack status -")
+  else
+    logger.i("Slack status " .. location)
+  end
+  hs.task.new("~/bin/slack-status", obj.slackStatusRetryCallback, function(...) return false end, {location}):start()
+end
+
+function obj.slackStatusRetryCallback(exitCode, stdOut, stdErr)
+  logger.i("Stack status retry callback - exitCode:" .. tostring(exitCode) .. " stdOut:" .. tostring(stdOut) .. " stdErr:" .. tostring(stdErr))
+  if exitCode ~= 0 then  -- if task fails, try again after 30s
+    logger.w("Stack status failed:" .. (stdErr or stdOut or ""))
+    hs.timer.doAfter(30, function() hs.task.new("~/bin/slack-status", obj.slackStatusRetryCallback, function(...) return false end, {obj.cachedLocation}) end):start()
+  end
 end
 
 
@@ -193,6 +209,8 @@ end
 -- Fitzroy
 function obj.FitzroyEntryActions()
   obj.killApp("Transmission")
+
+  obj.slackStatus("Fitzroy")
 end
 
 function obj.FitzroyExitActions()
@@ -201,11 +219,17 @@ function obj.FitzroyExitActions()
 end
 
 -- Canning
+function obj.CanningEntryActions()
+  obj.slackStatus("Canning")
+end
+
 function obj.CanningExitActions()
   obj.killApp("Transmission")
 
   logger.i("Wifi On")
   hs.wifi.setPower(true)
+
+  obj.slackStatus("")
 end
 
 -- Roaming
