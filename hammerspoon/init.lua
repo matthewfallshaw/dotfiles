@@ -108,6 +108,24 @@ logger.i("Starting Garmin volume auto-ejector")
 garminEjectWatcher:start()
 
 
+-- Spotify
+spotifyhotkeys = {}
+local spotifyhotkeymap = {
+  playpause = {{"⌥", "⌃", "⇧"}, "p"},
+  next      = {{"⌥", "⌃", "⇧"}, "n"},
+  -- like      = {{"⌥", "⌃", "⇧"}, "l"},
+  -- dislike   = {{"⌥", "⌃", "⇧"}, "d"},
+  -- hide      = {{"⌥", "⌃", "⇧"}, "h"},
+  -- quit      = {{"⌥", "⌃", "⇧"}, "q"},
+  -- mute      = {{"⌥", "⌃", "⇧"}, "f10"},
+  volumeDown= {{"⌥", "⌃", "⇧"}, "f11"},
+  volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
+}
+for fn, map in pairs(spotifyhotkeymap) do
+  spotifyhotkeys[fn] = hs.hotkey.bind(map[1], map[2], nil, function() hs.spotify[fn]() end)
+end
+
+
 -- URLs from hammerspoon:// schema
 local hex_to_char = function(x)
   return string.char(tonumber(x, 16))
@@ -145,32 +163,11 @@ hs.loadSpoon("Caffeine")
 spoon.Caffeine:bindHotkeys({ toggle  = {{"⌥", "⌃", "⇧"}, "c"}})
 spoon.Caffeine:start()
 
-hs.loadSpoon("Hermes")
-spoon.Hermes:bindHotkeys( {
-  playpause = {{"⌥", "⌃", "⇧"}, "p"},
-  next      = {{"⌥", "⌃", "⇧"}, "n"},
-  like      = {{"⌥", "⌃", "⇧"}, "l"},
-  dislike   = {{"⌥", "⌃", "⇧"}, "d"},
-  tired     = {{"⌥", "⌃", "⇧"}, "t"},
-  hide      = {{"⌥", "⌃", "⇧"}, "h"},
-  quit      = {{"⌥", "⌃", "⇧"}, "q"},
-  mute      = {{"⌥", "⌃", "⇧"}, "f10"},
-  volumeDown= {{"⌥", "⌃", "⇧"}, "f11"},
-  volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
-})
-
 hs.loadSpoon("HeadphoneAutoPause")
 spoon.HeadphoneAutoPause.control['vox'] = nil
 spoon.HeadphoneAutoPause.control['deezer'] = nil
 spoon.HeadphoneAutoPause.controlfns['vox'] = nil
 spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
-spoon.HeadphoneAutoPause.control['hermes'] = true
-spoon.HeadphoneAutoPause.controlfns['hermes'] = {
-  appname   = 'Hermes',
-  isPlaying = spoon.Hermes.isPlaying,
-  play      = spoon.Hermes.play,
-  pause     = spoon.Hermes.pause,
-}
 spoon.HeadphoneAutoPause:start()
 
 hs.loadSpoon("RestoreWindows")
