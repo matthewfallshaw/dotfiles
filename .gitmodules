@@ -6,4 +6,4 @@
 	url = https://github.com/vim-scripts/octave.vim--.git
 [submodule "hammerspoon/Spoons/RestoreWindows.spoon"]
 	path = hammerspoon/Spoons/RestoreWindows.spoon
-	url = git@github.com:matthewfallshaw/RestoreWindows.spoon.git
+	url = https://github.com/matthewfallshaw/RestoreWindows.spoon.git
