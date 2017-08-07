@@ -41,6 +41,10 @@ function obj.location()
   end
 end
 
+function obj.queueActions()
+  obj.actionTimer:start()
+end
+
 function obj.actions()
   local newLocation = obj.location()
   if obj.cachedLocation ~= newLocation then
@@ -60,6 +64,7 @@ function obj.actions()
     logger.i("(location unchanged: ".. obj.cachedLocation ..")")
   end
 end
+obj.actionTimer = hs.timer.delayed.new(5, obj.actions)
 
 function obj:start()
   for k,v in pairs(obj) do
@@ -71,7 +76,7 @@ function obj:start()
       v:start()
     end
   end
-  obj.actions()
+  obj.queueActions()
   return obj
 end
 
@@ -109,8 +114,9 @@ function obj.networkConfCallback(_, keys)
     logger.i("recording network = nil")
     obj.locationFacts['network'] = nil
   end
+  obj.queueActions()
 end
-obj.networkConfWatcher = hs.network.configuration.open():setCallback( function(_, keys) obj.networkConfCallback(_, keys); obj.actions() end ):monitorKeys({
+obj.networkConfWatcher = hs.network.configuration.open():setCallback( function(_, keys) obj.networkConfCallback(_, keys) end ):monitorKeys({
   "State:/Network/Interface",
   "State:/Network/Global/IPv4",
   "State:/Network/Global/IPv6",
@@ -130,8 +136,9 @@ function obj.powerCallback()
     logger.i("recording psu = nil")
     obj.locationFacts['psu'] = nil
   end
+  obj.queueActions()
 end
-obj.batteryWatcher = hs.battery.watcher.new( function() obj.powerCallback(); obj.actions() end )
+obj.batteryWatcher = hs.battery.watcher.new( function() obj.powerCallback() end )
 
 -- Attached monitor change (Canning, Fitzroy)
 function obj.screenCallback()
@@ -149,10 +156,17 @@ function obj.screenCallback()
     logger.i("recording monitor = nil")
     obj.locationFacts['monitor'] = nil
   end
+  obj.queueActions()
 end
-obj.screenWatcher = hs.screen.watcher.new( function() obj.screenCallback(); obj.actions() end )
+obj.screenWatcher = hs.screen.watcher.new( function() obj.screenCallback() end )
 
+
+end
+
+
+-- ##########################
 -- ## Entry & Exit Actions ##
+-- ##########################
 
 -- iPhone
 function obj.iPhoneEntryActions()
