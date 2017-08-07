@@ -211,6 +211,8 @@ function obj.FitzroyEntryActions()
   obj.killApp("Transmission")
 
   obj.slackStatus("Fitzroy")
+
+  hs.execute("~/code/utils/Scripts/mount-external-drives", true)
 end
 
 function obj.FitzroyExitActions()
@@ -221,6 +223,8 @@ end
 -- Canning
 function obj.CanningEntryActions()
   obj.slackStatus("Canning")
+
+  hs.execute("~/code/utils/Scripts/mount-external-drives", true)
 end
 
 function obj.CanningExitActions()
