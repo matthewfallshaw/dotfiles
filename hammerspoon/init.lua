@@ -115,7 +115,7 @@ local spotifyhotkeymap = {
   next      = {{"⌥", "⌃", "⇧"}, "n"},
   -- like      = {{"⌥", "⌃", "⇧"}, "l"},
   -- dislike   = {{"⌥", "⌃", "⇧"}, "d"},
-  -- hide      = {{"⌥", "⌃", "⇧"}, "h"},
+  -- hide      = {{"⌥", "⌃", "⇧"}, "h"},  -- below
   -- quit      = {{"⌥", "⌃", "⇧"}, "q"},
   -- mute      = {{"⌥", "⌃", "⇧"}, "f10"},
   volumeDown= {{"⌥", "⌃", "⇧"}, "f11"},
@@ -124,6 +124,16 @@ local spotifyhotkeymap = {
 for fn, map in pairs(spotifyhotkeymap) do
   spotifyhotkeys[fn] = hs.hotkey.bind(map[1], map[2], nil, function() hs.spotify[fn]() end)
 end
+hs.hotkey.bind({"⌥", "⌃", "⇧"}, "h", nil, function()
+  local s = hs.application.find("Spotify")
+  if not s then
+    hs.application.open("Spotify")
+  elseif s:isHidden() then
+    s:unhide()
+  else
+    s:hide()
+  end
+end)
 
 
 -- URLs from hammerspoon:// schema
