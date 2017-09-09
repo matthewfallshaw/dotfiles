@@ -110,32 +110,23 @@ logger.i("Starting Garmin volume auto-ejector")
 garminEjectWatcher:start()
 
 
--- Spotify
-spotifyhotkeys = {}
-local spotifyhotkeymap = {
+-- iTunes
+hs.itunes = require 'extensions/itunes'
+ituneshotkeys = {}
+local ituneshotkeymap = {
   playpause = {{"⌥", "⌃", "⇧"}, "p"},
   next      = {{"⌥", "⌃", "⇧"}, "n"},
-  -- like      = {{"⌥", "⌃", "⇧"}, "l"},
-  -- dislike   = {{"⌥", "⌃", "⇧"}, "d"},
-  -- hide      = {{"⌥", "⌃", "⇧"}, "h"},  -- below
-  -- quit      = {{"⌥", "⌃", "⇧"}, "q"},
+  like      = {{"⌥", "⌃", "⇧"}, "l"},
+  dislike   = {{"⌥", "⌃", "⇧"}, "d"},
+  hide      = {{"⌥", "⌃", "⇧"}, "h"},
+  quit      = {{"⌥", "⌃", "⇧"}, "q"},
   -- mute      = {{"⌥", "⌃", "⇧"}, "f10"},
   volumeDown= {{"⌥", "⌃", "⇧"}, "f11"},
   volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
 }
-for fn, map in pairs(spotifyhotkeymap) do
-  spotifyhotkeys[fn] = hs.hotkey.bind(map[1], map[2], nil, function() hs.spotify[fn]() end)
+for fn, map in pairs(ituneshotkeymap) do
+  ituneshotkeys[fn] = hs.hotkey.bind(map[1], map[2], nil, function() hs.itunes[fn]() end)
 end
-hs.hotkey.bind({"⌥", "⌃", "⇧"}, "h", nil, function()
-  local s = hs.application.find("Spotify")
-  if not s then
-    hs.application.open("Spotify")
-  elseif s:isHidden() then
-    s:unhide()
-  else
-    s:hide()
-  end
-end)
 
 
 -- URLs from hammerspoon:// schema
