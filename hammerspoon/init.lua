@@ -20,6 +20,8 @@ spoon.Hammer:start()
 hs.application.enableSpotlightForNameSearches(true)
 hs.allowAppleScript(true)
 
+
+-- Control Plane replacement
 controlplane = require 'control-plane'
 controlplane:start()
 
@@ -181,12 +183,13 @@ spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
 spoon.HeadphoneAutoPause:start()
 
 hs.loadSpoon("RestoreWindows")
-spoon.RestoreWindows.locationFunction = function() return controlplane.cachedLocation end
+spoon.RestoreWindows.locationFunction = function() return controlplane.location() end
 spoon.RestoreWindows.appLayouts = {
   ["*"] = {
          -- {window title, screen name, unit rect, frame rect, full-frame rect}
     Morty = {nil, "Color LCD", hs.geometry.unitrect(0,0,0.7,1), nil, nil},
     GitX = {nil, "Color LCD", hs.layout.maximized, nil, nil},
+    nvALT = {nil, "Color LCD", hs.geometry.unitrect(0.63, 0.0, 0.37, 0.79), nil, nil},
   },
   Canning = {
     MacVim = {nil, "SyncMaster", hs.layout.left50, nil, nil},
