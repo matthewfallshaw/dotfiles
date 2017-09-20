@@ -94,7 +94,7 @@ end
 ---  * None
 function itunes.like()
   if itunes.isRunning() then
-    if tell("loved of the current track") ~= "false" then
+    if tell("loved of the current track") ~= true then
       tell('set the loved of the current track to true')
       alert.show("Liked song in iTunes", itunes.alert_duration)
     else
@@ -117,7 +117,7 @@ end
 ---  * None
 function itunes.dislike()
   if itunes.isRunning() then
-    if tell("disliked of the current track") ~= "false" then
+    if tell("disliked of the current track") ~= true then
       tell('set the disliked of the current track to true')
       alert.show("Disliked song in iTunes", itunes.alert_duration)
       itunes.next()
