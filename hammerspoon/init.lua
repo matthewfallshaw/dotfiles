@@ -234,10 +234,14 @@ end tell
   ]],
   },
 }
+spoon.RestoreWindows.appLayouts["iPhone"] = spoon.RestoreWindows.appLayouts["Roaming"]
 spoon.RestoreWindows:bindHotkeys({
   restoreOrChooser = {{"⌘", "⌥", "⌃", "⇧"}, "s"},
 })
 spoon.RestoreWindows:start()
+-- RestoreWindows only restores windows in the current space; trigger it on space change
+-- TODO: only do this once per controlplane location change
+space_change_watcher = hs.spaces.watcher.new(function(space_number) spoon.RestoreWindows:restoreWindows() end):start()
 
 -- ## notnux only
 if hs.host.localizedName() == "notnux" then
