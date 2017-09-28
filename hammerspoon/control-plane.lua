@@ -87,10 +87,12 @@ obj.actionTimer = hs.timer.delayed.new(5, obj.actions)
 
 function obj:start()
   for k,v in pairs(obj) do
+    -- Run all callback functions to initialise obj.locationFacts
     if type(v) == 'function' and string.find(k, "Callback$") then
       v()
     end
     if type(v) == 'userdata' and string.find(k, "Watcher$") then
+      -- Start all watchers
       logger.i("Starting " .. k)
       v:start()
     end
@@ -106,34 +108,33 @@ end
 -- Network configuration change (iPhone)
 function obj.networkConfCallback(_, keys)
   logger.i("Network config changed (" .. hs.inspect(keys) .. ")")
+  local old_network = obj.locationFacts['network']
   -- Work out which network we're on
   if (hs.network.reachability.internet():status() & hs.network.reachability.flags.reachable) > 0 then
     local pi4, pi6 = hs.network.primaryInterfaces() -- use pi4, ignore pi6
     if pi4 then
       logger.i("Primary interface is ".. pi4)
     else
-      logger.i("hs.network.reachability.internet():status() == ".. hs.network.reachability.internet():status() .." but hs.network.primaryInterfaces() == false… which is confusing")
+      logger.w("hs.network.reachability.internet():status() == ".. hs.network.reachability.internet():status() .." but hs.network.primaryInterfaces() == false… which is confusing")
     end
     if hs.network.interfaceDetails(pi4).Link and hs.network.interfaceDetails(pi4).Link.Expensive then
-      logger.i("recording network = iPhone")
       obj.locationFacts['network'] = 'iPhone'
     elseif hs.fnutils.contains({'blacknode5', 'blacknode2.4'}, hs.wifi.currentNetwork()) then
-      logger.i("recording network = Canning")
       obj.locationFacts['network'] = 'Canning'
     elseif hs.wifi.currentNetwork() == 'bellroy' then
-      logger.i("recording network = Fitzroy")
       obj.locationFacts['network'] = 'Fitzroy'
     else
       logger.i("Unknown network")
-      logger.i("recording network = nil")
       obj.locationFacts['network'] = nil
     end
   else
     logger.i("No primary interface")
-    logger.i("recording network = nil")
     obj.locationFacts['network'] = nil
   end
-  obj.queueActions()
+  if obj.locationFacts['network'] ~= old_network then
+    logger.i("recording network = " .. tostring(obj.locationFacts['network']))
+    obj.queueActions()
+  end
 end
 obj.networkConfWatcher = hs.network.configuration.open():setCallback( function(_, keys) obj.networkConfCallback(_, keys) end ):monitorKeys({
   "State:/Network/Interface",
@@ -145,37 +146,38 @@ obj.networkConfWatcher = hs.network.configuration.open():setCallback( function(_
 -- Attached power supply change (Canning, Fitzroy)
 function obj.powerCallback()
   logger.i("Power changed")
+  local old_power = obj.locationFacts['psu']
   if hs.battery.psuSerial() == 3136763 then
-    logger.i("recording psu = Canning")
     obj.locationFacts['psu'] = 'Canning'
   elseif hs.battery.psuSerial() == 7411505 then
-    logger.i("recording psu = Fitzroy")
     obj.locationFacts['psu'] = 'Fitzroy'
   else
-    logger.i("recording psu = nil")
     obj.locationFacts['psu'] = nil
   end
-  obj.queueActions()
+  if obj.locationFacts['psu'] ~= old_power then
+    logger.i("recording psu = " .. tostring(obj.locationFacts['psu']))
+    obj.queueActions()
+  end
 end
 obj.batteryWatcher = hs.battery.watcher.new( function() obj.powerCallback() end )
 
 -- Attached monitor change (Canning, Fitzroy)
 function obj.screenCallback()
   logger.i("Monitor changed")
+  local old_monitor = obj.locationFacts['monitor']
   if hs.screen.find(188814579) then
-    logger.i("recording monitor = Canning")
     obj.locationFacts['monitor'] = 'Canning'
   elseif hs.screen.find(724061396) then
-    logger.i("recording monitor = Fitzroy")
     obj.locationFacts['monitor'] = 'Fitzroy'
   elseif hs.screen.find(69992768) then
-    logger.i("recording monitor = CanningServer")
     obj.locationFacts['monitor'] = "CanningServer"
   else
-    logger.i("recording monitor = nil")
     obj.locationFacts['monitor'] = nil
   end
-  obj.queueActions()
+  if obj.locationFacts['monitor'] ~= old_monitor then
+    logger.i("recording monitor = " .. tostring(obj.locationFacts['monitor']))
+    obj.queueActions()
+  end
 end
 obj.screenWatcher = hs.screen.watcher.new( function() obj.screenCallback() end )
 
