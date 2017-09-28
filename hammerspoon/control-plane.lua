@@ -187,13 +187,13 @@ function obj.slackStatus(location)
   else
     logger.i("Slack status " .. location)
   end
-  result = hs.task.new("~/bin/slack-status", obj.slackStatusRetryCallback, function(...) return false end, {location}):start()
+  result = hs.task.new("~/bin/slack-status", obj.slackStatusRetry, function(...) return false end, {location}):start()
 end
 
-function obj.slackStatusRetryCallback(exitCode, stdOut, stdErr)
+function obj.slackStatusRetry(exitCode, stdOut, stdErr)
   if exitCode ~= 0 then  -- if task fails, try again after 30s
     logger.w("Stack status failed - exitCode:" .. tostring(exitCode) .. " stdOut:" .. tostring(stdOut) .. " stdErr:" .. tostring(stdErr))
-    hs.timer.doAfter(30, function() hs.task.new("~/bin/slack-status", obj.slackStatusRetryCallback, function(...) return false end, {obj.cachedLocation}) end):start()
+    hs.timer.doAfter(30, function() hs.task.new("~/bin/slack-status", obj.slackStatusRetry, function(...) return false end, {obj.cachedLocation}) end):start()
   end
 end
 
