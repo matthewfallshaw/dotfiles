@@ -204,13 +204,13 @@ end
 
 -- iPhone
 function obj.iPhoneEntryActions()
-  logger.i("Pausing Crashplan, closing Dropbox & GDrive")
+  logger.i("Pausing Crashplan, closing Dropbox & GBackup")
   local output, status = hs.execute("/Users/matt/bin/crashplan-pause")
   if not status then
     logger.e("Crashplan may have failed to exit")
   end
   obj.killApp("Dropbox")
-  obj.killApp("Google Drive")
+  obj.killApp("Backup and Sync from Google")
   obj.killApp("Transmission")
 end
 
@@ -221,7 +221,7 @@ function obj.iPhoneExitActions()
     logger.e("Crashplan may have failed to resume")
   end
   obj.resumeApp("Dropbox")
-  obj.resumeApp("Google Drive")
+  obj.resumeApp("Backup and Sync from Google", "Backup and Sync")
 end
 
 -- Fitzroy
