@@ -7,20 +7,39 @@ obj.cachedLocation = ''
 obj.locationFacts = {}
 
 function obj.killApp(appname)
-  local app = hs.application.get(appname)
+  local app, other_app = hs.application.find(appname)
+    -- Should check for other_app, but this happens lots, so … we're going to ignore it
   if app then
     logger.i("Closing " .. appname)
     app:kill()
-    if app:isRunning() then app:kill9() end
+    hs.timer.doAfter(15, function()
+      -- sometimes apps are hard to kill, so we try several times
+      if app:isRunning() then app:kill9() end
+      app = hs.application.find(appname); if app then app:kill9() end
+      if hs.application.find(appname) then logger.e("Failed to kill " .. appname) end
+    end):start()
+  else
+    logger.i(appname .. " wasn't open, so I didn't close it")
   end
 end
 
-function obj.resumeApp(appname)
-  local app = hs.application.get(appname)
+function obj.resumeApp(appname, alt_appname)
+  -- optional alt_appname
+  local app = hs.application.find(appname)
   if app and app:isRunning() then
-    -- no action
+    logger.i(appname .. " is already running")
   else
-    return hs.application.open(appname)
+    if hs.application.open(appname) then
+      logger.i("Resuming " .. appname)
+    elseif alt_appname and hs.application.open(alt_appname) then
+      logger.i("Resuming " .. alt_appname)
+    else
+      hs.timer.doAfter(15, function()
+        if (not hs.application.find(appname)) and (not hs.application.find(alt_appname)) then
+          logger.e("Couldn't resume '" .. appname .. (alt_appname and ("' or '" .. alt_appname) or "'"))
+        end
+      end)
+    end
   end
 end
 
