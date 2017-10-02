@@ -176,75 +176,9 @@ spoon.HeadphoneAutoPause.controlfns['vox'] = nil
 spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
 spoon.HeadphoneAutoPause:start()
 
-hs.loadSpoon("RestoreWindows")
-spoon.RestoreWindows.locationFunction = function() return controlplane.location() end
-spoon.RestoreWindows.appLayouts = {
-  ["*"] = {
-         -- {window title, screen name, unit rect, frame rect, full-frame rect}
-    Morty = {nil, "Color LCD", hs.geometry.unitrect(0,0,0.7,1), nil, nil},
-    GitX = {nil, "Color LCD", hs.layout.maximized, nil, nil},
-    nvALT = {nil, "Color LCD", hs.geometry.unitrect(0.63, 0.0, 0.37, 0.79), nil, nil},
-  },
-  Canning = {
-    MacVim = {nil, "SyncMaster", hs.layout.left50, nil, nil},
-    Terminal = {nil, "SyncMaster", hs.layout.right50, nil, nil},
-    PivotalTracker = {nil, "SyncMaster", hs.layout.maximized, nil, nil},
-    Asana = {nil, "SyncMaster", hs.geometry.unitrect(0,0,0.66,1), nil, nil},
-    ["Google Calendar"] = {nil, "SyncMaster", hs.layout.maximized, nil, nil},
-    Calendar = {nil, "SyncMaster", hs.layout.maximized, nil, nil},
-    FreeMindStarter = {nil, "SyncMaster", hs.layout.right50, nil, nil},
-    ["Google Chrome"] = [[
--- restoreChromeWindow(target_url_start, target_title_end, target_tab_name, target_position, target_size, target_url_exclude)
-
-tell script "Raise in Chrome Library.scpt"
-  restoreChromeWindow("https://mail.google.com/mail/u/0/", " - Gmail", "Gmail", {0, 23}, {1111, 873}, "ui=2")
-  restoreChromeWindow("https://drive.google.com/drive/u/0/", " - Google Drive", "Personal Docs", {-1526, -750}, {1190, 1080}, "")
-end tell
-  ]],
-  },
-  Fitzroy = {
-    MacVim = {nil, "DELL 2408WFP", hs.layout.left50, nil, nil},
-    Terminal = {nil, "DELL 2408WFP", hs.layout.right50, nil, nil},
-    PivotalTracker = {nil, "DELL 2408WFP", hs.layout.maximized, nil, nil},
-    Asana = {nil, "DELL 2408WFP", hs.geometry.unitrect(0,0,0.66,1), nil, nil},
-    ["Google Calendar"] = {nil, "DELL 2408WFP", hs.layout.maximized, nil, nil},
-    Calendar = {nil, "DELL 2408WFP", hs.layout.maximized, nil, nil},
-    FreeMindStarter = {nil, "DELL 2408WFP", hs.layout.right50, nil, nil},
-    ["Google Chrome"] = [[
--- restoreChromeWindow(target_url_start, target_title_end, target_tab_name, target_position, target_size, target_url_exclude)
-
-tell script "Raise in Chrome Library.scpt"
-  restoreChromeWindow("https://mail.google.com/mail/u/0/", " - Gmail", "Gmail", {0, 23}, {1111, 873}, "ui=2")
-  restoreChromeWindow("https://drive.google.com/drive/u/0/", " - Google Drive", "Personal Docs", {-1526, -447}, {1190, 1200}, "")
-end tell
-  ]],
-  },
-  Roaming = {
-    MacVim = {nil, "Color LCD", hs.layout.left50, nil, nil},
-    Terminal = {nil, "Color LCD", hs.layout.right50, nil, nil},
-    PivotalTracker = {nil, "Color LCD", hs.layout.maximized, nil, nil},
-    Asana = {nil, "Color LCD", hs.layout.maximized, nil, nil},
-    ["Google Calendar"] = {nil, "Color LCD", hs.layout.maximized, nil, nil},
-    Calendar = {nil, "Color LCD", hs.layout.maximized, nil, nil},
-    FreeMindStarter = {nil, "Color LCD", hs.layout.maximized, nil, nil},
-    ["Google Chrome"] = [[
--- restoreChromeWindow(target_url_start, target_title_end, target_tab_name, target_position, target_size)
-
-tell script "Raise in Chrome Library.scpt"
-  restoreChromeWindow("https://mail.google.com/mail/u/0/", " - Gmail", "Gmail", {0, 23}, {1111, 873}, "ui=2")
-  restoreChromeWindow("https://drive.google.com/drive/u/0/", " - Google Drive", "Personal Docs", {0, 23}, {1111, 873})
-end tell
-  ]],
-  },
-}
-spoon.RestoreWindows.appLayouts["iPhone"] = spoon.RestoreWindows.appLayouts["Roaming"]
-spoon.RestoreWindows:bindHotkeys({
-  restoreOrChooser = {{"⌘", "⌥", "⌃", "⇧"}, "s"},
-})
-spoon.RestoreWindows:start()
--- RestoreWindows only restores windows in the current space; trigger it on space change
--- TODO: only do this once per controlplane location change
-space_change_watcher = hs.spaces.watcher.new(function(space_number) spoon.RestoreWindows:restoreWindows() end):start()
+-- Keep App windows in their places
+stay = require('stay')
+stay:start()
 
 -- ## notnux only
 if hs.host.localizedName() == "notnux" then
