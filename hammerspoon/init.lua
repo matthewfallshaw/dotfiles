@@ -1,6 +1,7 @@
 hs.logger.setGlobalLogLevel('info')
 hs.logger.defaultLogLevel = 'info'
 local logger = hs.logger.new("Init")
+hs.console.clearConsole()
 
 -- Load spoons
 -- hs.loadSpoon("SpoonInstall")
@@ -21,6 +22,9 @@ hs.application.enableSpotlightForNameSearches(true)
 hs.allowAppleScript(true)
 
 
+u = require 'utilities'
+
+
 -- Control Plane replacement
 controlplane = require 'control-plane'
 controlplane:start()
@@ -28,16 +32,15 @@ controlplane:start()
 
 -- ScanSnap
 logger.i("Loading ScanSnap USB watcher")
-usbWatcher = nil
 function usbDeviceCallback(data)
   if (data["productName"]:match("^ScanSnap")) then
     if (data["eventType"] == "added") then
-      logger.i(data["productName"].. " added, launching ScanSnap Manager")
+      u.log_and_alert(logger, data["productName"].. " added, launching ScanSnap Manager")
       hs.application.launchOrFocus("ScanSnap Manager")
     elseif (data["eventType"] == "removed") then
       local app = hs.application.find("ScanSnap Manager")
       if app then
-        logger.i(data["productName"].. " removed, closing ScanSnap Manager")
+        u.log_and_alert(logger, data["productName"].. " removed, closing ScanSnap Manager")
         app:kill()
       end
       if hs.application.get("AOUMonitor") then hs.application.get("AOUMonitor"):kill9() end
@@ -56,11 +59,9 @@ function sleepWatcherCallback(event)
     local result, output = hs.osascript.applescript('tell application "Finder" to return (URL of every disk whose ejectable is true)')
     if output then
       hs.caffeinate.declareUserActivity()  -- prevent sleep to give us time to eject drives
-      logger.i("Ejecting drives before sleep…")
-      hs.alert.show("Ejecting drives before sleep…")
+      u.log_and_alert(logger, "Ejecting drives before sleep…")
       hs.osascript.applescript('tell application "Finder" to eject (every disk whose ejectable is true)')
-      logger.i("… drives ejected.")
-      hs.alert.show("… drives ejected.")
+      u.log_and_alert(logger, "… drives ejected.")
       hs.caffeinate.systemSleep()
     end
   end
@@ -74,20 +75,18 @@ sleepWatcher:start()
 logger.i("Loading Transmission VPN Guard")
 function applicationWatcherCallback(appname, event, app)
   if appname == "Transmission" and event == hs.application.watcher.launching then
-    logger.i("Transmission launch detected…")
     if not hs.application.get("Private Internet Access") then
-      logger.i("… launching PIA")
+      u.log_and_alert(logger, "Transmission launch detected… launching PIA")
       hs.application.open("Private Internet Access")
     else
-      logger.i("… but PIA already running")
+      u.log_and_alert(logger, "Transmission launch detected… but PIA already running")
     end
   elseif appname == "Private Internet Access" and event == hs.application.watcher.terminated then
-    logger.i("PIA termination detected…")
     if hs.application.get("Transmission") then
-      logger.i("… killing Transmission")
+      u.log_and_alert(logger, "PIA termination detected… killing Transmission")
       hs.application.get("Transmission"):kill9()
     else
-      logger.i("… Transmission not running, so no action")
+      u.log_and_alert(logger, "PIA termination detected… Transmission not running, so no action")
     end
   end
 end
@@ -100,8 +99,7 @@ applicationWatcher:start()
 logger.i("Loading Garmin volume auto-ejector")
 function garminEjectWatcherCallback(event, info)
   if event == hs.fs.volume.didMount and info.path:match("/Volumes/GARMIN") then
-    logger.i("Garmin volume mounted… go away pesky Garmin volume")
-    hs.alert.show("Garmin volume mounted… go away pesky Garmin volume")
+    u.log_and_alert(logger, "Garmin volume mounted… go away pesky Garmin volume")
     hs.fs.volume.eject(info.path)
   end
 end
@@ -111,8 +109,9 @@ garminEjectWatcher:start()
 
 
 -- iTunes
+-- iTunes Hotkeys
 hs.itunes = require 'extensions/itunes'
-ituneshotkeys = {}
+itunes_hotkeys = {}
 local ituneshotkeymap = {
   playpause = {{"⌥", "⌃", "⇧"}, "p"},
   next      = {{"⌥", "⌃", "⇧"}, "n"},
@@ -125,15 +124,15 @@ local ituneshotkeymap = {
   volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
 }
 for fn, map in pairs(ituneshotkeymap) do
-  ituneshotkeys[fn] = hs.hotkey.bind(map[1], map[2], nil, function() hs.itunes[fn]() end)
+  itunes_hotkeys[fn] = hs.hotkey.bind(map[1], map[2], function() hs.itunes[fn]() end)
 end
 
 
 -- URLs from hammerspoon:// schema
-local hex_to_char = function(x)
+local function hex_to_char(x)
   return string.char(tonumber(x, 16))
 end
-local unescape = function(url)
+local function unescape(url)
   return url:gsub("%%(%x%x)", hex_to_char)
 end
 function URLDispatcherCallback(eventName, params)
@@ -141,7 +140,7 @@ function URLDispatcherCallback(eventName, params)
   local parts = hs.http.urlParts(fullUrl)
   spoon.URLDispatcher:dispatchURL(parts.scheme, parts.host, parts.parameterString, fullUrl)
 end
-hs.urlevent.bind("URLDispatcher", URLDispatcherCallback)
+url_dispatcher = hs.urlevent.bind("URLDispatcher", URLDispatcherCallback)
 
 
 -- Spoons (other than spoon.Hammer)
