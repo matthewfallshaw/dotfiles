@@ -7,6 +7,10 @@ local M = {}
 M.window_layouts = {} -- see bottom of file
 
 
+local function escape_for_regexp(str)
+  return str:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])","%%%1")
+end
+
 local CHROME_TITLE_REPLACE_STRING = "AEDA6OHZOOBOO4UL8OHH" -- an arbitrary string
 local chrome_tab_list_applescript = [[
 tell application "Google Chrome"
@@ -18,8 +22,10 @@ tell application "Google Chrome"
 end tell
 ]]
 local function chrome_window_first_tab(window)
-  local out, window_tabs_raw, err
-  out,window_tabs_raw,err = hs.osascript.applescript(chrome_tab_list_applescript:gsub(CHROME_TITLE_REPLACE_STRING, window:title()))
+  local window_title_escaped_for_applescript_and_regexp = window:title():gsub("\"","\\\""):gsub("%%","%%%%")
+  local success, applescript_text = pcall(string.gsub, chrome_tab_list_applescript, CHROME_TITLE_REPLACE_STRING, window_title_escaped_for_applescript_and_regexp)
+  if not success then error("Bad strings: ".. hs.inspect({applescript_text,window:title(),chrome_tab_list_applescript,CHROME_TITLE_REPLACE_STRING})) end
+  local out, window_tabs_raw, err = hs.osascript.applescript(applescript_text)
   if out and window_tabs_raw and window_tabs_raw[1] then
     local first_tab = window_tabs_raw[1]  -- assume the first tab is the interesting one
     local url, title = first_tab[1], first_tab[2]
@@ -30,11 +36,8 @@ local function chrome_window_first_tab(window)
   end
 end
 
-local function escape_for_regexp(str)
-  return str:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])","%%%1")
-end
 local function chrome_window_with_first_tab_matching(window, url_start_target)
-  if (window:role() == "AXWindow") and (window:application():name() == "Google Chrome") then
+  if window and (window:role() == "AXWindow") and (window:application():name() == "Google Chrome") then
     local url,_= chrome_window_first_tab(window)
     local found = url and url:match("^".. escape_for_regexp(url_start_target))
     return found and true
@@ -46,76 +49,120 @@ end
 local chrome_gmail_window_filter = hs.window.filter.new(function(window)
   return chrome_window_with_first_tab_matching(window, "https://mail.google.com/mail/u/0/")
 end)
-
 chrome_docs_window_filter = hs.window.filter.new(function(window)
   return chrome_window_with_first_tab_matching(window, "https://drive.google.com/drive/u/0/")
 end)
 
+
+function M:report_frontmost_window()
+  local window = hs.application.frontmostApplication():focusedWindow()
+  local unit_rect = window:screen():toUnitRect(window:frame())
+  local screen_position = string.format("%i,%i", window:screen():position())
+  local layout_rule = string.format("{{['%s']={allowScreens='%s'}}, 'move 1 oldest [%.0f,%.0f>%.0f,%.0f] %s'},",
+    window:application():name(),screen_position,unit_rect.x1*100,unit_rect.y1*100,unit_rect.x2*100,unit_rect.y2*100,screen_position)
+  hs.pasteboard.setContents(layout_rule)
+  logger.w("Active window position:\n".. layout_rule)
+  hs.alert.show("Stay: Active window position in clipboard\n".. layout_rule)
+  return layout_rule
+end
+
+
+function M:toggle_window_layouts_enabled()
+  if self.window_layouts_enabled then
+    for _,layout in pairs(self.window_layouts) do layout:stop() end
+    self.window_layouts_enabled = false
+    hs.alert.show("Window auto-layout engine paused")
+  else
+    for _,layout in pairs(self.window_layouts) do layout:start() end
+    self.window_layouts_enabled = true
+    hs.alert.show("Window auto-layout engine started")
+  end
+end
+
+function M:toggle_or_report()
+  if not self.double_tap_timer then
+    -- If called once, toggle_window_layouts_enabled
+    self.double_tap_timer = {
+      name = "toggle",
+      timer = hs.timer.doAfter(0.5, function()
+        self.double_tap_timer = nil
+        self:toggle_window_layouts_enabled()
+      end)
+    }
+  elseif self.double_tap_timer.name == "toggle" then
+    -- If called twice quickly, report_frontmost_window
+    self.double_tap_timer.timer:stop()
+    self.double_tap_timer = {
+      name = "report",
+      timer = hs.timer.doAfter(0.5, function()
+        self.double_tap_timer = nil
+        self:report_frontmost_window()
+      end)
+    }
+  else
+    -- If called thrice quickly, report_frontmost_window & open this file
+    self.double_tap_timer.timer:stop()
+    self.double_tap_timer = nil
+    self:report_frontmost_window()
+    hs.execute("/usr/bin/open ".. debug.getinfo(1).short_src)
+  end
+  return self
+end
+
 function M:start()
-  M.window_layouts_enabled = false
-  M:toggle_window_layouts_enabled()
-  M.hotkey = M.hotkey and M.hotkey:enable() or hs.hotkey.bind({"⌘", "⌥", "⌃", "⇧"}, "s", function() M.toggle_window_layouts_enabled(M) end)
+  self.window_layouts_enabled = false
+  self:toggle_window_layouts_enabled()
+  self.hotkey = self.hotkey and self.hotkey:enable() or hs.hotkey.bind({"⌘", "⌥", "⌃", "⇧"}, "s", function() M:toggle_or_report() end)
   return M
 end
 function M:stop()
-  if M.window_layouts_enabled then M:toggle_window_layouts_enabled() end
-  M.hotkey:disable()
+  if self.window_layouts_enabled then self:toggle_window_layouts_enabled() end
+  self.hotkey:disable()
   return M
-end
-function M:toggle_window_layouts_enabled()
-  if M.window_layouts_enabled then
-    for _,layout in pairs(M.window_layouts) do layout:stop() end
-    M.window_layouts_enabled = false
-    hs.alert.show("Window auto-layout engine paused")
-  else
-    for _,layout in pairs(M.window_layouts) do layout:start() end
-    M.window_layouts_enabled = true
-    hs.alert.show("Window auto-layout engine started")
-  end
 end
 
 
 M.window_layouts = {
   shared = hs.window.layout.new({
-    {chrome_gmail_window_filter, 'move 1 oldest [0,0,77,100] 0,0'},
-    {'Morty', 'move 1 oldest [0,0,70,100] 0,0'},
+    {chrome_gmail_window_filter, 'move 1 oldest [0,0>77,100] 0,0'},
+    {'Morty', 'move 1 oldest [0,0>70,100] 0,0'},
     {{['GitX']={allowScreens='0,0'}}, 'max 1 oldest 0,0'},
     -- allowScreens='0,0' so that it only applies to windows on the main screen, 
     -- so in desk mode i can temporarily "tear off" Safari windows to the side 
     -- screens for manual management
-    {{['nvALT']={allowScreens='0,0'}}, 'move 1 oldest [63,0,37,79] 0,0'}, -- creates unitrect=[37,0>63,79]
-    {{['Finder']={allowScreens='0,0'}},'move 1 oldest [40,44,94,92] 0,0'},
-    {{['Hammerspoon']={allowRoles='AXStandardWindow'}}, 'move 1 oldest [50,0,100,100] 0,0'},
+    {{['nvALT']={allowScreens='0,0'}}, 'move 1 oldest [63,0>100,79] 0,0'},
+    {{['Finder']={allowScreens='0,0'}},'move 1 oldest [40,44>94,92] 0,0'},
+    {{['Hammerspoon']={allowRoles='AXStandardWindow'}}, 'move 1 oldest [50,0>100,100] 0,0'},
   },'SHARED'),
   laptop = hs.window.layout.new({
     screens={['Color LCD']='0,0',SyncMaster=false,DELL=false}, -- when no external screens
-    {chrome_docs_window_filter, 'move 1 oldest [0,0,80,100] 0,0'},
-    {'MacVim', 'move 1 oldest [0,0,50,100] 0,0'},
-    {'Terminal', 'move 1 oldest [50,0,100,100] 0,0'},
+    {chrome_docs_window_filter, 'move 1 oldest [0,0>80,100] 0,0'},
+    {'MacVim', 'move 1 oldest [0,0>65,100] 0,0'},
+    {'Terminal', 'move 1 oldest [50,0>100,100] 0,0'},
     {{'PivotalTracker','Asana','Google Calendar','Calendar','FreeMindStarter'},
      'max all 0,0'},
   },'LAPTOP'),
   canning = hs.window.layout.new({
     screens={['Color LCD']='0,0',SyncMaster='-1,0',DELL=false},
-    {chrome_docs_window_filter, 'move 1 oldest [0,0,90,100] -1,0'},
-    {{['MacVim']={allowScreens='-1,0'}}, 'move 1 oldest [0,0,50,100] -1,0'},
-    {'Terminal', 'move 1 oldest [50,0,100,100] -1,0'},
+    {chrome_docs_window_filter, 'move 1 oldest [0,0>90,100] -1,0'},
+    {{['MacVim']={allowScreens='-1,0'}}, 'move 1 oldest [0,0>50,100] -1,0'},
+    {'Terminal', 'move 1 oldest [50,0>100,100] -1,0'},
     {'PivotalTracker', 'max 1 oldest -1,0'},
     {'Google Calendar', 'max 2 oldest -1,0'},
     {'Calendar', 'max 1 oldest -1,0'},
-    {'Asana', 'move 1 oldest [0,0,66,100] -1,0'},
-    {'FreeMindStarter', 'move 1 oldest [50,0,100,100] -1,0'},
+    {'Asana', 'move 1 oldest [0,0>66,100] -1,0'},
+    {'FreeMindStarter', 'move 1 oldest [50,0>100,100] -1,0'},
   },'CANNING'),
   fitzroy = hs.window.layout.new({
     screens={['Color LCD']='0,0',SyncMaster=false,DELL='-1,0'},
-    {chrome_docs_window_filter, 'move 1 oldest [10,0,90,100] -1,0'},
-    {{['MacVim']={allowScreens='-1,0'}}, 'move 1 oldest [0,0,50,100] -1,0'},
-    {'Terminal', 'move 1 oldest [50,0,100,100] -1,0'},
+    {chrome_docs_window_filter, 'move 1 oldest [10,0>90,100] -1,0'},
+    {{['MacVim']={allowScreens='-1,0'}}, 'move 1 oldest [0,0>50,100] -1,0'},
+    {'Terminal', 'move 1 oldest [50,0>100,100] -1,0'},
     {'PivotalTracker', 'max 1 oldest -1,0'},
     {'Google Calendar', 'max 2 oldest -1,0'},
     {'Calendar', 'max 1 oldest -1,0'},
-    {'Asana', 'move 1 oldest [0,0,66,100] -1,0'},
-    {'FreeMindStarter', 'move 1 oldest [50,0,100,100] -1,0'},
+    {'Asana', 'move 1 oldest [0,0>66,100] -1,0'},
+    {'FreeMindStarter', 'move 1 oldest [50,0>100,100] -1,0'},
   },'FITZROY'),
 }
 
