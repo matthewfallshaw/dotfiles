@@ -108,9 +108,9 @@ logger.i("Starting Garmin volume auto-ejector")
 garminEjectWatcher:start()
 
 
--- Terminal.app Hotkeys ⌘1-9 to switch tabs
-terminal_hotkeys = require 'terminal-hotkeys'
-terminal_hotkeys:start()
+-- App Hotkeys
+app_hotkeys = require 'app-hotkeys'
+app_hotkeys:start()
 
 
 -- iTunes Hotkeys
