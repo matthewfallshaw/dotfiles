@@ -5,10 +5,11 @@ logger.i("Loading Stay")
 local M = {}
 
 M.window_layouts = {} -- see bottom of file
+M.window_layouts_enabled = false
 
 
 local function escape_for_regexp(str)
-  return str:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])","%%%1")
+  return (str:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])","%%%1"))
 end
 
 local CHROME_TITLE_REPLACE_STRING = "AEDA6OHZOOBOO4UL8OHH" -- an arbitrary string
@@ -57,26 +58,52 @@ end)
 function M:report_frontmost_window()
   local window = hs.application.frontmostApplication():focusedWindow()
   local unit_rect = window:screen():toUnitRect(window:frame())
-  local screen_position = string.format("%i,%i", window:screen():position())
-  local layout_rule = string.format("{{['%s']={allowScreens='%s'}}, 'move 1 oldest [%.0f,%.0f>%.0f,%.0f] %s'},",
-    window:application():name(),screen_position,unit_rect.x1*100,unit_rect.y1*100,unit_rect.x2*100,unit_rect.y2*100,screen_position)
+  local unit_rect_string = string.format("[%.0f,%.0f>%.0f,%.0f]",
+            unit_rect.x1*100,unit_rect.y1*100,unit_rect.x2*100,unit_rect.y2*100)
+  local screen_position_string = string.format("%i,%i", window:screen():position())
+  local layout_rule
+  if unit_rect_string == "[0,0>100,100]" then
+    layout_rule = string.format("{{['%s']={allowScreens='%s'}}, 'maximize 1 oldest %s'},",
+      window:application():name(),screen_position_string,screen_position_string)
+  else
+    layout_rule = string.format("{{['%s']={allowScreens='%s'}}, 'move 1 oldest %s %s'},",
+      window:application():name(),screen_position_string,unit_rect_string,screen_position_string)
+  end
   hs.pasteboard.setContents(layout_rule)
   logger.w("Active window position:\n".. layout_rule)
   hs.alert.show("Stay: Active window position in clipboard\n".. layout_rule)
   return layout_rule
 end
 
-
 function M:toggle_window_layouts_enabled()
+  if self.window_layouts_enabled then
+    self:window_layouts_disable()
+  else
+    self:window_layouts_enable()
+  end
+  return self
+end
+
+function M:window_layouts_enable()
+  if not self.window_layouts_enabled then
+    for _,layout in pairs(self.window_layouts) do layout:start() end
+    self.window_layouts_enabled = true
+    if self.disable_startup_alert then
+      self.disable_startup_alert = nil -- no alert at startup
+    else
+      hs.alert.show("Window auto-layout engine started")
+    end
+  end
+  return self
+end
+
+function M:window_layouts_disable()
   if self.window_layouts_enabled then
     for _,layout in pairs(self.window_layouts) do layout:stop() end
     self.window_layouts_enabled = false
     hs.alert.show("Window auto-layout engine paused")
-  else
-    for _,layout in pairs(self.window_layouts) do layout:start() end
-    self.window_layouts_enabled = true
-    hs.alert.show("Window auto-layout engine started")
   end
+  return self
 end
 
 function M:toggle_or_report()
@@ -110,15 +137,18 @@ function M:toggle_or_report()
 end
 
 function M:start()
-  self.window_layouts_enabled = false
-  self:toggle_window_layouts_enabled()
-  self.hotkey = self.hotkey and self.hotkey:enable() or hs.hotkey.bind({"⌘", "⌥", "⌃", "⇧"}, "s", function() M:toggle_or_report() end)
-  return M
+  self.disable_startup_alert = true
+  self:window_layouts_enable()
+  self.disable_startup_alert = nil
+
+  self.hotkey = self.hotkey or hs.hotkey.new({"⌘", "⌥", "⌃", "⇧"}, "s", function() M:toggle_or_report() end)
+  self.hotkey:enable() 
+  return self
 end
 function M:stop()
-  if self.window_layouts_enabled then self:toggle_window_layouts_enabled() end
-  self.hotkey:disable()
-  return M
+  self:window_layouts_disable()
+  if self.hotkey then self.hotkey:disable() end
+  return self
 end
 
 
