@@ -91,7 +91,7 @@ function M:window_layouts_enable()
     if self.disable_startup_alert then
       self.disable_startup_alert = nil -- no alert at startup
     else
-      hs.alert.show("Window auto-layout engine started")
+      hs.alert.show("Stay: Window auto-layout engine started")
     end
   end
   return self
@@ -101,7 +101,7 @@ function M:window_layouts_disable()
   if self.window_layouts_enabled then
     for _,layout in pairs(self.window_layouts) do layout:stop() end
     self.window_layouts_enabled = false
-    hs.alert.show("Window auto-layout engine paused")
+    hs.alert.show("Stay: Window auto-layout engine paused")
   end
   return self
 end
