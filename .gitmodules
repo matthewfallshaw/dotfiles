@@ -4,6 +4,3 @@
 [submodule "vim/bundle/octave"]
 	path = vim/bundle/octave
 	url = https://github.com/vim-scripts/octave.vim--.git
-[submodule "hammerspoon/Spoons/RestoreWindows.spoon"]
-	path = hammerspoon/Spoons/RestoreWindows.spoon
-	url = https://github.com/matthewfallshaw/RestoreWindows.spoon.git
