@@ -25,6 +25,14 @@ M.hotkeys["Terminal"][9] = hs.hotkey.new('⌘', "9", function()
   hs.osascript.applescript('tell application "Terminal" to set selected of last tab of first window to true')
 end)
 
+-- Slack usability improvements
+logger.i("Slack usability hotkeys")
+M.hotkeys["Slack"][1] = hs.hotkey.new('⌘', 'w', function()
+  hs.eventtap.keyStrokes("/leave ")
+  hs.timer.doAfter(0.3, function() hs.application.get("Slack"):activate(); hs.eventtap.keyStroke({}, "return") end)
+end)
+M.hotkeys["Slack"][2] = hs.hotkey.new('⌘⇧', ']', function() hs.eventtap.keyStroke({'alt'}, 'down') end)
+M.hotkeys["Slack"][3] = hs.hotkey.new('⌘⇧', '[', function() hs.eventtap.keyStroke({'alt'}, 'up') end)
 
 
 -- Utility functions
