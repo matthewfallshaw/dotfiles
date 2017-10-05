@@ -158,11 +158,13 @@ M.window_layouts = {
     {'Morty', 'move 1 oldest [0,0>70,100] 0,0'},
     {{['GitX']={allowScreens='0,0'}}, 'max 1 oldest 0,0'},
     -- allowScreens='0,0' so that it only applies to windows on the main screen, 
-    -- so in desk mode i can temporarily "tear off" Safari windows to the side 
-    -- screens for manual management
+    -- so in desk mode I can temporarily "tear off" windows to the side screens
+    -- for manual management
     {{['nvALT']={allowScreens='0,0'}}, 'move 1 oldest [63,0>100,79] 0,0'},
     {{['Finder']={allowScreens='0,0'}},'move 1 oldest [40,44>94,92] 0,0'},
     {{['Hammerspoon']={allowRoles='AXStandardWindow'}}, 'move 1 oldest [50,0>100,100] 0,0'},
+    {{['Skype']={allowScreens='0,0'}}, 'move 1 oldest [56,0>100,70] 0,0'},
+    {{['Messages']={allowScreens='0,0'}}, 'move 1 oldest [53,0>100,71] 0,0'},
   },'SHARED'),
   laptop = hs.window.layout.new({
     screens={['Color LCD']='0,0',SyncMaster=false,DELL=false}, -- when no external screens
@@ -171,6 +173,7 @@ M.window_layouts = {
     {'Terminal', 'move 1 oldest [50,0>100,100] 0,0'},
     {{'PivotalTracker','Asana','Google Calendar','Calendar','FreeMindStarter'},
      'max all 0,0'},
+    {{['greenhouse']={allowScreens='0,0'}}, 'maximize 1 oldest 0,0'},
   },'LAPTOP'),
   canning = hs.window.layout.new({
     screens={['Color LCD']='0,0',SyncMaster='-1,0',DELL=false},
@@ -182,6 +185,7 @@ M.window_layouts = {
     {'Calendar', 'max 1 oldest -1,0'},
     {'Asana', 'move 1 oldest [0,0>66,100] -1,0'},
     {'FreeMindStarter', 'move 1 oldest [50,0>100,100] -1,0'},
+    {{['greenhouse']={allowScreens='-1,0'}}, 'maximize 1 oldest -1,0'},
   },'CANNING'),
   fitzroy = hs.window.layout.new({
     screens={['Color LCD']='0,0',SyncMaster=false,DELL='-1,0'},
@@ -193,6 +197,7 @@ M.window_layouts = {
     {'Calendar', 'max 1 oldest -1,0'},
     {'Asana', 'move 1 oldest [0,0>66,100] -1,0'},
     {'FreeMindStarter', 'move 1 oldest [50,0>100,100] -1,0'},
+    {{['greenhouse']={allowScreens='-1,0'}}, 'maximize 1 oldest -1,0'},
   },'FITZROY'),
 }
 
