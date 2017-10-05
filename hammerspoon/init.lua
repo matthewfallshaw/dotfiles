@@ -25,12 +25,22 @@ hs.allowAppleScript(true)
 u = require 'utilities'
 
 
--- Control Plane replacement
+-- Control Plane replacement: Actions on change of location
 controlplane = require 'control-plane'
 controlplane:start()
 
 
--- ScanSnap
+-- App Hotkeys
+app_hotkeys = require 'app-hotkeys'
+app_hotkeys:start()
+
+
+-- Keep App windows in their places
+stay = require('stay')
+stay:start()
+
+
+-- ScanSnap: Start ScanSnap manager when scanner attached
 logger.i("Loading ScanSnap USB watcher")
 function usbDeviceCallback(data)
   if (data["productName"]:match("^ScanSnap")) then
@@ -52,7 +62,7 @@ logger.i("Starting ScanSnap USB watcher")
 usbWatcher:start()
 
 
--- Jettison
+-- Jettison replacement: Eject ejectable drives on sleep
 logger.i("Loading Jettison sleep watcher")
 function sleepWatcherCallback(event)
   if event == hs.caffeinate.watcher.systemWillSleep then
@@ -71,7 +81,7 @@ logger.i("Starting Jettison sleep watcher")
 sleepWatcher:start()
 
 
--- Transmission safety
+-- Transmission safety: Keep VPN running when Transmission is running
 logger.i("Loading Transmission VPN Guard")
 function applicationWatcherCallback(appname, event, app)
   if appname == "Transmission" and event == hs.application.watcher.launching then
@@ -106,11 +116,6 @@ end
 garminEjectWatcher = hs.fs.volume.new(garminEjectWatcherCallback)
 logger.i("Starting Garmin volume auto-ejector")
 garminEjectWatcher:start()
-
-
--- App Hotkeys
-app_hotkeys = require 'app-hotkeys'
-app_hotkeys:start()
 
 
 -- iTunes Hotkeys
@@ -175,10 +180,6 @@ spoon.HeadphoneAutoPause.control['deezer'] = nil
 spoon.HeadphoneAutoPause.controlfns['vox'] = nil
 spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
 spoon.HeadphoneAutoPause:start()
-
--- Keep App windows in their places
-stay = require('stay')
-stay:start()
 
 -- ## notnux only
 if hs.host.localizedName() == "notnux" then
