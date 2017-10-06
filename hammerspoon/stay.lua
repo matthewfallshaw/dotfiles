@@ -156,7 +156,7 @@ M.window_layouts = {
   shared = hs.window.layout.new({
     {chrome_gmail_window_filter, 'move 1 oldest [0,0>77,100] 0,0'},
     {'Morty', 'move 1 oldest [0,0>70,100] 0,0'},
-    {{['GitX']={allowScreens='0,0'}}, 'max 1 oldest 0,0'},
+    {{['GitX']={allowScreens='0,0',allowRoles='AXStandardWindow'}}, 'max all 0,0'},
     -- allowScreens='0,0' so that it only applies to windows on the main screen, 
     -- so in desk mode I can temporarily "tear off" windows to the side screens
     -- for manual management
@@ -165,6 +165,7 @@ M.window_layouts = {
     {{['Hammerspoon']={allowRoles='AXStandardWindow'}}, 'move 1 oldest [50,0>100,100] 0,0'},
     {{['Skype']={allowScreens='0,0'}}, 'move 1 oldest [56,0>100,70] 0,0'},
     {{['Messages']={allowScreens='0,0'}}, 'move 1 oldest [53,0>100,71] 0,0'},
+    {{['Activity Monitor']={allowScreens='0,0'}}, 'move 1 oldest [0,42>61,100] 0,0'},
   },'SHARED'),
   laptop = hs.window.layout.new({
     screens={['Color LCD']='0,0',SyncMaster=false,DELL=false}, -- when no external screens
