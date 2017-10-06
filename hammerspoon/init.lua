@@ -30,11 +30,6 @@ controlplane = require 'control-plane'
 controlplane:start()
 
 
--- App Hotkeys
-app_hotkeys = require 'app-hotkeys'
-app_hotkeys:start()
-
-
 -- Keep App windows in their places
 stay = require('stay')
 stay:start()
@@ -180,6 +175,30 @@ spoon.HeadphoneAutoPause.control['deezer'] = nil
 spoon.HeadphoneAutoPause.controlfns['vox'] = nil
 spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
 spoon.HeadphoneAutoPause:start()
+
+
+hs.loadSpoon("AppHotkeys")
+local hotkeys = spoon.AppHotkeys.hotkeys
+-- Terminal ⌘1-9 to tab focus
+logger.i("Terminal hotkeys for switching ⌘1-9 to Tab focus")
+for i=1,8 do
+  table.insert(hotkeys["Terminal"], hs.hotkey.new('⌘', tostring(i), function()
+    hs.osascript.applescript('tell application "Terminal" to set selected of tab ' .. i .. ' of first window to true')
+  end))
+end
+table.insert(hotkeys["Terminal"], hs.hotkey.new('⌘', "9", function()
+  hs.osascript.applescript('tell application "Terminal" to set selected of last tab of first window to true')
+end))
+-- Slack usability improvements
+logger.i("Slack usability hotkeys")
+table.insert(hotkeys["Slack"], hs.hotkey.new('⌘', 'w', function()
+  hs.eventtap.keyStrokes("/leave ")
+  hs.timer.doAfter(0.3, function() hs.application.get("Slack"):activate(); hs.eventtap.keyStroke({}, "return") end)
+end))
+table.insert(hotkeys["Slack"], hs.hotkey.new('⌘⇧', ']', function() hs.eventtap.keyStroke({'alt'}, 'down') end))
+table.insert(hotkeys["Slack"], hs.hotkey.new('⌘⇧', '[', function() hs.eventtap.keyStroke({'alt'}, 'up') end))
+spoon.AppHotkeys:start()
+
 
 -- ## notnux only
 if hs.host.localizedName() == "notnux" then

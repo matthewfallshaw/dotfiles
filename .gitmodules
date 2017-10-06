@@ -4,3 +4,6 @@
 [submodule "vim/bundle/octave"]
 	path = vim/bundle/octave
 	url = https://github.com/vim-scripts/octave.vim--.git
+[submodule "hammerspoon/Spoons/AppHotkeys.spoon"]
+	path = hammerspoon/Spoons/AppHotkeys.spoon
+	url = git@github.com:matthewfallshaw/AppHotkeys.spoon.git
