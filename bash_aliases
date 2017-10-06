@@ -52,7 +52,7 @@ function st {
 # Gitx.app (http://rowanj.github.io/gitx/)
 alias gx="gitx"
 alias gxc="gitx --commit"
-alias gxd="gitx --diff"
+alias gxd="git diff --ignore-space-change | gitx --diff"
 
 ########
 # RUBY #
