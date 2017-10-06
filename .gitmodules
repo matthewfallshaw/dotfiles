@@ -7,3 +7,6 @@
 [submodule "hammerspoon/Spoons/AppHotkeys.spoon"]
 	path = hammerspoon/Spoons/AppHotkeys.spoon
 	url = git@github.com:matthewfallshaw/AppHotkeys.spoon.git
+[submodule "hammerspoon/Spoons/CaptureHotkeys.spoon"]
+	path = hammerspoon/Spoons/CaptureHotkeys.spoon
+	url = git@github.com:matthewfallshaw/CaptureHotkeys.spoon.git

@@ -3,12 +3,10 @@ hs.logger.defaultLogLevel = 'info'
 local logger = hs.logger.new("Init")
 hs.console.clearConsole()
 
--- Load spoons
--- hs.loadSpoon("SpoonInstall")
--- spoon.SpoonInstall.repos.zzspoons = {
---    url = "https://github.com/zzamboni/zzSpoons",
---    desc = "zzamboni's spoon repository",
--- }
+-- Capture spoon hotkeys
+hs.loadSpoon("CaptureHotkeys")
+spoon.CaptureHotkeys:bindHotkeys({show = {{ "⌘", "⌥", "⌃", "⇧" }, "k"}})
+spoon.CaptureHotkeys:start()
 
 -- Load spoon.Hammer first, since it gives us config reload & etc.
 hs.loadSpoon("Hammer")
@@ -198,6 +196,36 @@ end))
 table.insert(hotkeys["Slack"], hs.hotkey.new('⌘⇧', ']', function() hs.eventtap.keyStroke({'alt'}, 'down') end))
 table.insert(hotkeys["Slack"], hs.hotkey.new('⌘⇧', '[', function() hs.eventtap.keyStroke({'alt'}, 'up') end))
 spoon.AppHotkeys:start()
+
+
+hs.loadSpoon("WindowHalfsAndThirds")
+spoon.WindowHalfsAndThirds:bindHotkeys({
+  left_half   = { {        "alt", "cmd"}, "Left" },
+  right_half  = { {        "alt", "cmd"}, "Right" },
+  top_half    = { {        "alt", "cmd"}, "Up" },
+  bottom_half = { {        "alt", "cmd"}, "Down" },
+  third_left  = { {"ctrl", "alt"       }, "Left" },
+  third_right = { {"ctrl", "alt"       }, "Right" },
+  third_up    = { {"ctrl", "alt"       }, "Up" },
+  third_down  = { {"ctrl", "alt"       }, "Down" },
+  top_left    = { {"ctrl",        "cmd"}, "Left" },
+  bottom_left = { {"ctrl",        "cmd", "shift"}, "Left" },
+  top_right   = { {"ctrl",        "cmd"}, "Right" },
+  bottom_right= { {"ctrl",        "cmd", "shift"}, "Right" },
+  max_toggle  = { {        "alt", "cmd", "shift"}, "f" },
+  max         = { {        "alt", "cmd"}, "f" },
+  -- center   = { {        "alt", "cmd"}, "f" },
+  -- larger   = { {        "alt", "cmd", "shift"}, "Right" },
+  -- smaller  = { {        "alt", "cmd", "shift"}, "Left" },
+  -- undo     = { {        "alt", "cmd"}, "z" },
+  -- redo     = { {        "alt", "cmd", "shift"}, "z" },
+})
+
+hs.loadSpoon("WindowScreenLeftAndRight")
+spoon.WindowScreenLeftAndRight:bindHotkeys({
+   screen_left = { {"ctrl", "alt", "cmd"}, "Left" },
+   screen_right= { {"ctrl", "alt", "cmd"}, "Right" },
+})
 
 
 -- ## notnux only
