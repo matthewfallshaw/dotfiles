@@ -51,7 +51,8 @@ function st {
 
 # Gitx.app (http://rowanj.github.io/gitx/)
 alias gx="gitx"
-alias gxc="gitx -c"
+alias gxc="gitx --commit"
+alias gxd="gitx --diff"
 
 ########
 # RUBY #
