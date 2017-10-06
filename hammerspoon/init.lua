@@ -26,12 +26,12 @@ u = require 'utilities'
 
 
 -- Control Plane replacement: Actions on change of location
-controlplane = require 'control-plane'
-controlplane:start()
+control_plane = require 'control-plane'
+control_plane:start()
 
 
--- Keep App windows in their places
-stay = require('stay')
+-- Stay replacement: Keep App windows in their places
+stay = require 'stay'
 stay:start()
 
 
@@ -114,7 +114,7 @@ garminEjectWatcher:start()
 
 
 -- iTunes Hotkeys
-hs.itunes = require 'extensions/itunes'
+hs.itunes = require 'extensions.itunes' -- hs.itunes with improvements
 itunes_hotkeys = {}
 local ituneshotkeymap = {
   playpause = {{"⌥", "⌃", "⇧"}, "p"},
@@ -127,8 +127,8 @@ local ituneshotkeymap = {
   volumeDown= {{"⌥", "⌃", "⇧"}, "f11"},
   volumeUp  = {{"⌥", "⌃", "⇧"}, "f12"},
 }
-for fn, map in pairs(ituneshotkeymap) do
-  itunes_hotkeys[fn] = hs.hotkey.bind(map[1], map[2], function() hs.itunes[fn]() end)
+for fn_name, map in pairs(ituneshotkeymap) do
+  itunes_hotkeys[fn_name] = hs.hotkey.bind(map[1], map[2], function() hs.itunes[fn_name]() end)
 end
 
 
@@ -152,7 +152,7 @@ url_dispatcher = hs.urlevent.bind("URLDispatcher", URLDispatcherCallback)
 hs.loadSpoon("URLDispatcher")
 spoon.URLDispatcher.default_handler = "com.google.Chrome"
 spoon.URLDispatcher.url_patterns = {
-  -- { "url pattern", "application bundle ID" },
+  -- { <url pattern>, <application bundle ID> },
   { "https?://www.pivotaltracker.com/.*", "com.fluidapp.FluidApp.PivotalTracker" },
   { "https?://morty.trikeapps.com/.*",    "org.epichrome.app.Morty" },
   { "https?://app.asana.com/.*",          "org.epichrome.app.Asana" },
@@ -160,19 +160,19 @@ spoon.URLDispatcher.url_patterns = {
 spoon.URLDispatcher:start()
 
 hs.loadSpoon("Emojis")
-spoon.Emojis:bindHotkeys({ toggle    = {{"⌘", "⌥", "⌃", "⇧"}, "space"}})
+spoon.Emojis:bindHotkeys({ toggle = {{"⌘", "⌥", "⌃", "⇧"}, "space"}})
 
 hs.loadSpoon("MouseCircle")
 spoon.MouseCircle:bindHotkeys({ show = {{"⌘", "⌥", "⌃", "⇧"}, "m"}})
 
 hs.loadSpoon("Caffeine")
-spoon.Caffeine:bindHotkeys({ toggle  = {{"⌥", "⌃", "⇧"}, "c"}})
+spoon.Caffeine:bindHotkeys({ toggle = {{"⌥", "⌃", "⇧"}, "c"}})
 spoon.Caffeine:start()
 
 hs.loadSpoon("HeadphoneAutoPause")
 spoon.HeadphoneAutoPause.control['vox'] = nil
-spoon.HeadphoneAutoPause.control['deezer'] = nil
 spoon.HeadphoneAutoPause.controlfns['vox'] = nil
+spoon.HeadphoneAutoPause.control['deezer'] = nil
 spoon.HeadphoneAutoPause.controlfns['deezer'] = nil
 spoon.HeadphoneAutoPause:start()
 

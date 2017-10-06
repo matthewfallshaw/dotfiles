@@ -172,7 +172,7 @@ M.window_layouts = {
     {'MacVim', 'move 1 oldest [0,0>65,100] 0,0'},
     {'Terminal', 'move 1 oldest [50,0>100,100] 0,0'},
     {{'PivotalTracker','Asana','Google Calendar','Calendar','FreeMindStarter'},
-     'max all 0,0'},
+      'max all 0,0'},
     {{['greenhouse']={allowScreens='0,0'}}, 'maximize 1 oldest 0,0'},
   },'LAPTOP'),
   canning = hs.window.layout.new({
