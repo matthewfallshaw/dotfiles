@@ -31,6 +31,9 @@ control_plane:start()
 -- Stay replacement: Keep App windows in their places
 stay = require 'stay'
 stay:start()
+spoon.CaptureHotkeys:capture("Stay", {
+  ["Toggle layout engine or report frontmost window"] = { {"⌘", "⌥", "⌃", "⇧"}, "s" },
+})
 
 
 -- ScanSnap: Start ScanSnap manager when scanner attached
@@ -128,6 +131,7 @@ local ituneshotkeymap = {
 for fn_name, map in pairs(ituneshotkeymap) do
   itunes_hotkeys[fn_name] = hs.hotkey.bind(map[1], map[2], function() hs.itunes[fn_name]() end)
 end
+spoon.CaptureHotkeys:capture("iTunes", ituneshotkeymap)
 
 
 -- URLs from hammerspoon:// schema
@@ -187,6 +191,10 @@ end
 table.insert(hotkeys["Terminal"], hs.hotkey.new('⌘', "9", function()
   hs.osascript.applescript('tell application "Terminal" to set selected of last tab of first window to true')
 end))
+spoon.CaptureHotkeys:capture("Terminal", {
+  ["Select tab n"] = { {"⌘"}, "n" },
+  ["Select last tab"] = { {"⌘"}, "9" },
+})
 -- Slack usability improvements
 logger.i("Slack usability hotkeys")
 table.insert(hotkeys["Slack"], hs.hotkey.new('⌘', 'w', function()
@@ -195,6 +203,11 @@ table.insert(hotkeys["Slack"], hs.hotkey.new('⌘', 'w', function()
 end))
 table.insert(hotkeys["Slack"], hs.hotkey.new('⌘⇧', ']', function() hs.eventtap.keyStroke({'alt'}, 'down') end))
 table.insert(hotkeys["Slack"], hs.hotkey.new('⌘⇧', '[', function() hs.eventtap.keyStroke({'alt'}, 'up') end))
+spoon.CaptureHotkeys:capture("Slack", {
+  ["Close Channel"] = { {"⌘"}, "w" },
+  ["Next Channel"] = { {"⌘", "⇧"}, "]" },
+  ["Previous Channel"] = { {"⌘", "⇧"}, "[" },
+})
 spoon.AppHotkeys:start()
 
 
@@ -214,6 +227,7 @@ spoon.WindowHalfsAndThirds:bindHotkeys({
   bottom_right= { {"ctrl",        "cmd", "shift"}, "Right" },
   max_toggle  = { {        "alt", "cmd", "shift"}, "f" },
   max         = { {        "alt", "cmd"}, "f" },
+  -- TODO:
   -- center   = { {        "alt", "cmd"}, "f" },
   -- larger   = { {        "alt", "cmd", "shift"}, "Right" },
   -- smaller  = { {        "alt", "cmd", "shift"}, "Left" },
