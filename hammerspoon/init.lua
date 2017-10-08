@@ -229,12 +229,10 @@ spoon.WindowHalfsAndThirds:bindHotkeys({
   bottom_right= { {"ctrl",        "cmd", "shift"}, "Right" },
   max_toggle  = { {        "alt", "cmd", "shift"}, "f" },
   max         = { {        "alt", "cmd"}, "f" },
-  -- TODO:
-  -- center   = { {        "alt", "cmd"}, "f" },
-  -- larger   = { {        "alt", "cmd", "shift"}, "Right" },
-  -- smaller  = { {        "alt", "cmd", "shift"}, "Left" },
-  -- undo     = { {        "alt", "cmd"}, "z" },
-  -- redo     = { {        "alt", "cmd", "shift"}, "z" },
+  undo        = { {        "alt", "cmd"}, "z" },
+  center      = { {        "alt", "cmd"}, "c" },
+  larger      = { {        "alt", "cmd", "shift"}, "Right" },
+  smaller     = { {        "alt", "cmd", "shift"}, "Left" },
 })
 
 hs.loadSpoon("WindowScreenLeftAndRight")
