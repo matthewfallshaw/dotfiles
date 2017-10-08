@@ -15,6 +15,8 @@ spoon.Hammer:bindHotkeys({
   toggle_console={{"⌘", "⌥", "⌃", "⇧"}, "h"},
 })
 spoon.Hammer:start()
+hs.hotkey.bind({"⌘", "⌥", "⌃", "⇧"}, "c", function() hs.console.clearConsole() end)
+spoon.CaptureHotkeys:capture("Clear console", {["Clear console"] = { {"⌘", "⌥", "⌃", "⇧"}, "c" }})
 
 hs.application.enableSpotlightForNameSearches(true)
 hs.allowAppleScript(true)
