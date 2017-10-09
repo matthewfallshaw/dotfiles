@@ -3,7 +3,7 @@ hs.logger.defaultLogLevel = 'info'
 local logger = hs.logger.new("Init")
 hs.console.clearConsole()
 
--- Capture spoon hotkeys
+-- Capture spoon (and other) hotkeys
 hs.loadSpoon("CaptureHotkeys")
 spoon.CaptureHotkeys:bindHotkeys({show = {{ "⌘", "⌥", "⌃", "⇧" }, "k"}})
 spoon.CaptureHotkeys:start()
@@ -245,10 +245,17 @@ spoon.WindowScreenLeftAndRight:bindHotkeys({
 -- ## notnux only
 if hs.host.localizedName() == "notnux" then
 
-  -- hs.loadSpoon("ToggleSkypeMute")
-  -- spoon.ToggleSkypeMute:bindHotkeys( {
-  --   toggle_skype={{"⌘", "⌥", "⌃", "⇧"}, "v"},
-  -- })
+  local kce = spoon.CaptureHotkeys.exporters.keyCue
+  --
+  -- local out, out_old = kce.output_file_path, kce.output_file_path .. ".old"
+  -- hs.execute("mv " .. out .. " " .. out_old)
+  --
+  kce:export_to_file()
+  --
+  -- local diff_command = "/usr/bin/diff -q <(/usr/bin/sort "..out.." ) <( /usr/bin/sort "..out_old.." )"
+  -- local output, status, t, rc = hs.execute(diff_command)
+  -- -- TODO: if diff, open .kcustom file for import into KeyCue
+  -- hs.execute("rm " .. out_old)
 
 end
 
