@@ -169,38 +169,26 @@ M.window_layouts = {
     {{['Slack']={allowScreens='0,0'}}, 'move 1 oldest [40,0>100,100] 0,0'},
   },'SHARED'),
   laptop = hs.window.layout.new({
-    screens={['Color LCD']='0,0',SyncMaster=false,DELL=false}, -- when no external screens
+    screens={['Color LCD']='0,0',['-1,0']=false}, -- when no external screens
     {chrome_docs_window_filter, 'move 1 oldest [0,0>80,100] 0,0'},
     {'MacVim', 'move 1 oldest [0,0>65,100] 0,0'},
-    {'Terminal', 'move 1 oldest [50,0>100,100] 0,0'},
+    {{'Terminal', 'iTerm2'}, 'move 1 oldest [50,0>100,100] 0,0'},
     {{'PivotalTracker','Asana','Google Calendar','Calendar','FreeMindStarter'},
       'max all 0,0'},
     {{['greenhouse']={allowScreens='0,0'}}, 'maximize 1 oldest 0,0'},
   },'LAPTOP'),
-  canning = hs.window.layout.new({
-    screens={['Color LCD']='0,0',SyncMaster='-1,0',DELL=false},
-    {chrome_docs_window_filter, 'move 1 oldest [0,0>90,100] -1,0'},
+  dual = hs.window.layout.new({
+    screens={['-1,0']=true},
+    {chrome_docs_window_filter, 'move 1 oldest [0,0>60,100] -1,0'},
     {{['MacVim']={allowScreens='-1,0'}}, 'move 1 oldest [0,0>50,100] -1,0'},
-    {'Terminal', 'move 1 oldest [50,0>100,100] -1,0'},
+    {{'Terminal', 'iTerm2'}, 'move 1 oldest [50,0>100,100] -1,0'},
     {'PivotalTracker', 'max 1 oldest -1,0'},
     {'Google Calendar', 'max 2 oldest -1,0'},
     {'Calendar', 'max 1 oldest -1,0'},
     {'Asana', 'move 1 oldest [0,0>66,100] -1,0'},
     {'FreeMindStarter', 'move 1 oldest [50,0>100,100] -1,0'},
     {{['greenhouse']={allowScreens='-1,0'}}, 'maximize 1 oldest -1,0'},
-  },'CANNING'),
-  fitzroy = hs.window.layout.new({
-    screens={['Color LCD']='0,0',SyncMaster=false,DELL='-1,0'},
-    {chrome_docs_window_filter, 'move 1 oldest [10,0>90,100] -1,0'},
-    {{['MacVim']={allowScreens='-1,0'}}, 'move 1 oldest [0,0>50,100] -1,0'},
-    {'Terminal', 'move 1 oldest [50,0>100,100] -1,0'},
-    {'PivotalTracker', 'max 1 oldest -1,0'},
-    {'Google Calendar', 'max 2 oldest -1,0'},
-    {'Calendar', 'max 1 oldest -1,0'},
-    {'Asana', 'move 1 oldest [0,0>66,100] -1,0'},
-    {'FreeMindStarter', 'move 1 oldest [50,0>100,100] -1,0'},
-    {{['greenhouse']={allowScreens='-1,0'}}, 'maximize 1 oldest -1,0'},
-  },'FITZROY'),
+  },'DUAL'),
 }
 
 return M
