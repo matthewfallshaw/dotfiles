@@ -1,5 +1,5 @@
-hs.logger.setGlobalLogLevel('info')
-hs.logger.defaultLogLevel = 'info'
+hs.logger.setGlobalLogLevel('warning')
+hs.logger.defaultLogLevel = 'warning'
 local logger = hs.logger.new("Init")
 hs.console.clearConsole()
 
