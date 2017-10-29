@@ -73,9 +73,6 @@ set backspace=eol,start,indent " make backspace work
 " but BE CAREFUL! Windows file operations require backslashes--any
 " paths determined manually (not by Vim) need to be reversed.
 set shellslash
-" use ack for grepping
-set grepprg=ack
-set grepformat=%f:%l:%m
 " By default, pressing <TAB> in command mode will choose the first possible completion with no indication of how many others there might be. The following configuration lets you see what your other options are
 set wildmenu
 set wildmode=list:longest
@@ -172,8 +169,7 @@ Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffe
 Plug 'tpope/vim-commentary' " Comment toggle
 Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
 Plug 'tpope/vim-endwise' " Auto close if, do, def, etc.
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fzf fuzzy finder
-Plug 'junegunn/fzf.vim'
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " fzf fuzzy finder
 " vim-plug filetypes
 Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -185,6 +181,8 @@ Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'vim-scripts/vim-coffee-script', { 'for': 'coffee' }
+Plug 'dag/vim-fish', { 'for': 'fish' }
+Plug 'thalesmello/lkml.vim', { 'for': 'lkml' }
 call plug#end()
 
 
@@ -222,6 +220,24 @@ vmap <leader>C gc
 " ??
 let g:rct_completion_use_fri = 0
 command! -bar -nargs=1 OpenURL :!open <args>
+
+" fzf.vim
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Ag, Ack, better
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep --smart-case'
+endif
+
 
 " Commands
 " ########
