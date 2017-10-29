@@ -1,2 +1,3 @@
---type-add=ruby=.haml,.rake,.builder
---type-add=css=.sass
+--type-add=ruby:ext:haml,builder
+--type-add=css:ext:sass
+--smart-case
