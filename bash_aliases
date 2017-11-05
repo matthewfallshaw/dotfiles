@@ -4,7 +4,7 @@ alias aliases='echo "waiting for MacVim to close…"; mvim -f ~/.bash_aliases &&
 #######
 # git #
 #######
-# also see utils/bash_completion.d/git-aliases
+# also see utilities/bash_completion.d/git-aliases
 alias g='git'
 alias ga="git add"
 alias gb='git branch --verbose'
@@ -116,7 +116,7 @@ alias passenger-restart='touch tmp/restart.txt'
 
 # You'll be adding to your vhosts configuration everytime you introduce a new Rails app.
 # Might as well make it a shortcut
-alias passenger-host='sudo gvim -p ~/code/utils/apache2/vhosts.conf /etc/hosts > /dev/null'
+alias passenger-host='sudo gvim -p ~/code/utilities/apache2/vhosts.conf /etc/hosts > /dev/null'
 
 # You'll need to restart apache whenever you make a change to vhosts.
 # You can also click System Preference->Sharing->Web Sharing, but this is quicker.

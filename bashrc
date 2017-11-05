@@ -13,10 +13,14 @@ system_name=`uname -s`
 # set PATH so it includes user's private bin if it exists
 [ -d ~/bin ] && export PATH=~/bin:"${PATH}"
 
-# set PATH so it includes homebrew coreutils if they exist
+# set PATH so it includes homebrew coreutils and findutils if they exist
 if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
   export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
+fi
+if [ -d "$(brew --prefix findutils)/libexec/gnubin" ] ; then
+  export PATH="$(brew --prefix findutils)/libexec/gnubin:${PATH}"
+  export MANPATH="$(brew --prefix findutils)/libexec/gnuman:$MANPATH"
 fi
 
 # Node version manager
@@ -111,6 +115,3 @@ fi
 
 # Alias definitions.
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
-
-# fzf shell extensions
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
