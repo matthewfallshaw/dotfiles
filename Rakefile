@@ -135,7 +135,7 @@ dotfiles_with_secrets.each do |dotfile|
       end
     ensure
       tempfile.close
-      sh "shred #{tempfile.path}", verbose: false
+      sh "/usr/local/opt/coreutils/libexec/gnubin/shred #{tempfile.path}", verbose: false
       tempfile.unlink
     end
   end
