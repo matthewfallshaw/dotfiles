@@ -107,21 +107,6 @@ alias sst='kill `cat tmp/pids/mongrel.pid`' # restart detached Mongrel
 alias sc='script/console'
 alias a='rspactor' # makes autotesting even quicker
 
-#############
-# PASSENGER #
-#############
-# Use this in any RAILS_ROOT dir. That restart.txt file tells mod_rails to restart this app.
-# You'll want to do this when (for example) you install a new plugin.
-alias passenger-restart='touch tmp/restart.txt'
-
-# You'll be adding to your vhosts configuration everytime you introduce a new Rails app.
-# Might as well make it a shortcut
-alias passenger-host='sudo gvim -p ~/code/utilities/apache2/vhosts.conf /etc/hosts > /dev/null'
-
-# You'll need to restart apache whenever you make a change to vhosts.
-# You can also click System Preference->Sharing->Web Sharing, but this is quicker.
-alias graceful='sudo apachectl graceful'
-
 ##############
 # TENSORFLOW #
 ##############
@@ -133,7 +118,6 @@ alias tfq='deactivate'
 # default options for standard commands #
 #########################################
 alias ls='ls -h'
-alias pwsafe='pwsafe -E'
 alias which='which -a'
 
 
@@ -141,7 +125,6 @@ alias which='which -a'
 # misc #
 ########
 alias cleanvimswaps="find . -iregex '.*\.sw[po]$' -delete"
-alias gconsync='/System/Library/PrivateFrameworks/GoogleContactSync.framework/Versions/A/Resources/gconsync --sync com.google.ContactSync --syncmode slow --report 1'
 alias h='history'
 alias l="ls -lah"
 alias la='ls -ah --color=auto'
@@ -149,7 +132,6 @@ alias ll="ls -lh --color=auto"
 alias lla='ls -alh --color=auto'
 alias m='mate'
 alias m.='mate .'
-alias svnst="svn st | grep -v '^\?'"
 alias ql='qlmanage -p 2>/dev/null'
 
 function cdd {

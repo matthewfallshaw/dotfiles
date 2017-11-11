@@ -3,12 +3,12 @@
 system_name=`uname -s`
 
 
-# set PATH so it includes .cabal bin if it exists
-[ -d ~/.cabal/bin ] && export PATH=~/.cabal/bin:"${PATH}"
-
 # set PATH so it includes /usr/local/bin and sbin early if they exist
 [ -d /usr/local/sbin ] && export PATH=/usr/local/sbin:"${PATH}"
 [ -d /usr/local/bin ] && export PATH=/usr/local/bin:"${PATH}"
+[ -d /usr/local/bin ] && export MANPATH=/usr/local/man:"${MANPATH}"
+
+[ -d /usr/share/man ] && export MANPATH=/usr/share/man:"${MANPATH}"
 
 # set PATH so it includes user's private bin if it exists
 [ -d ~/bin ] && export PATH=~/bin:"${PATH}"
@@ -23,14 +23,10 @@ if [ -d "$(brew --prefix findutils)/libexec/gnubin" ] ; then
   export MANPATH="$(brew --prefix findutils)/libexec/gnuman:$MANPATH"
 fi
 
-# Node version manager
-NVM_DIR=$HOME/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && source $NVM_DIR/nvm.sh
-
 # AWS credentials
 [ -a "$HOME/.aws/bashrc" ] && source "$HOME/.aws/bashrc"
 
-# Renv
+# rbenv
 eval "$(rbenv init -)"
 
 # remove duplicates from PATH
@@ -99,10 +95,6 @@ xterm-color | xterm-256color)
   PS1="\u@\h:\w\$(__git_ps1 \" (%s)\")$ "
   ;;
 esac
-
-# mpd config
-export MPD_HOST=mpd
-export MPD_PORT=6600
 
 # Autotest
 export AUTOFEATURE=true

@@ -1,6 +1,6 @@
 [user]
   name = user-name
-	email = user-email
+  email = user-email
 [apply]
   whitespace = nowarn
 [alias]
