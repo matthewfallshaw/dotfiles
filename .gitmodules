@@ -4,3 +4,6 @@
 [submodule "vim/bundle/octave"]
 	path = vim/bundle/octave
 	url = https://github.com/vim-scripts/octave.vim--.git
+[submodule "oh-my-zsh/plugins/zsh-completions"]
+	path = oh-my-zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git

@@ -5,7 +5,7 @@
 
 %w[rubygems rake yaml shellwords tempfile].each {|l| require l }
 
-IGNORE_LIST = %w[install.rb Rakefile README vendor lib tags]
+IGNORE_LIST = %w[install.rb Rakefile README vendor lib tags oh-my-zsh]
 DESTDIR = File.expand_path("~")
 SOURCEDIR = File.dirname(__FILE__)
 SECRETS = File.expand_path('~/.dotfiles_secrets')
@@ -45,6 +45,7 @@ install dotfiles into user's home directory, and replace secrets defined in ~/.d
 )
 DESC
 task all: dotfiles
+task all: "oh-my-zsh"
 
 def target(dotfile)
   File.join(DESTDIR, ".#{dotfile}")
@@ -137,6 +138,19 @@ dotfiles_with_secrets.each do |dotfile|
       tempfile.close
       sh "/usr/local/opt/coreutils/libexec/gnubin/shred #{tempfile.path}", verbose: false
       tempfile.unlink
+    end
+  end
+end
+
+desc "Symlink oh-my-zsh to .oh-my-zsh/custom"
+task "oh-my-zsh" do
+  unless File.identical?(File.expand_path("~/.oh-my-zsh/custom"), "oh-my-zsh") then
+    if Dir[File.expand_path("~/.oh-my-zsh/custom/**/*")].reject {|x| x.match(%r[custom/plugins(|/example(|/example\.plugin\.zsh))$|custom/example.zsh$]) }.empty? then
+      # Vanilla custom directory - can be removed
+      rm_r(File.expand_path("~/.oh-my-zsh/custom"))
+      ln_s(File.expand_path("oh-my-zsh"), File.expand_path("~/.oh-my-zsh/custom"))
+    else
+      puts "~/.oh-my-zsh/custom/ has stuff in it, aborting."
     end
   end
 end
