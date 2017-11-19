@@ -14,13 +14,13 @@ system_name=`uname -s`
 [ -d ~/bin ] && export PATH=~/bin:"${PATH}"
 
 # set PATH so it includes homebrew coreutils and findutils if they exist
-if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ] ; then
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:${PATH}"
-  export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
+if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ] ; then
+  export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
-if [ -d "$(brew --prefix findutils)/libexec/gnubin" ] ; then
-  export PATH="$(brew --prefix findutils)/libexec/gnubin:${PATH}"
-  export MANPATH="$(brew --prefix findutils)/libexec/gnuman:$MANPATH"
+if [ -d "/usr/local/opt/findutils/libexec/gnubin" ] ; then
+  export PATH="/usr/local/opt/findutils/libexec/gnubin:${PATH}"
+  export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
 fi
 
 # AWS credentials
@@ -60,8 +60,8 @@ fi
 
 
 # bash completion
-if [ -f `/usr/local/bin/brew --prefix`/etc/bash_completion ]; then  # homebrew bash-completion
-  . `/usr/local/bin/brew --prefix`/etc/bash_completion
+if [ -f /usr/local/etc/bash_completion ]; then  # homebrew bash-completion
+  . /usr/local/etc/bash_completion
 elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
@@ -101,9 +101,15 @@ export AUTOFEATURE=true
 export RSPEC=true
 
 # Autojump
-if [ -f `/usr/local/bin/brew --prefix`/etc/profile.d/autojump.sh ]; then
-  . `/usr/local/bin/brew --prefix`/etc/profile.d/autojump.sh
+if [ -f /usr/local/etc/profile.d/autojump.sh ]; then
+  . /usr/local/etc/profile.d/autojump.sh
 fi
+
+# For when you type the wrong thing
+eval $(thefuck --alias)
+
+# Z, jump around
+[ -f /usr/local/etc/profile.d/z.sh ] && source /usr/local/etc/profile.d/z.sh
 
 # Alias definitions.
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases

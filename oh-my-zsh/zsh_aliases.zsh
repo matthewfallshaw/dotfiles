@@ -4,7 +4,7 @@ alias aliases='echo "waiting for Vim to close…"; vim -f ~/.oh-my-zsh/custom/zs
 #########################################
 # default options for standard commands #
 #########################################
-alias ls='ls -h'
+alias ls='ls -h --color=auto'
 alias which='which -a'
 
 
@@ -66,6 +66,6 @@ alias h='history'
 alias l="ls -lah"
 alias la='ls -ah --color=auto'
 alias ll="ls -lh --color=auto"
-alias lla='ls -alh --color=auto'
+alias lla='ls -lah --color=auto'
 
 alias ql='qlmanage -p 2>/dev/null'
