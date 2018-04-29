@@ -217,6 +217,10 @@ vmap <leader>c gc
 vmap <leader>C gc
 " /vim-surround
 
+" vim-markdown
+let g:vim_markdown_folding_disabled = 1
+" /vim-markdown
+
 " ??
 let g:rct_completion_use_fri = 0
 command! -bar -nargs=1 OpenURL :!open <args>
