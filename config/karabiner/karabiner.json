@@ -9,7 +9,8 @@
             "complex_modifications": {
                 "parameters": {
                     "basic.to_delayed_action_delay_milliseconds": 500,
-                    "basic.to_if_alone_timeout_milliseconds": 1000
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500
                 },
                 "rules": [
                     {
@@ -188,6 +189,52 @@
                         "is_pointing_device": false,
                         "product_id": 610,
                         "vendor_id": 1452
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false,
+                    "simple_modifications": []
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [
+                        {
+                            "from": {
+                                "key_code": "f9"
+                            },
+                            "to": {
+                                "key_code": "f9"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "f10"
+                            },
+                            "to": {
+                                "key_code": "f10"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "f11"
+                            },
+                            "to": {
+                                "key_code": "f11"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "f12"
+                            },
+                            "to": {
+                                "key_code": "f12"
+                            }
+                        }
+                    ],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 45847,
+                        "vendor_id": 1133
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": false,
