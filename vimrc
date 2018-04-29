@@ -261,5 +261,3 @@ com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
 cmap w!! w !sudo tee % > /dev/null
 
 runtime macros/matchit.vim
-
-let g:syntastic_lua_luac_exec = "luac-5.3"
