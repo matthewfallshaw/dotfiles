@@ -169,3 +169,5 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
   unsetopt xtrace
   exec 2>&3 3>&-
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

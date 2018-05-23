@@ -48,18 +48,17 @@ set cm=blowfish  " when encrypting files with :X, use blowfish instead of hopele
 set ruler
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
 " Setup automatic text formatting/wrapping:
-"set formatoptions=
-"set formatoptions-=t " Don't autowrap text
-"set formatoptions+=c " Do autowrap comments
-"set formatoptions+=r " Automatically continue comments
-"set formatoptions+=o " Automatically continue comments when hitting 'o' or 'O'
-"set formatoptions+=q " Allow formatting of comments with 'gq'
-"set formatoptions+=n " Recognize numbered lists
-"set formatoptions+=l " Don't break long lines that were already there
-"set textwidth=78     " From settings above, this is only for comments
-if has("colorcolumn")
-  set colorcolumn=+3   " Highlight column 81
-end
+set formatoptions=
+set formatoptions-=t " Don't autowrap text
+set formatoptions+=c " Do autowrap comments
+set formatoptions+=r " Automatically continue comments
+set formatoptions+=o " Automatically continue comments when hitting 'o' or 'O'
+set formatoptions+=q " Allow formatting of comments with 'gq'
+set formatoptions+=n " Recognize numbered lists
+set formatoptions+=l " Don't break long lines that were already there
+set textwidth=100    " From settings above, this is only for comments
+set colorcolumn=+1,+11,+12,+13   " Highlight column 1 & 11 chars past textwidth
+hi ColorColumn ctermbg=darkgrey guibg=dimgrey
 
 " Make window splitting behave
 set noequalalways
@@ -89,8 +88,11 @@ au BufWrite /private/tmp/crontab.* set nobackup
 
 " Reload this vimrc when it changes
 augroup myvimrc
-  au!
-  au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+  let expanded_vimrc = resolve(expand($MYVIMRC))
+  let expanded_gvimrc = resolve(expand($MYGVIMRC))
+  autocmd!
+  execute 'autocmd! BufWritePost $MYVIMRC,' . expanded_vimrc . ' tabdo source $MYVIMRC | redraw | echom "Reloaded " . $MYVIMRC'
+  execute 'autocmd! BufWritePost $MYGVIMRC,' . expanded_gvimrc . ' if has("gui_running") | so $MYGVIMRC | redraw | echom "Reloaded " . $MYGVIMRC | endif'
 augroup END
 
 " Mappings
@@ -169,7 +171,9 @@ Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffe
 Plug 'tpope/vim-commentary' " Comment toggle
 Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
 Plug 'tpope/vim-endwise' " Auto close if, do, def, etc.
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " fzf fuzzy finder
+Plug '/usr/local/opt/fzf' " fzf fuzzy finder
+Plug 'junegunn/fzf.vim'
+Plug 'inkarkat/vim-SyntaxRange'
 " vim-plug filetypes
 Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -183,6 +187,7 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'vim-scripts/vim-coffee-script', { 'for': 'coffee' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'thalesmello/lkml.vim', { 'for': 'lkml' }
+Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
 call plug#end()
 
 
