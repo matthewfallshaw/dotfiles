@@ -113,3 +113,5 @@ eval $(thefuck --alias)
 
 # Alias definitions.
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -57,8 +57,8 @@ set formatoptions+=q " Allow formatting of comments with 'gq'
 set formatoptions+=n " Recognize numbered lists
 set formatoptions+=l " Don't break long lines that were already there
 set textwidth=100    " From settings above, this is only for comments
-set colorcolumn=+1,+11,+12,+13   " Highlight column 1 & 11 chars past textwidth
 hi ColorColumn ctermbg=darkgrey guibg=dimgrey
+set colorcolumn=+1,+11,+12,+13   " Highlight column 1 & 11 chars past textwidth
 
 " Make window splitting behave
 set noequalalways

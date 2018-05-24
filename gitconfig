@@ -36,13 +36,10 @@
   token = github-token
 [push]
 	default = tracking
-[filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-	required = true
 [credential]
 	helper = osxkeychain
-[diff "scpt"]
-  textconv = osadecompile
-  binary=true
+[filter "ascr"]
+	clean = git-ascr-filter --clean %f
+	smudge = git-ascr-filter --smudge %f
+
 # vi:filetype=conf
