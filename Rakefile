@@ -144,8 +144,12 @@ end
 
 desc "Symlink oh-my-zsh to .oh-my-zsh/custom"
 task "oh-my-zsh" do
-  unless File.identical?(File.expand_path("~/.oh-my-zsh/custom"), "oh-my-zsh") then
-    if Dir[File.expand_path("~/.oh-my-zsh/custom/**/*")].reject {|x| x.match(%r[custom/plugins(|/example(|/example\.plugin\.zsh))$|custom/example.zsh$]) }.empty? then
+  oh_my_zsh_dir = File.expand_path("~/.oh-my-zsh/custom")
+  unless File.identical?(oh_my_zsh_dir, "oh-my-zsh") then
+    if not File.exist?(oh_my_zsh_dir) then
+      # Doesn't exist yet
+      ln_s(File.expand_path("oh-my-zsh"), File.expand_path("~/.oh-my-zsh/custom"))
+    elsif Dir[File.expand_path("~/.oh-my-zsh/custom/**/*")].reject {|x| x.match(%r[custom/plugins(|/example(|/example\.plugin\.zsh))$|custom/example.zsh$]) }.empty? then
       # Vanilla custom directory - can be removed
       rm_r(File.expand_path("~/.oh-my-zsh/custom"))
       ln_s(File.expand_path("oh-my-zsh"), File.expand_path("~/.oh-my-zsh/custom"))
