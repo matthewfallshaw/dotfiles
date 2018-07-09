@@ -3,7 +3,7 @@ set nocompatible      " We're running Vim, not Vi
 let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:' . $PATH
 
 set encoding=utf8 nobomb " BOM often causes trouble
-let mapleader = ","  " <leader> now means ',' rather than '\'
+let mapleader = ","   " <leader> now means ',' rather than '\'
 if &t_Co > 1
   syntax enable       " Enable syntax highlighting without clobbering colors
 endif
@@ -24,7 +24,7 @@ set mouse=a
 set history=500
 set showcmd
 set title
-set scrolloff=3
+set scrolloff=5
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 colorscheme desert
@@ -32,10 +32,7 @@ set incsearch
 set hlsearch
 nmap <silent> <leader>n :silent :nohlsearch<CR>
 set shortmess=atI
-set cursorline
-hi CursorLine term=none cterm=none ctermbg=DarkBlue
-autocmd InsertLeave * hi CursorLine term=none cterm=none ctermbg=DarkBlue
-autocmd InsertEnter * hi CursorLine term=none cterm=none ctermbg=DarkBlue
+
 set autoindent
 set tabstop=2
 set softtabstop=2
@@ -47,6 +44,7 @@ autocmd FileType make     set noexpandtab
 set cm=blowfish  " when encrypting files with :X, use blowfish instead of hopelessly insecure zip
 set ruler
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P>
+
 " Setup automatic text formatting/wrapping:
 set formatoptions=
 set formatoptions-=t " Don't autowrap text
@@ -56,9 +54,6 @@ set formatoptions+=o " Automatically continue comments when hitting 'o' or 'O'
 set formatoptions+=q " Allow formatting of comments with 'gq'
 set formatoptions+=n " Recognize numbered lists
 set formatoptions+=l " Don't break long lines that were already there
-set textwidth=100    " From settings above, this is only for comments
-highlight ColorColumn ctermbg=darkgrey guibg=dimgrey
-set colorcolumn=+1,+11,+12,+13   " Highlight column 1 & 11 chars past textwidth
 
 " Make window splitting behave
 set noequalalways
@@ -72,15 +67,25 @@ set backspace=eol,start,indent " make backspace work
 " but BE CAREFUL! Windows file operations require backslashes--any
 " paths determined manually (not by Vim) need to be reversed.
 set shellslash
-" By default, pressing <TAB> in command mode will choose the first possible completion with no indication of how many others there might be. The following configuration lets you see what your other options are
+" By default, pressing <TAB> in command mode will choose the first possible
+" completion with no indication of how many others there might be. The following
+" configuration lets you see what your other options are
 set wildmenu
 set wildmode=list:longest
+
+" Search for ctags from current dir up to root
+" set tags=./tags;
+"   disabled - easytags uses ~/.vimtags
+
 
 " Restore cursor position
 autocmd BufReadPost *
   \ if line("'\"") > 1 && line("'\"") <= line("$") |
   \   exe "normal! g`\"" |
   \ endif
+
+" lcd to directory of file on entering buffer
+autocmd BufEnter * silent! lcd %:p:h
 
 " Don't write backup file if vim is being called by "crontab -e"
 au BufWrite /private/tmp/crontab.* set nowritebackup
@@ -94,6 +99,7 @@ augroup myvimrc
   execute 'autocmd! BufWritePost $MYVIMRC,' . expanded_vimrc . ' tabdo source $MYVIMRC | redraw | echom "Reloaded " . $MYVIMRC'
   execute 'autocmd! BufWritePost $MYGVIMRC,' . expanded_gvimrc . ' if has("gui_running") | so $MYGVIMRC | redraw | echom "Reloaded " . $MYGVIMRC | endif'
 augroup END
+
 
 " Mappings
 inoremap ( ()<Left>
@@ -115,7 +121,28 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
 " Substitute the word under the cursor
-nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+vnoremap <Leader>s y:%s/\<<C-r>"\>//gc<Left><Left><Left>
+
+" Refactoring: rename local variable
+"   gd - jump to definition of word under cursor
+"   [{ - jump to start of block
+"   V  - visual block mode
+"   %  - jump to end of block
+"   :  - command mode
+"   s/ - substitude 
+"   <C-R>/ - insert text of last search
+"   //gd<left><left><left> - finish subtitute command and move cursor
+nmap gr gd[{V%:s/<C-R>///gc<left><left><left>
+" Refactoring: rename variable across whole file
+"   [{ - jump to start of block
+"   V  - visual block mode
+"   %  - jump to end of block
+"   :  - command mode
+"   s/ - substitude 
+"   <C-R>/ - insert text of last search
+"   //gd<left><left><left> - finish subtitute command and move cursor
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 
 " Alt mapped keys (none of these work on mac)
 inoremap <m-[> [
@@ -130,14 +157,14 @@ function! ClosePair(char)
   else
     return a:char
   endif
-endf
+endfunction
 function! CloseBracket()
   if match(getline(line('.') + 1), '\s*}') < 0
     return "\<CR>}"
   else
     return "\<ESC>j0f}a"
   endif
-endf
+endfunction
 function! QuoteDelim(char)
   let line = getline('.')
   let col = col('.')
@@ -151,7 +178,10 @@ function! QuoteDelim(char)
     "Starting a string
     return a:char.a:char."\<ESC>i"
   endif
-endf
+endfunction
+
+" CDC = Change to Directory of Current file
+command! CDC cd %:p:h
 
 " Plugins
 " #######
@@ -163,17 +193,25 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 call plug#begin('~/.vim/bundle')
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
+Plug 'neomake/neomake' " Async make (linters, syntax checke)
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
 Plug 'scrooloose/syntastic' " Syntastic: Code linting errors
 Plug 'mileszs/ack.vim' " File search with ack
 Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
+" Plug 'wellle/targets.vim'
 Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
 Plug 'tpope/vim-commentary' " Comment toggle
 Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
 Plug 'tpope/vim-endwise' " Auto close if, do, def, etc.
 Plug '/usr/local/opt/fzf' " fzf fuzzy finder
 Plug 'junegunn/fzf.vim'
-Plug 'inkarkat/vim-SyntaxRange'
+" Plug 'inkarkat/vim-SyntaxRange' " (lots of potential, but doesn't work reliably)
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+Plug 'rizzatti/dash.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-airline/vim-airline'
+
 " vim-plug filetypes
 Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -188,8 +226,17 @@ Plug 'vim-scripts/vim-coffee-script', { 'for': 'coffee' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'thalesmello/lkml.vim', { 'for': 'lkml' }
 Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
+Plug 'tbastos/vim-lua', { 'for': 'lua' }
+Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 call plug#end()
 
+
+" vim-easytags
+let g:easytags_async=1
+
+" dash.vim plugin
+:nmap <silent> <leader>d <Plug>DashSearch
+let g:dash_map = { 'lua' : ['luaspoon'] }
 
 " rails.vim plugin
 let g:rails_level=4
@@ -208,11 +255,11 @@ let NERDTreeShowHidden=1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list=1
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
 " /Syntastic
 
 " vim-surround plugin
@@ -222,30 +269,32 @@ vmap <leader>c gc
 vmap <leader>C gc
 " /vim-surround
 
-" vim-markdown
-let g:vim_markdown_folding_disabled = 1
+" vim-markdown plugin
+let g:vim_markdown_folding_disabled=1
 " /vim-markdown
 
 " ??
-let g:rct_completion_use_fri = 0
+let g:rct_completion_use_fri=0
 command! -bar -nargs=1 OpenURL :!open <args>
 
-" fzf.vim
+" fzf.vim plugin
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
-
 " Insert mode completion
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-" Ag, Ack, better
+" Ag plugin: Ack, better
 if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
 endif
+
+" Neomake plugin
+call neomake#configure#automake('nrwi', 500)
 
 
 " Commands
@@ -263,10 +312,17 @@ function! CopyWithLineNumbers() range
     sil echomsg "----------------------"
     exec 'sil!' . a:firstline . ',' . a:lastline . '#'
     redir END
-endf
+endfunction
 com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
 
 " w!! to save with root permissions
 cmap w!! w !sudo tee % > /dev/null
 
 runtime macros/matchit.vim
+
+" Cursorline gets broken by something above, so do it last
+set cursorline
+highlight CursorLine term=none cterm=none ctermbg=darkgrey guibg=#272727
+highlight ColorColumn ctermbg=darkgrey guibg=#272727
+" Highlight column 1 & 11 chars past textwidth
+let &colorcolumn='+1,+'.join(range(11,80),',+')
