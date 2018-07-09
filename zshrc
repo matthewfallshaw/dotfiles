@@ -1,3 +1,5 @@
+# See also zshenv
+
 PROFILE_STARTUP=false
 if [[ "$PROFILE_STARTUP" == true ]]; then
   # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
@@ -5,10 +7,6 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
   exec 3>&2 2>$HOME/tmp/startlog.$$
   setopt xtrace prompt_subst
 fi
-
-
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -64,39 +62,6 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-
-
-# PATH & MANPATH
-paths=(
-  /sbin
-  /usr/sbin
-  /bin
-  /usr/bin
-  /usr/local/sbin
-  /usr/local/bin
-  /usr/X11/bin
-  /usr/local/opt/coreutils/libexec/gnubin
-  /usr/local/opt/findutils/libexec/gnubin
-  ~/bin
-)
-for i in $paths; do
-  [ -d "$i" ] && export PATH="$i":"${PATH}"
-done
-typeset -U path PATH
-
-manpaths=(
-  /usr/share/man
-  /usr/local/share/man
-  /usr/local/man
-  /usr/X11/share/man
-  /usr/local/opt/coreutils/libexec/gnuman
-  /usr/local/opt/findutils/libexec/gnuman
-)
-[[ -v MANPATH ]] && MANPATH=/opt/X11/share/man  # avoid trailing : if MANPATH undefined
-for i in $manpaths; do
-  [ -d "$i" ] && export MANPATH="$i":"${MANPATH}"
-done
-typeset -U manpath MANPATH
 
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
