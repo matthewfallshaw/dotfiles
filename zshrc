@@ -1,4 +1,43 @@
-# See also zshenv
+# The part that should be in zshenv (but that gets killed by /private/etc/zprofile
+# which runs eval `/usr/libexec/path_helper -s` and ruins everything.)
+
+# ZSHENV
+
+# PATH
+paths=(
+  /usr/X11/bin
+  /bin
+  /sbin
+  /usr/bin
+  /usr/sbin
+  /usr/local/bin
+  /usr/local/sbin
+  /usr/local/opt/findutils/libexec/gnubin
+  /usr/local/opt/coreutils/libexec/gnubin
+  ~/bin
+)
+for i in $paths; do
+  [ -d "$i" ] && export PATH="$i":"${PATH}"
+done
+
+typeset -U path PATH
+
+# MANPATH
+manpaths=(
+  /usr/X11/share/man
+  /usr/share/man
+  /usr/local/man
+  /usr/local/share/man
+  /usr/local/opt/findutils/libexec/gnuman
+  /usr/local/opt/coreutils/libexec/gnuman
+)
+[[ -v MANPATH ]] && MANPATH=/opt/X11/share/man  # avoid trailing : if MANPATH undefined
+for i in $manpaths; do
+  [ -d "$i" ] && export MANPATH="$i":"${MANPATH}"
+done
+typeset -U manpath MANPATH
+
+# / ZSHENV
 
 PROFILE_STARTUP=false
 if [[ "$PROFILE_STARTUP" == true ]]; then
