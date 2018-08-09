@@ -128,8 +128,8 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
 " Substitute the word under the cursor
-nnoremap <Leader>s :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-vnoremap <Leader>s y:%s/\<<C-r>"\>//gc<Left><Left><Left>
+nnoremap <Leader>s :%s/\C\<<C-r><C-w>\>//gc<Left><Left><Left>
+vnoremap <Leader>s y:%s/\C\<<C-r>"\>//gc<Left><Left><Left>
 
 " Refactoring: rename local variable
 "   gd - jump to definition of word under cursor
@@ -233,7 +233,7 @@ Plug 'vim-scripts/vim-coffee-script', { 'for': 'coffee' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'thalesmello/lkml.vim', { 'for': 'lkml' }
 Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
-Plug 'tbastos/vim-lua', { 'for': 'lua' }
+Plug 'tbastos/vim-lua', { 'for': 'lua' } " syntax highlighting only
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 call plug#end()
 
@@ -331,5 +331,5 @@ runtime macros/matchit.vim
 set cursorline
 highlight CursorLine term=none cterm=none ctermbg=darkgrey guibg=#272727
 highlight ColorColumn ctermbg=darkgrey guibg=#272727
-" Highlight column 1 & 11 chars past textwidth
-let &colorcolumn='+1,+'.join(range(11,80),',+')
+" Highlight column 1 & 21 chars past textwidth
+let &colorcolumn='+1,+'.join(range(21,80),',+')
