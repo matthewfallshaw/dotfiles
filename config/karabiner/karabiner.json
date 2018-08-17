@@ -14,6 +14,28 @@
                     "basic.to_if_held_down_threshold_milliseconds": 500
                 },
                 "rules": [
+                  {
+                    "description": "Fn + Delete to Delete forward",
+                    "manipulators": [
+                      {
+                        "description": "Fn + Delete to Delete forward",
+                        "from": {
+                          "key_code": "delete_or_backspace",
+                          "modifiers": {
+                            "mandatory": [
+                              "fn"
+                            ],
+                            "optional": [
+                              "any"
+                            ]
+                          }
+                        },
+                        "to": {
+                          "key_code": "delete_forward"
+                        }
+                      }
+                    ]
+                  },
                     {
                         "description": "Change CapsLock + h/j/k/l to Arrows",
                         "manipulators": [
