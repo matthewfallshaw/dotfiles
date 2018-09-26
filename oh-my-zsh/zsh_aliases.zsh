@@ -11,36 +11,37 @@ alias which='which -a'
 #######
 # git #
 #######
-alias g='git'
-alias ga='git add'
-alias gb='git branch --verbose'
-alias gba='git branch --verbose -a'
-alias gc='git commit --verbose'
-alias gca='git commit --verbose --all'
-alias gd='git diff --ignore-space-change'
-alias gl='git pull'
-alias gm='git merge'
-alias gnp='git --no-pager'
-alias gp='git push'
-alias gs='git stash'
-alias gst='git status'
-alias gsu='git submodule update'
-alias gsui='git submodule update --init'
+alias git=hub
+alias g='hub'
+alias ga='hub add'
+alias gb='hub branch --verbose'
+alias gba='hub branch --verbose -a'
+alias gc='hub commit --verbose'
+alias gca='hub commit --verbose --all'
+alias gd='hub diff --ignore-space-change'
+alias gl='hub pull'
+alias gm='hub merge'
+alias gnp='hub --no-pager'
+alias gp='hub push'
+alias gs='hub stash'
+alias gst='hub status'
+alias gsu='hub submodule update'
+alias gsui='hub submodule update --init'
 
-alias st='git status'
+alias st='hub status'
 
 function gco {
   if [ -z "$1" ]; then
-    git checkout master
+    hub checkout master
   else
-    git checkout $1
+    hub checkout $1
   fi
 }
 
 # Gitx.app (http://rowanj.github.io/gitx/)
 alias gx="gitx"
 alias gxc="gitx --commit"
-alias gxd="git diff --ignore-space-change | gitx --diff"
+alias gxd="hub diff --ignore-space-change | gitx --diff"
 
 
 ########
