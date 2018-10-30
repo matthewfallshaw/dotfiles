@@ -1,17 +1,17 @@
 # Some useful aliases
-alias aliases='echo "waiting for MacVim to close…"; mvim -f ~/.bash_aliases; and source ~/.config/fish/aliases.fish'
+alias aliases="echo 'waiting for nim to close…'; nvim -f "(status --current-filename)"; and source "(status --current-filename)
 
 #########################################
 # default options for standard commands #
 #########################################
 alias ls='ls -h'
-alias pwsafe='pwsafe -E'
 alias which='which -a'
 
 
 #######
 # git #
 #######
+alias git='hub'
 alias g='git'
 alias ga="git add"
 alias gb='git branch --verbose'
@@ -28,20 +28,15 @@ alias gst='git status'
 alias gsu="git submodule update"
 alias gsui="git submodule update --init"
 
-alias st='git status'
-
-function gco
-  if [ -z "$argv[1]" ]; then
-    git checkout master
-  else
-    git checkout $argv[1]
-  end
-end
-
 # Gitx.app (http://rowanj.github.io/gitx/)
 alias gx="gitx"
 alias gxc="gitx --commit"
 alias gxd="git diff --ignore-space-change | gitx --diff"
+# Gitup.app (https://github.com/git-up/GitUp)
+alias gu='gitup commit'
+alias guc='gitup commit'
+alias gum='gitup map'
+alias gus='gitup stash'
 
 
 ########
@@ -79,9 +74,3 @@ for i in (seq 1 9)
   set dots $dots"."
   alias $dots="cdup $i"
 end
-
-
-# Tensorflow
-alias tf='cd ~/code/tensorflow; source bin/activate'
-alias tfq='deactivate'
-
