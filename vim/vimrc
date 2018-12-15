@@ -2,6 +2,8 @@ set nocompatible      " We're running Vim, not Vi
 
 let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:' . $PATH
 
+set clipboard+=unnamed
+
 set encoding=utf8 nobomb " BOM often causes trouble
 let mapleader = ","   " <leader> now means ',' rather than '\'
 if &t_Co > 1
@@ -32,6 +34,8 @@ set incsearch
 set hlsearch
 nmap <silent> <leader>n :silent :nohlsearch<CR>
 set shortmess=atI
+
+set signcolumn=yes   " persistent sign column
 
 set autoindent
 set tabstop=2
@@ -120,6 +124,7 @@ inoremap } <c-r>=ClosePair('}')<CR>
 inoremap " <c-r>=QuoteDelim('"')<CR>
 "inoremap ' <c-r>=QuoteDelim("'")<CR>
 
+" New line below, above
 inoremap <S-CR> <ESC>o
 inoremap <C-CR> <ESC><S-o>
 
@@ -236,6 +241,8 @@ Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
 Plug 'tbastos/vim-lua', { 'for': 'lua' } " syntax highlighting only
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'ElmCast/elm-vim'
+Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
+Plug 'leafo/moonscript-vim'
 call plug#end()
 
 
@@ -244,7 +251,6 @@ let g:easytags_async=1
 
 " dash.vim plugin
 :nmap <silent> <leader>d <Plug>DashSearch
-let g:dash_map = { 'lua' : ['luaspoon'] }
 
 " rails.vim plugin
 let g:rails_level=4

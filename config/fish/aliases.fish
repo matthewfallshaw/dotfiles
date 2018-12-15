@@ -27,6 +27,8 @@ alias gs="git stash"
 alias gst='git status'
 alias gsu="git submodule update"
 alias gsui="git submodule update --init"
+alias gst="git status"
+alias st="echo -e \"\a####\nuse `gst`\n####\n\"; git status"
 
 # Gitx.app (http://rowanj.github.io/gitx/)
 alias gx="gitx"

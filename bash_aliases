@@ -53,6 +53,11 @@ function st {
 alias gx="gitx"
 alias gxc="gitx --commit"
 alias gxd="git diff --ignore-space-change | gitx --diff"
+# Gitup.app (https://github.com/git-up/GitUp)
+alias gu='gitup open'
+alias guc='gitup commit'
+alias gum='gitup map'
+alias gus='gitup stash'
 
 ########
 # RUBY #
