@@ -1,0 +1,1 @@
+/Users/matt/.config/fisherman/fzf/init.fish
