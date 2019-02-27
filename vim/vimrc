@@ -211,6 +211,8 @@ Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'ElmCast/elm-vim'
 Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 Plug 'leafo/moonscript-vim'
+Plug 'tyru/open-browser.vim'
+Plug 'aklt/plantuml-syntax'            , { 'for': 'plantuml' } " plantuml UML tool
 call plug#end()
 
 " vim-easytags plugin
