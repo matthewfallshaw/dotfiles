@@ -6,9 +6,4 @@ export DOTPROFILE=1
 # the default umask is set in /etc/login.defs
 #umask 022
 
-# include .bashrc if it exists
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-fi
-
 # vi:filetype=sh:

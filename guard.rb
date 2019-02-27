@@ -1,0 +1,2 @@
+clearing :on
+notification :growl
