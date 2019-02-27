@@ -2,8 +2,6 @@ set nocompatible      " We're running Vim, not Vi
 
 let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:' . $PATH
 
-set clipboard+=unnamed
-
 set encoding=utf8 nobomb " BOM often causes trouble
 let mapleader = ","   " <leader> now means ',' rather than '\'
 if &t_Co > 1
