@@ -1,2 +1,2 @@
 let g:syntastic_puppet_checkers = ['puppetlint']
-set textwidth=80
+let &l:textwidth = 80

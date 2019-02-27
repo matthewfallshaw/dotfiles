@@ -1,1 +1,1 @@
-set textwidth=100
+let &l:textwidth = 100
