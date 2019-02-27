@@ -192,6 +192,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'mileszs/ack.vim' " File search with ack
 
 " vim-plug filetypes
+Plug 'sheerun/vim-polyglot'   " TODO: check which below are included
 Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
