@@ -3,7 +3,6 @@ set nocompatible      " We're running Vim, not Vi
 let $PATH = '~/bin:/usr/local/bin:/usr/local/sbin:' . $PATH
 
 set encoding=utf8 nobomb " BOM often causes trouble
-let mapleader = ","   " <leader> now means ',' rather than '\'
 if &t_Co > 1
   syntax enable       " Enable syntax highlighting without clobbering colors
 endif
@@ -95,7 +94,7 @@ autocmd BufEnter * silent! lcd %:p:h
 au BufWrite /private/tmp/crontab.* set nowritebackup
 au BufWrite /private/tmp/crontab.* set nobackup
 
-" Reload this vimrc when it changes
+" Reload this vimrc when it changes  TODO: fix this
 augroup myvimrc
   if has('nvim')
     let expanded_vimrc = resolve(expand($MYVIMRC)) . ',' . resolve(expand('~/.vim/vimrc'))
@@ -111,9 +110,8 @@ augroup END
 
 
 " Mappings
-" New line below, above
-inoremap <S-CR> <ESC>o
-inoremap <C-CR> <ESC><S-o>
+" ########
+let mapleader = ","   " <leader> now means ',' rather than '\'
 
 " <C-e> and <C-y> scroll the viewport a single line
 nnoremap <C-e> 3<C-e>
@@ -123,6 +121,14 @@ nnoremap <C-y> 3<C-y>
 nnoremap <Leader>s :%s/\C\<<C-r><C-w>\>//gc<Left><Left><Left>
 vnoremap <Leader>s y:%s/\C\<<C-r>"\>//gc<Left><Left><Left>
 
+" Make moving around in Command-mode less painful
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+
+" ## Input mappings
+" New line below, above  TODO: fix this in nvim
+inoremap <S-CR> <ESC>o
+inoremap <C-CR> <ESC><S-o>
 " Refactoring: rename local variable
 "   gd - jump to definition of word under cursor
 "   [{ - jump to start of block
@@ -143,9 +149,6 @@ nmap gr gd[{V%:s/<C-R>///gc<left><left><left>
 "   //gd<left><left><left> - finish subtitute command and move cursor
 nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 
-" CDC = Change to Directory of Current file
-command! CDC cd %:p:h
-
 " Plugins
 " #######
 
@@ -153,28 +156,36 @@ command! CDC cd %:p:h
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin('~/.vim/bundle')
+Plug 'junegunn/vim-plug'  " to enable help for vim-plug itself
 Plug 'neomake/neomake' " Async make (linters, syntax checke)
 " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
-Plug 'scrooloose/syntastic' " Syntastic: Code linting errors
-Plug 'mileszs/ack.vim' " File search with ack
-Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
 " Plug 'wellle/targets.vim'
-Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
+" Plug 'inkarkat/vim-SyntaxRange' " (lots of potential, but doesn't work reliably)
+Plug 'xolox/vim-misc'     " req for: xolox/vim-easytags
+Plug 'xolox/vim-easytags'
+Plug 'rizzatti/dash.vim'  " Dash.app integration
+Plug 'vim-airline/vim-airline'  " vim modeline decorations
+
+" input
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary' " Comment toggle
 Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
 Plug 'tpope/vim-endwise' " Auto close if, do, def, etc.
-Plug '/usr/local/opt/fzf' " fzf fuzzy finder
-Plug 'junegunn/fzf.vim'
-" Plug 'inkarkat/vim-SyntaxRange' " (lots of potential, but doesn't work reliably)
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
-Plug 'rizzatti/dash.vim'
+Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
+
+" linting
+Plug 'scrooloose/syntastic' " Syntastic: Code linting errors
+
+" commands
+Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
+" TODO: ?? search dups ??
+Plug '/usr/local/opt/fzf' " req for: junegunn/fzf
+Plug 'junegunn/fzf.vim'   " fzf fuzzy finder
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-airline/vim-airline'
+" Plug 'mileszs/ack.vim' " File search with ack
 
 " vim-plug filetypes
 Plug 'tpope/vim-git', { 'for': 'git' }
@@ -197,12 +208,11 @@ Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 Plug 'leafo/moonscript-vim'
 call plug#end()
 
-
-" vim-easytags
+" vim-easytags plugin
 let g:easytags_async=1
 
 " dash.vim plugin
-:nmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <leader>d <Plug>DashSearch
 
 " rails.vim plugin
 let g:rails_level=4
@@ -240,7 +250,7 @@ let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_fenced_languages = ['ruby', 'python', 'bash=sh', 'html']
 " /vim-markdown
 
-" ??
+" ??  TODO: WTF?
 let g:rct_completion_use_fri=0
 command! -bar -nargs=1 OpenURL :!open <args>
 
@@ -254,11 +264,13 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+" /fzf.vim
 
-" Ag plugin: Ack, better
+" Ag plugin: Ack but better
 if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
 endif
+" /Ag
 
 " Neomake plugin
 call neomake#configure#automake('nrwi', 500)
@@ -270,6 +282,9 @@ call neomake#configure#automake('nrwi', 500)
 " Tidy
 command! -range=% Tidy :<line1>,<line2>!tidy -quiet -indent -clean -bare -wrap 0 --show-errors 0 --show-body-only auto
 
+" CDC = Change to Directory of Current file
+command! CDC cd %:p:h
+
 " Visual mode copy to pastebuffer
 " kudos to Brad: http://xtargets.com/2010/10/13/cutting-and-pasting-source-code-from-vim-to-skype/
 function! CopyWithLineNumbers() range
@@ -280,11 +295,12 @@ function! CopyWithLineNumbers() range
     exec 'sil!' . a:firstline . ',' . a:lastline . '#'
     redir END
 endfunction
-com! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
+command! -range CopyWithLineNumbers <line1>,<line2>call CopyWithLineNumbers()
 
 " w!! to save with root permissions
 cmap w!! w !sudo tee % > /dev/null
 
+" TODO: WTF?
 runtime macros/matchit.vim
 
 " Cursorline gets broken by something above, so do it last
