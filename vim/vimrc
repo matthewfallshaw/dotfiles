@@ -111,17 +111,6 @@ augroup END
 
 
 " Mappings
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap } <c-r>=ClosePair('}')<CR>
-
-inoremap " <c-r>=QuoteDelim('"')<CR>
-"inoremap ' <c-r>=QuoteDelim("'")<CR>
-
 " New line below, above
 inoremap <S-CR> <ESC>o
 inoremap <C-CR> <ESC><S-o>
@@ -154,42 +143,6 @@ nmap gr gd[{V%:s/<C-R>///gc<left><left><left>
 "   //gd<left><left><left> - finish subtitute command and move cursor
 nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 
-" Alt mapped keys (none of these work on mac)
-inoremap <m-[> [
-inoremap <m-9> (
-inoremap <m--> {
-inoremap <m-"> "
-inoremap <m-'> '
-
-function! ClosePair(char)
-  if getline('.')[col('.') - 1] == a:char
-    return "\<Right>"
-  else
-    return a:char
-  endif
-endfunction
-function! CloseBracket()
-  if match(getline(line('.') + 1), '\s*}') < 0
-    return "\<CR>}"
-  else
-    return "\<ESC>j0f}a"
-  endif
-endfunction
-function! QuoteDelim(char)
-  let line = getline('.')
-  let col = col('.')
-  if line[col - 2] == "\\"
-    "Inserting a quoted quotation mark into the string
-    return a:char
-  elseif line[col - 1] == a:char
-    "Escaping out of the string
-    return "\<Right>"
-  else
-    "Starting a string
-    return a:char.a:char."\<ESC>i"
-  endif
-endfunction
-
 " CDC = Change to Directory of Current file
 command! CDC cd %:p:h
 
@@ -210,6 +163,7 @@ Plug 'mileszs/ack.vim' " File search with ack
 Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
 " Plug 'wellle/targets.vim'
 Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary' " Comment toggle
 Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
 Plug 'tpope/vim-endwise' " Auto close if, do, def, etc.
