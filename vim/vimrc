@@ -129,6 +129,10 @@ cnoremap <C-E> <End>
 " New line below, above  TODO: fix this in nvim
 inoremap <S-CR> <ESC>o
 inoremap <C-CR> <ESC><S-o>
+
+" Forward delete in insert mode
+inoremap <C-d> <Delete>
+
 " Refactoring: rename local variable
 "   gd - jump to definition of word under cursor
 "   [{ - jump to start of block
