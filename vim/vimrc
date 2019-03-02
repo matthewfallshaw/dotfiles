@@ -133,6 +133,16 @@ inoremap <C-CR> <ESC><S-o>
 " Forward delete in insert mode
 inoremap <C-d> <Delete>
 
+" Tab switching
+if has('macunix')
+  noremap <S-D-}> <Cmd>tabNext<CR>
+  noremap <S-D-{> <Cmd>tabprevious<CR>
+  inoremap <S-D-}> <Esc><Cmd>tabNext<CR>
+  inoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
+  cnoremap <S-D-}> <Esc><Cmd>tabNext<CR>
+  cnoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
+endif
+
 " Refactoring: rename local variable
 "   gd - jump to definition of word under cursor
 "   [{ - jump to start of block
