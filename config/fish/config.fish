@@ -32,4 +32,6 @@ test -e {$HOME}/.iterm2_shell_integration.fish; and source {$HOME}/.iterm2_shell
 undup PATH
 undup MANPATH
 undup fish_user_paths
-set -g fish_user_paths "/usr/local/opt/sqlite/bin" $fish_user_paths
+
+# Bindings
+bind $argv \cx\ce edit_command_buffer
