@@ -135,11 +135,11 @@ inoremap <C-d> <Delete>
 
 " Tab switching
 if has('macunix')
-  noremap <S-D-}> <Cmd>tabNext<CR>
+  noremap <S-D-}> <Cmd>tabnext<CR>
   noremap <S-D-{> <Cmd>tabprevious<CR>
-  inoremap <S-D-}> <Esc><Cmd>tabNext<CR>
+  inoremap <S-D-}> <Esc><Cmd>tabnext<CR>
   inoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
-  cnoremap <S-D-}> <Esc><Cmd>tabNext<CR>
+  cnoremap <S-D-}> <Esc><Cmd>tabnext<CR>
   cnoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
 endif
 
