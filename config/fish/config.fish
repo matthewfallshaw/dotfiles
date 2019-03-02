@@ -7,10 +7,12 @@ test -d /usr/local/opt/coreutils/libexec/gnuman; and set -gx MANPATH /usr/local/
 test -d /usr/local/man; and set -gx MANPATH /usr/local/man $MANPATH
 test -d /usr/share/man; and set -gx MANPATH /usr/share/man $MANPATH
 
+# google-cloud-sdk completion & path
 for p in /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/{completion.fish.inc,path.fish.inc}
   test -e $p; and source $p
 end
 
+# 
 if not functions -q fisher
     echo "Installing fisher for the first time..." >&2
     set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
@@ -27,11 +29,6 @@ source ~/.config/fish/aliases.fish
 
 # iTerm integration
 test -e {$HOME}/.iterm2_shell_integration.fish; and source {$HOME}/.iterm2_shell_integration.fish
-
-# undup PATH, MANPATH
-undup PATH
-undup MANPATH
-undup fish_user_paths
 
 # Bindings
 bind $argv \cx\ce edit_command_buffer
