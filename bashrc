@@ -7,11 +7,7 @@ system_name=`uname -s`
 [ -d /usr/local/sbin ] && export PATH=/usr/local/sbin:"${PATH}"
 [ -d /usr/local/bin ] && export PATH=/usr/local/bin:"${PATH}"
 [ -d /usr/local/bin ] && export MANPATH=/usr/local/man:"${MANPATH}"
-
 [ -d /usr/share/man ] && export MANPATH=/usr/share/man:"${MANPATH}"
-
-# set PATH so it includes user's private bin if it exists
-[ -d ~/bin ] && export PATH=~/bin:"${PATH}"
 
 # set PATH so it includes homebrew coreutils and findutils if they exist
 if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ] ; then
@@ -28,6 +24,9 @@ fi
 
 # rbenv
 eval "$(rbenv init -)"
+
+# set PATH so it includes user's private bin if it exists
+[ -d ~/bin ] && export PATH=~/bin:"${PATH}"
 
 # remove duplicates from PATH
 export PATH=`awk -F: '{for(i=1;i<=NF;i++){if(!($i in a)){a[$i];printf s$i;s=":"}}}'<<<$PATH`
