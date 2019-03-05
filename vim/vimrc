@@ -203,30 +203,21 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " vim-plug filetypes
 Plug 'sheerun/vim-polyglot'   " TODO: check which below are included
-Plug 'tpope/vim-git', { 'for': 'git' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
 Plug 'jgdavey/vim-blockle', { 'for': 'ruby' } " <leader>b to toggle Ruby block style
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'vim-scripts/vim-coffee-script', { 'for': 'coffee' }
-Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'thalesmello/lkml.vim', { 'for': 'lkml' }
-Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
-Plug 'tbastos/vim-lua', { 'for': 'lua' } " syntax highlighting only
-Plug 'ElmCast/elm-vim'
 Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
-Plug 'leafo/moonscript-vim'
-Plug 'tyru/open-browser.vim'
-Plug 'aklt/plantuml-syntax'            , { 'for': 'plantuml' } " plantuml UML tool
 call plug#end()
 
 " vim-easytags plugin
 let g:easytags_async=1
+
+" vim-polyglot, xolox/vim-lua-ftplugin
+let g:polyglot_disabled = ['lua']
 
 " dash.vim plugin
 nmap <silent> <leader>d <Plug>DashSearch
