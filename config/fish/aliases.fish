@@ -1,5 +1,5 @@
 # Some useful aliases
-alias aliases="echo 'waiting for nim to close…'; nvim -f "(status --current-filename)"; and source "(status --current-filename)
+alias aliases="echo 'waiting for "(echo $EDITOR)" to close…'; nvim -f "(status --current-filename)"; and source "(status --current-filename)
 
 #########################################
 # default options for standard commands #
@@ -69,6 +69,8 @@ alias lla='ls -alh --color=auto'
 
 alias ql='qlmanage -p 2>/dev/null'
 alias j='z'
+
+alias vimr='vimr --cur-env'
 
 # .. cds to parent, therefore ..., ...., ....., etc.
 set -l dots "."

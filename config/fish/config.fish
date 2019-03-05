@@ -4,6 +4,7 @@ set fish_greeting  # nohello
 set -gx EDITOR vim
 test -d /usr/local/opt/findutils/libexec/gnuman; and set -gx MANPATH /usr/local/opt/findutils/libexec/gnuman $MANPATH
 test -d /usr/local/opt/coreutils/libexec/gnuman; and set -gx MANPATH /usr/local/opt/coreutils/libexec/gnuman $MANPATH
+test -d /usr/local/share/man; and set -gx MANPATH /usr/local/share/man $MANPATH
 test -d /usr/local/man; and set -gx MANPATH /usr/local/man $MANPATH
 test -d /usr/share/man; and set -gx MANPATH /usr/share/man $MANPATH
 
