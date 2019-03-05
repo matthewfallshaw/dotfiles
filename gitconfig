@@ -35,18 +35,18 @@
   user = github-user
   token = github-token
 [push]
-	default = tracking
+  default = tracking
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [filter "ascr"]
-	clean = git-ascr-filter --clean %f
-	smudge = git-ascr-filter --smudge %f
+  clean = git-ascr-filter --clean %f
+  smudge = git-ascr-filter --smudge %f
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 [hub]
-	protocol = ssh
+  protocol = ssh
 
 # vi:filetype=conf

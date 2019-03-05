@@ -173,22 +173,22 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin('~/.vim/bundle')
-Plug 'junegunn/vim-plug'  " to enable help for vim-plug itself
-Plug 'neomake/neomake' " Async make (linters, syntax checke)
+Plug 'junegunn/vim-plug'        " Enable help for vim-plug itself
+Plug 'neomake/neomake'          " Async make (linters, syntax checke)
 " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
 " Plug 'wellle/targets.vim'
-" Plug 'inkarkat/vim-SyntaxRange' " (lots of potential, but doesn't work reliably)
-Plug 'xolox/vim-misc'     " req for: xolox/vim-easytags
-Plug 'xolox/vim-easytags'
-Plug 'rizzatti/dash.vim'  " Dash.app integration
+" Plug 'inkarkat/vim-SyntaxRange'  " (lots of potential, but doesn't work reliably)
+Plug 'xolox/vim-misc'           " req for: xolox/vim-easytags, xolox/vim-lua-ftplugin
+Plug 'xolox/vim-easytags'       " TODO: find something better than this
+Plug 'rizzatti/dash.vim'        " Dash.app integration
 Plug 'vim-airline/vim-airline'  " vim modeline decorations
 
 " input
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary' " Comment toggle
-Plug 'tpope/vim-repeat' " Make plugin commands repeatable with .
-Plug 'tpope/vim-endwise' " Auto close if, do, def, etc.
-Plug 'tpope/vim-surround' " Easily delete, change and add surroundings in pairs
+Plug 'tpope/vim-repeat'     " Make plugin commands repeatable with .
+Plug 'tpope/vim-endwise'    " Auto close if, do, def, etc.
+Plug 'tpope/vim-surround'   " Easily delete, change and add surroundings in pairs
 
 " linting
 Plug 'scrooloose/syntastic' " Syntastic: Code linting errors
@@ -199,12 +199,13 @@ Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffe
 Plug '/usr/local/opt/fzf' " req for: junegunn/fzf
 Plug 'junegunn/fzf.vim'   " fzf fuzzy finder
 Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'mileszs/ack.vim' " File search with ack
+" Plug 'mileszs/ack.vim'    " File search with ack
 
 " vim-plug filetypes
 Plug 'sheerun/vim-polyglot'   " TODO: check which below are included
 Plug 'tpope/vim-git', { 'for': 'git' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
 Plug 'jgdavey/vim-blockle', { 'for': 'ruby' } " <leader>b to toggle Ruby block style
@@ -217,7 +218,6 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'thalesmello/lkml.vim', { 'for': 'lkml' }
 Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
 Plug 'tbastos/vim-lua', { 'for': 'lua' } " syntax highlighting only
-Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'ElmCast/elm-vim'
 Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 Plug 'leafo/moonscript-vim'
