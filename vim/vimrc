@@ -98,14 +98,11 @@ au BufWrite /private/tmp/crontab.* set nobackup
 augroup myvimrc
   if has('nvim')
     let expanded_vimrc = resolve(expand($MYVIMRC)) . ',' . resolve(expand('~/.vim/vimrc'))
-    let expanded_gvimrc = resolve(expand($MYGVIMRC)) . ',' . resolve(expand('~/.vim/vimrc'))
   else
     let expanded_vimrc = resolve(expand($MYVIMRC))
-    let expanded_gvimrc = resolve(expand($MYGVIMRC))
   endif
   autocmd!
-  execute 'autocmd! BufWritePost $MYVIMRC,' . expanded_vimrc . ' tabdo windo source $MYVIMRC | filetype detect | redraw'
-  execute 'autocmd! BufWritePost $MYGVIMRC,' . expanded_gvimrc . ' if has("gui_running") | tabdo windo so $MYGVIMRC | filetype detect | redraw | endif'
+  execute 'autocmd! BufWritePost ' . expanded_vimrc . ' tabdo windo source $MYVIMRC | filetype detect | redraw'
 augroup END
 
 
@@ -128,7 +125,7 @@ cnoremap <C-E> <End>
 " ## Input mappings
 " New line below, above  TODO: fix this in nvim
 inoremap <S-CR> <ESC>o
-inoremap <C-CR> <ESC><S-o>
+inoremap <C-CR> <ESC>O
 
 " Forward delete in insert mode
 inoremap <C-d> <Delete>
