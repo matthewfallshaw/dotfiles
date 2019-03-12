@@ -179,6 +179,7 @@ Plug 'xolox/vim-misc'           " req for: xolox/vim-easytags, xolox/vim-lua-ftp
 Plug 'xolox/vim-easytags'       " TODO: find something better than this
 Plug 'rizzatti/dash.vim'        " Dash.app integration
 Plug 'vim-airline/vim-airline'  " vim modeline decorations
+Plug 'airblade/vim-gitgutter'   " Shows a git diff in the gutter (sign column) and stages/undoes hunks
 
 " input
 Plug 'jiangmiao/auto-pairs'
@@ -279,6 +280,13 @@ endif
 
 " Neomake plugin
 call neomake#configure#automake('nrwi', 500)
+
+" GitGutter
+" https://github.com/airblade/vim-gitgutter
+let g:gitgutter_override_sign_column_highlight = 0     " make sign column look consistent
+let g:gitgutter_sign_added = '┃'                       " replace default symbols with something nicer
+let g:gitgutter_sign_modified = g:gitgutter_sign_added
+let g:gitgutter_sign_removed = g:gitgutter_sign_added
 
 
 " Commands
