@@ -2,22 +2,37 @@
 
 system_name=`uname -s`
 
+pathadd() {
+  for d; do
+    if [ -z "$d" ]; then continue; fi  # skip nonexistent directory
+    case ":${PATH:=$d}:" in
+      *:$d:*) ;;
+      *) PATH="$d:$PATH" ;;
+    esac
+  done
+}
+manpathadd() {
+  for d; do
+    if [ -z "$d" ]; then continue; fi  # skip nonexistent directory
+    case ":${MANPATH:=$d}:" in
+      *:$d:*) ;;
+      *) MANPATH="$d:$MANPATH" ;;
+    esac
+  done
+}
 
+manpathadd /usr/share/man
 # set PATH so it includes /usr/local/bin and sbin early if they exist
-[ -d /usr/local/sbin ] && export PATH=/usr/local/sbin:"${PATH}"
-[ -d /usr/local/bin ] && export PATH=/usr/local/bin:"${PATH}"
-[ -d /usr/local/bin ] && export MANPATH=/usr/local/man:"${MANPATH}"
-[ -d /usr/share/man ] && export MANPATH=/usr/share/man:"${MANPATH}"
+pathadd /usr/local/sbin
+pathadd /usr/local/bin
+manpath add /usr/local/man
+manpath add /usr/share/man
 
 # set PATH so it includes homebrew coreutils and findutils if they exist
-if [ -d "/usr/local/opt/coreutils/libexec/gnubin" ] ; then
-  export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-fi
-if [ -d "/usr/local/opt/findutils/libexec/gnubin" ] ; then
-  export PATH="/usr/local/opt/findutils/libexec/gnubin:${PATH}"
-  export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
-fi
+pathadd /usr/local/opt/coreutils/libexec/gnubin
+manpathadd /usr/local/opt/coreutils/libexec/gnuman
+pathadd /usr/local/opt/findutils/libexec/gnubin
+manpathadd /usr/local/opt/findutils/libexec/gnuman
 
 # AWS credentials
 [ -a "$HOME/.aws/bashrc" ] && source "$HOME/.aws/bashrc"
@@ -55,7 +70,7 @@ fi
 [ -z $EDITOR ] && export EDITOR=vim
 #[ -z $GREP_OPTIONS ] && export GREP_OPTIONS="--color=auto"
 [ -z $LESS ] && export LESS="--RAW-CONTROL-CHARS"
-[ -z $REPLYTO ] && export REPLYTO=youremailaddress
+[ -z $REPLYTO ] && export REPLYTO=`security find-generic-password -a dotfiles -s bashrc.replyto -w`
 
 
 # bash completion
