@@ -3,38 +3,13 @@ set fish_greeting  # nohello
 # paths
 ## PATH
 set -gq PATH || set -gx PATH ''
-for d in (reverse
-  /Users/matt/bin
-  /Users/matt/code/clipboard-scripts/bin
-  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin
-  /Users/matt/.rbenv/shims
-  /usr/local/opt/sqlite/bin
-  /usr/local/opt/fzf/bin
-  /usr/local/MacGPG2/bin
-  /opt/puppetlabs/bin
-  /usr/local/opt/findutils/libexec/gnubin
-  /usr/local/opt/coreutils/libexec/gnubin
-  /usr/local/bin
-  /usr/local/sbin
-  /opt/X11/bin
-  /usr/bin
-  /usr/sbin
-  /bin
-  /sbin
-  )
+for d in (reverse /Users/matt/bin /Users/matt/code/clipboard-scripts/bin /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin /Users/matt/.rbenv/shims /usr/local/opt/sqlite/bin /usr/local/opt/fzf/bin /usr/local/MacGPG2/bin /opt/puppetlabs/bin /usr/local/opt/findutils/libexec/gnubin /usr/local/opt/coreutils/libexec/gnubin /usr/local/bin /usr/local/sbin /opt/X11/bin /usr/bin /usr/sbin /bin /sbin)
   set -gx PATH $d $PATH
 end
 
 ## MANPATH
 set -gq MANPATH || set -gx MANPATH ''
-for d in (reverse
-  /usr/local/opt/findutils/libexec/gnuman
-  /usr/local/opt/coreutils/libexec/gnuman
-  /usr/local/MacGPG2/share/man
-  /opt/X11/share/man
-  /usr/local/share/man
-  /usr/local/man
-  /usr/share/man)
+for d in (reverse /usr/local/opt/findutils/libexec/gnuman /usr/local/opt/coreutils/libexec/gnuman /usr/local/MacGPG2/share/man /opt/X11/share/man /usr/local/share/man /usr/local/man /usr/share/man)
   set -gx MANPATH $d $MANPATH
 end
 
