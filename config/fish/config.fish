@@ -18,6 +18,15 @@ for p in /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/{completio
   test -e $p; and source $p
 end
 
+# msmtp
+set -gx MAIL_SERVER smtp.gmail.com
+set -gx MAIL_PORT 587
+set -gx MAIL_USE_TLS True
+set -gx MAIL_USE_SSL False
+set -gx MAIL_USERNAME (security find-generic-password -a dotfiles -s msmtp.email -w)
+set -gx MAIL_PASSWORD (security find-generic-password -a dotfiles -s msmtp.pass -w)
+
+
 # fisher
 if not functions -q fisher
   echo "Installing fisher for the first time..." >&2
