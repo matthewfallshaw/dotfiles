@@ -45,7 +45,7 @@ alias gus='gitup stash'
 # RUBY #
 ########
 # use readline, completion and require rubygems by default for irb
-alias irb='irb --simple-prompt -r irb/completion -rubygems'
+alias irb='irb --simple-prompt -r irb/completion -r rubygems'
 alias rtags='ctags -R --languages=ruby --exclude=.git --exclude=log .'
 
 # Rails
