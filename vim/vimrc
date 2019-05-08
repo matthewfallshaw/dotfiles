@@ -160,6 +160,12 @@ nmap gr gd[{V%:s/<C-R>///gc<left><left><left>
 "   //gd<left><left><left> - finish subtitute command and move cursor
 nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 
+
+" Abbreviations
+" ########
+cmap ~d/ ~/code/
+cmap ~s/ ~/source/
+
 " Plugins
 " #######
 
