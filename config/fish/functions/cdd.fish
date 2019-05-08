@@ -1,8 +1,9 @@
 # cd into ~/code
 function cdd
+  set -l cdpath "$HOME/code"
   if [ -z "$argv[1]" ]
-    cd ~/code
+    cd $cdpath
   else
-    cd ~/code/$argv[1]
+    cd $cdpath/$argv[1]
   end
 end

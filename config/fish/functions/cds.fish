@@ -1,8 +1,9 @@
 # cd into ~/source
 function cds
+  set -l cdpath "$HOME/source"
   if [ -z "$argv[1]" ]
-    cd ~/source
+    cd $cdpath
   else
-    cd ~/source/$argv[1]
+    cd $cdpath/$argv[1]
   end
 end
