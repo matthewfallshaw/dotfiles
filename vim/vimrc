@@ -186,6 +186,7 @@ Plug 'xolox/vim-easytags'       " TODO: find something better than this
 Plug 'rizzatti/dash.vim'        " Dash.app integration
 Plug 'vim-airline/vim-airline'  " vim modeline decorations
 Plug 'airblade/vim-gitgutter'   " Shows a git diff in the gutter (sign column) and stages/undoes hunks
+Plug 'gioele/vim-autoswap'      " Please Vim, stop with these swap file messages
 
 " input
 Plug 'jiangmiao/auto-pairs'
