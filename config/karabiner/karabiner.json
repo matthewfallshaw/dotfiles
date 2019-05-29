@@ -10,8 +10,8 @@
                 "parameters": {
                     "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
-                    "basic.to_if_alone_timeout_milliseconds": 1000,
-                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 300,
+                    "basic.to_if_held_down_threshold_milliseconds": 300,
                     "mouse_motion_to_scroll.speed": 100
                 },
                 "rules": [
@@ -111,7 +111,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "VI CapsLock-0 to Beginning of Line",
                                 "conditions": [
                                     {
                                         "name": "caps_lock pressed",
@@ -119,6 +118,7 @@
                                         "value": 1
                                     }
                                 ],
+                                "description": "VI CapsLock-0 to Beginning of Line",
                                 "from": {
                                     "key_code": "0",
                                     "modifiers": {
@@ -138,7 +138,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "VI CapsLock-4 (as in $) to End of Line",
                                 "conditions": [
                                     {
                                         "name": "caps_lock pressed",
@@ -146,6 +145,7 @@
                                         "value": 1
                                     }
                                 ],
+                                "description": "VI CapsLock-4 (as in $) to End of Line",
                                 "from": {
                                     "key_code": "4",
                                     "modifiers": {
@@ -165,7 +165,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "VI CapsLock-b to Back Word",
                                 "conditions": [
                                     {
                                         "name": "caps_lock pressed",
@@ -173,6 +172,7 @@
                                         "value": 1
                                     }
                                 ],
+                                "description": "VI CapsLock-b to Back Word",
                                 "from": {
                                     "key_code": "b",
                                     "modifiers": {
@@ -192,7 +192,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "VI CapsLock-w to Forward Word",
                                 "conditions": [
                                     {
                                         "name": "caps_lock pressed",
@@ -200,6 +199,7 @@
                                         "value": 1
                                     }
                                 ],
+                                "description": "VI CapsLock-w to Forward Word",
                                 "from": {
                                     "key_code": "w",
                                     "modifiers": {
