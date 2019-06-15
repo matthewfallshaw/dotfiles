@@ -1,3 +1,14 @@
-*
-!fish/
-!oni/
+*.log
+*.pyc
+Google Play Music Desktop Player/gpmdp-cli.token
+coc/
+configstore/
+fisher/
+fisherman/
+gcloud/
+karabiner/automatic_backups/
+karabiner/assets/
+keybase/config.json
+libimobiledevice/
+nvim/.netrwhist
+nvim/pack/
