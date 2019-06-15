@@ -26,7 +26,6 @@ set -gx MAIL_USE_SSL False
 set -gx MAIL_USERNAME (security find-generic-password -a dotfiles -s msmtp.email -w)
 set -gx MAIL_PASSWORD (security find-generic-password -a dotfiles -s msmtp.pass -w)
 
-
 # fisher
 if not functions -q fisher
   echo "Installing fisher for the first time..." >&2
