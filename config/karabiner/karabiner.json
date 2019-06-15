@@ -30,7 +30,9 @@
                                     "key_code": "j",
                                     "modifiers": {
                                         "optional": [
-                                            "any"
+                                            "left_shift",
+                                            "left_command",
+                                            "left_option"
                                         ]
                                     }
                                 },
@@ -53,7 +55,9 @@
                                     "key_code": "k",
                                     "modifiers": {
                                         "optional": [
-                                            "any"
+                                            "left_shift",
+                                            "left_command",
+                                            "left_option"
                                         ]
                                     }
                                 },
@@ -76,7 +80,9 @@
                                     "key_code": "h",
                                     "modifiers": {
                                         "optional": [
-                                            "any"
+                                            "left_shift",
+                                            "left_command",
+                                            "left_option"
                                         ]
                                     }
                                 },
@@ -99,7 +105,9 @@
                                     "key_code": "l",
                                     "modifiers": {
                                         "optional": [
-                                            "any"
+                                            "left_shift",
+                                            "left_command",
+                                            "left_option"
                                         ]
                                     }
                                 },
@@ -120,12 +128,7 @@
                                 ],
                                 "description": "VI CapsLock-0 to Beginning of Line",
                                 "from": {
-                                    "key_code": "0",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "key_code": "0"
                                 },
                                 "to": [
                                     {
@@ -147,12 +150,7 @@
                                 ],
                                 "description": "VI CapsLock-4 (as in $) to End of Line",
                                 "from": {
-                                    "key_code": "4",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "key_code": "4"
                                 },
                                 "to": [
                                     {
@@ -174,12 +172,7 @@
                                 ],
                                 "description": "VI CapsLock-b to Back Word",
                                 "from": {
-                                    "key_code": "b",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "key_code": "b"
                                 },
                                 "to": [
                                     {
@@ -201,12 +194,7 @@
                                 ],
                                 "description": "VI CapsLock-w to Forward Word",
                                 "from": {
-                                    "key_code": "w",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "key_code": "w"
                                 },
                                 "to": [
                                     {
@@ -230,7 +218,7 @@
                                     "key_code": "j",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift"
+                                            "left_control"
                                         ]
                                     }
                                 },
@@ -255,7 +243,7 @@
                                     "key_code": "k",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift"
+                                            "left_control"
                                         ]
                                     }
                                 },
@@ -280,7 +268,7 @@
                                     "key_code": "h",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift"
+                                            "left_control"
                                         ]
                                     }
                                 },
@@ -305,7 +293,7 @@
                                     "key_code": "l",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift"
+                                            "left_control"
                                         ]
                                     }
                                 },
@@ -502,6 +490,44 @@
                     "ignore": false,
                     "manipulate_caps_lock_led": false,
                     "simple_modifications": []
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 16386,
+                        "vendor_id": 1133
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false,
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "left_alt"
+                            },
+                            "to": {
+                                "key_code": "left_command"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "left_gui"
+                            },
+                            "to": {
+                                "key_code": "left_option"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "right_alt"
+                            },
+                            "to": {
+                                "key_code": "right_command"
+                            }
+                        }
+                    ]
                 }
             ],
             "fn_function_keys": [
