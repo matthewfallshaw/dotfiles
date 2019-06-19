@@ -12,76 +12,68 @@ if empty(glob(stdpath('config') . '/autoload/plug.vim'))
 endif
 call plug#begin(stdpath('config') . '/pack/matt/opt')  " vim standard optional plugin dir
 Plug 'junegunn/vim-plug'        " Enable help for vim-plug itself
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
-if !exists("g:gui_oni")
-Plug 'wellle/targets.vim'       " Vim plugin that provides additional text objects
-endif
+
 " Plug 'inkarkat/vim-SyntaxRange'  " (lots of potential, but doesn't work reliably)
-Plug 'rizzatti/dash.vim'        " Dash.app integration
-Plug 'vim-airline/vim-airline'  " vim modeline decorations
-Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'   " Shows a git diff in the gutter (sign column) and stages/undoes hunks
 Plug 'tpope/vim-fugitive'      " A Git wrapper so awesome, it should be illegal
 Plug 'chrisbra/Recover.vim'     " show a diff when recovering a buffer
 " Plug 'gioele/vim-autoswap'      " Please Vim, stop with these swap file messages
-Plug 't9md/vim-choosewin'       " Land on window you chose like tmux's 'display-pane'
+
+" UI
+Plug 'vim-airline/vim-airline'   " vim modeline decorations
+Plug 'vim-airline/vim-airline-themes'
+" Plug 'airblade/vim-gitgutter'    " Shows a git diff in the gutter (sign column) and stages/undoes hunks
+Plug 't9md/vim-choosewin'        " Land on window you chose like tmux's 'display-pane'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " sdile explorer
 " Plug 'mhinz/vim-startify'       " The fancy start screen for Vim
+Plug 'ryanoasis/vim-devicons'    " Adds file type glyphs/icons to popular Vim plugins: NERDTree,
+Plug 'easymotion/vim-easymotion' " Vim motions on speed!
+                                 " vim-airline, Powerline, Unite, vim-startify and more
+Plug 'rizzatti/dash.vim'         " Dash.app integration
 
 " input
-Plug 'jiangmiao/auto-pairs' " insert or delete brackets, parens, quotes in pair
+" Plug 'jiangmiao/auto-pairs' " insert or delete brackets, parens, quotes in pair
 Plug 'tpope/vim-endwise'    " Auto close if, do, def, etc.
 Plug 'tpope/vim-commentary' " Comment toggle
 Plug 'tpope/vim-repeat'     " Make plugin commands repeatable with .
 Plug 'tpope/vim-surround'   " Easily delete, change and add surroundings in pairs
-Plug 'junegunn/goyo.vim'    " Distraction free writing
+" Plug 'junegunn/goyo.vim'    " Distraction free writing
 Plug 'godlygeek/tabular'    " text filtering and alignment
 Plug 'reedes/vim-pencil'    " Rethinking Vim as a tool for writing
-if !exists("g:gui_oni")
 Plug 'tpope/vim-unimpaired' " Pairs of handy bracket mappings
+if !exists("g:gui_oni")
+  Plug 'wellle/targets.vim'       " Vim plugin that provides additional text objects
 endif
 
-" completion
-Plug 'Shougo/deoplete.nvim' " Dark powered asynchronous completion framework
-Plug 'ponko2/deoplete-fish' " deoplete.nvim source for fish
-Plug 'Shougo/neco-vim'      " The vim source for neocomplete/deoplete
-
 " linting
-" Plug 'scrooloose/syntastic' " Syntastic: Code linting errors
-" Plug 'neomake/neomake'      " Async make (linters, syntax checkers)
 Plug 'w0rp/ale'             " Check syntax in Vim asynchronously and fix files
 
 " commands
 " Plug 'tpope/vim-eunuch' " Unix shell commands that act on the file and the buffer simultaneously
-" Plug '/usr/local/opt/fzf' " req for: junegunn/fzf
-" Plug 'junegunn/fzf.vim'   " fzf fuzzy finder
 Plug 'Shougo/denite.nvim' " Dnite fuzzy finder
-" Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'mileszs/ack.vim'    " File search with ack
 
 " filetypes
-" if !exists("g:gui_oni")
-" Use release branch
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" endif
+if !exists("g:gui_oni")
+  Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine for vim8 & neovim,
+                                                  " full language server protocol support as VSCode
+  Plug 'neoclide/coc-denite'                      " Denite support of coc.nvim
+endif
 Plug 'sheerun/vim-polyglot'   " see https://github.com/sheerun/vim-polyglot#language-packs
-" Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } " polyglot: https://github.com/tbastos/vim-lua
 " Plug 'tpope/vim-rails', { 'for': 'ruby' }
 " Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
 " Plug 'jgdavey/vim-blockle', { 'for': 'ruby' } " <leader>b to toggle Ruby block style
 " Plug 'tpope/vim-rake', { 'for': 'ruby' }
 " Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 " Plug 'thalesmello/lkml.vim', { 'for': 'lkml' }
-" Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
-Plug 'neovimhaskell/haskell-vim'      " Syntax Highlighting and Indentation for Haskell and Cabal
-Plug 'dag/vim-fish'                   " Vim support for editing fish scripts
-Plug 'plasticboy/vim-markdown'        " Markdown Vim Mode
+" Plug 'neovimhaskell/haskell-vim'      " Syntax Highlighting and Indentation for Haskell and Cabal
+" Plug 'dag/vim-fish'                   " Vim support for editing fish scripts
+" Plug 'plasticboy/vim-markdown'        " Markdown Vim Mode
 Plug 'iamcco/markdown-preview.nvim', {
-    \ 'do': { -> mkdp#util#install() }
-    \ }  " markdown preview plugin
-Plug 'LnL7/vim-nix'                   " Vim configuration files for Nix
-Plug 'pangloss/vim-javascript'        " Vastly improved Javascript indentation and syntax support in Vim
+      \ 'do': { -> mkdp#util#install() }
+      \ }  " markdown preview plugin
+" Plug 'LnL7/vim-nix'                   " Vim configuration files for Nix
+" Plug 'pangloss/vim-javascript'        " Vastly improved Javascript indentation and syntax support in Vim
 Plug 'heavenshell/vim-jsdoc'          " Generate JSDoc to your JavaScript code
-Plug 'HerringtonDarkholme/yats.vim'   " Yet Another TypeScript Syntax: The most advanced TypeScript Syntax Highlighting in Vim
 
 " color schemes
 Plug 'iCyMind/NeoSolarized'
@@ -108,11 +100,12 @@ scriptencoding=utf-8
 
 let mapleader = ','
 let timeouttlen = 1500 " extend time-out on leader key
-set updatetime=100     " number of ms before changes are written to swap file
+" set updatetime=100     " number of ms before changes are written to swap file
 set scrolloff=5        " start scrolling when cursor is within 5 lines of the edge
 set linebreak          " soft wraps on words not individual chars
 set mouse=a            " enable mouse support in all modes
-set autochdir
+" set autochdir          " set pwd to directory of current file
+set nofoldenable       " disable folding
 
 " Search and replace
 set ignorecase         " make searches with lower case characters case insensative
@@ -154,7 +147,7 @@ set termguicolors   " truecolor support
 
 " Setup color scheme
 " https://github.com/icymind/NeoSolarized
-let g:neosolarized_italic = 1
+let g:neosolarized_italic = 1 " enable italics (must come before colorcheme command)
 " NeoVim terminal uses bold as bright (colors 8-15) but I want bold to just be bold
 function! UpdateTermColors()
   let g:terminal_color_8  = g:terminal_color_0
@@ -206,10 +199,8 @@ let g:airline_skip_empty_sections              = 1             " don't show sect
 let g:airline_extensions =
 \ [ 'ale'
 \ , 'branch'
-\ , 'coc'
 \ , 'denite'
 \ , 'fugitiveline'
-\ , 'hunks'
 \ , 'keymap'
 \ , 'netrw'
 \ , 'quickfix'
@@ -217,6 +208,9 @@ let g:airline_extensions =
 \ , 'whitespace'
 \ , 'wordcount'
 \ ]
+if !exists("g:gui_oni")
+  call add(g:airline_extensions, 'coc')
+endif
 
 " Tabline configuration
 "let g:airline#extensions#tabline#enabled           = 1 " needed since it isn't on by default
@@ -397,12 +391,27 @@ set splitright " open vertical splits to the right instead of the left with is t
 
 " Tab creation/destruction
 call Anoremap('<silent>', '<leader>tt', '<Cmd>tabnew +Startify<CR>') " new tab w/ Startify
-call Anoremap('<silent>', '<leader>to', '<Cmd>tabclose<CR>')         " close all other tabs
+call Anoremap('<silent>', '<leader>to', '<Cmd>tabonly<CR>')          " close all other tabs
 call Anoremap('<silent>', '<leader>qt', '<Cmd>tabclose<CR>')         " close tab
 
 " Tab navigation
 call Anoremap('<silent>', '<leader>tn', '<Cmd>tabnext<CR>')     " next tab
 call Anoremap('<silent>', '<leader>tN', '<Cmd>tabprevious<CR>') " previous tab
+if has('macunix')  " VimR
+  noremap <S-D-}> <Cmd>tabnext<CR>
+  noremap <S-D-{> <Cmd>tabprevious<CR>
+  inoremap <S-D-}> <Esc><Cmd>tabnext<CR>
+  inoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
+  cnoremap <S-D-}> <Esc><Cmd>tabnext<CR>
+  cnoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
+elseif exists("g:gui_oni")  " OniVim
+  noremap <S-M-}> <Cmd>tabnext<CR>
+  noremap <S-M-{> <Cmd>tabprevious<CR>
+  inoremap <S-M-}> <Esc><Cmd>tabnext<CR>
+  inoremap <S-M-{> <Esc><Cmd>tabprevious<CR>
+  cnoremap <S-M-}> <Esc><Cmd>tabnext<CR>
+  cnoremap <S-M-{> <Esc><Cmd>tabprevious<CR>
+endif
 
 " Split creation/destruction
 call Anoremap('<silent>', '<leader>-' , '<Cmd>new +term<CR>')           " new horizontal window w/ terminal
@@ -574,6 +583,7 @@ call Anoremap('<silent>', '<leader>sr' , '<Cmd>Denite -resume<CR>')
 " Coc.vim {{{
 " =======
 
+if !exists("g:gui_oni")
 set hidden         " if not set, TextEdit might fail
 set nobackup       " some lang servers have issues with backups, should be default, set just in case
 set nowritebackup
@@ -581,7 +591,18 @@ set updatetime=300 " smaller update time for CursorHold and CursorHoldI
 set shortmess+=c   " don't show ins-completion-menu messages.
 
 " General configuration
-let g:coc_global_extensions = ['coc-json', 'coc-lists', 'coc-tsserver', 'coc-vimlsp']
+let g:coc_global_extensions =
+\ [ 'coc-json'
+\ , 'coc-git'
+\ , 'coc-lists'
+\ , 'coc-pairs'
+\ , 'coc-tsserver'
+\ , 'coc-vimlsp'
+\ , 'coc-python'
+\ , 'coc-emoji'
+\ , 'coc-yaml'
+\ ]
+
 let g:coc_user_config =
 \ { 'coc.preferences':
 \     { 'formatOnSaveFiletypes': []
@@ -641,7 +662,7 @@ let g:coc_user_config =
 \     }
 \ , 'languageserver':
 \     { 'haskell':
-\         { 'command'     : 'hie-8.6.4'
+\         { 'command'     : 'hie-8.6.5'
 \         , 'filetypes'   : ['hs', 'lhs', 'haskell']
 \         , 'rootPatterns': ['stack.yaml']
 \         , 'initializationOptions': {}
@@ -659,7 +680,18 @@ let g:coc_user_config =
 \         , 'ignoredRootPaths': ['~']
 \         }
 \     }
-\
+\ , 'git':
+\     { 'changedSign.text'         : '┃'
+\     , 'addedSign.text'           : '┃'
+\     , 'removedSign.text'         : '_'
+\     , 'topRemovedSign.text'      : '‾'
+\     , 'changeRemovedSign.text'   : '≃'
+\     , 'addedSign.hlGroup'        : 'GitGutterAdd'
+\     , 'changedSign.hlGroup'      : 'GitGutterChange'
+\     , 'removedSign.hlGroup'      : 'GitGutterDelete'
+\     , 'topRemovedSign.hlGroup'   : 'GitGutterDelete'
+\     , 'changeRemovedSign.hlGroup': 'GitGutterChangeDelete'
+\     }
 \ }
 
 let g:coc_status_error_sign   = error_symbol
@@ -668,13 +700,16 @@ let g:markdown_fenced_languages = ['vim', 'help']
 
 " Keybindings
 nmap <silent> <leader>le <Plug>(coc-diagnostic-info)
-nmap <silent>         [c <Plug>(coc-diagnostic-prev) " TODO: overwrites vim mapping, make sure I want this
-nmap <silent>         ]c <Plug>(coc-diagnostic-next) " TODO: overwrites vim mapping, make sure I want this
-nmap <silent>         gd <Plug>(coc-definition)      " TODO: overwrites vim mapping, make sure I want this
+nmap <silent> <leader>[c <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>]c <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent>         gd call CocAction('jumpDefinition', 'drop')
 "<Plug>(coc-declaration)
-nmap <silent>         gi <Plug>(coc-implementation)  " TODO: overwrites vim mapping, make sure I want this
-nmap <silent>         gy <Plug>(coc-type-definition)
-nmap <silent>         gr <Plug>(coc-references)      " TODO: overwrites vim mapping, make sure I want this
+nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent>         gi call CocAction('jumpImplementation', 'drop')
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent>         gy call CocAction('jumpTypeDefinition', 'drop')
+nmap <silent> <leader>gr <Plug>(coc-references)
 vmap <silent> <leader>lf <Plug>(coc-format-selected)
 nmap <silent> <leader>lf <Plug>(coc-format-selected)
 nmap <silent> <leader>lF <Plug>(coc-format)
@@ -682,33 +717,42 @@ nmap <silent> <leader>lr <Plug>(coc-rename)
 nmap <silent> <leader>la <Plug>(coc-codeaction)
 nmap <silent> <leader>lc <Plug>(coc-codelens-action)
 nmap <silent> <leader>lq <Plug>(coc-fix-current)
-nmap <silent>         K  :call CocAction('doHover')<CR>
+nmap <silent> <leader>K  :call CocAction('doHover')<CR>
 nmap <silent> <leader>ls :Denite coc-symbols<CR>
 nmap <silent> <leader>lS :Denite coc-workspace<CR>
 nmap <silent> <leader>lE :Denite coc-diagnostic<CR>
 " use tab to navigate completion menu and jump in snippets
 inoremap <expr> <Tab>
-\ pumvisible()
-\ ? '<C-n>'
-\ : coc#jumpable()
-\   ? '<C-r>=coc#rpc#request("doKeymap", ["snippets-expand-jump",""])<CR>'
-\   : '<Tab>'
+      \ pumvisible()
+      \ ? '<C-n>'
+      \ : coc#jumpable()
+      \   ? '<C-r>=coc#rpc#request("doKeymap", ["snippets-expand-jump",""])<CR>'
+      \   : '<Tab>'
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" navigate chunks of current buffer
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
+" show chunk diff at current position
+nmap <leader>gs <Plug>(coc-git-chunkinfo)
+
 
 augroup coc_autocomands
   au!
   " Setup formatexpr specified filetypes (default binding is gq)
-  autocmd FileType typescript,json,haskell setl formatexpr=CocAction('formatSelected')
+  au FileType typescript,json,haskell setl formatexpr=CocAction('formatSelected')
   " Highlight symbol under cursor on CursorHold
-  autocmd CursorHold * silent call CocActionAsync('highlight')
+  au CursorHold * silent call CocActionAsync('highlight')
   " Update signature help on jump placeholder
   " TODO: understand what this does
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  " Close preview window when completion is done
+  au CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup end
 
+" Make highlights fit in with colorscheme
 hi link CocErrorSign NeomakeErrorSign
 hi link CocWarningSign NeomakeWarningSign
 hi link CocInfoSign NeomakeInfoSign
@@ -720,18 +764,7 @@ hi link CocHintHighlight SpellRare
 hi link CocHighlightText SpellCap
 hi link CocCodeLens Comment
 
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Close preview window when completion is done
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+endif  " !exists("g:gui_oni")
 " }}}
 
 " Linter/Fixer {{{
@@ -821,7 +854,7 @@ let g:javascript_plugin_jsdoc = 1
 " https://github.com/plasticboy/vim-markdown
 let g:vim_markdown_folding_disabled     = 1
 let g:vim_markdown_new_list_item_indent = 2
-" let g:vim_markdown_fenced_languages = ['viml=vim', 'ruby', 'python', 'bash=sh', 'html']
+let g:vim_markdown_fenced_languages = ['viml=vim', 'ruby', 'python', 'bash=sh', 'html', 'help']
 " let g:vim_markdown_frontmatter = 1
 " let g:vim_markdown_strikethrough = 1
 set conceallevel=2
@@ -916,16 +949,6 @@ inoremap <C-CR> <ESC>O
 " Forward delete in insert mode
 inoremap <C-d> <Delete>
 
-" Tab switching
-if has('macunix')
-  noremap <S-D-}> <Cmd>tabnext<CR>
-  noremap <S-D-{> <Cmd>tabprevious<CR>
-  inoremap <S-D-}> <Esc><Cmd>tabnext<CR>
-  inoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
-  cnoremap <S-D-}> <Esc><Cmd>tabnext<CR>
-  cnoremap <S-D-{> <Esc><Cmd>tabprevious<CR>
-endif
-
 " Refactoring: rename local variable
 "   gd - jump to definition of word under cursor
 "   [{ - jump to start of block
@@ -955,5 +978,4 @@ cmap ~s/ ~/source/
 augroup myvimrc
   autocmd!
   autocmd BufWritePost $MYVIMRC source $MYVIMRC | filetype detect | redraw
-  " execute 'autocmd! BufWritePost ' . expanded_vimrc . ' tabdo windo source $MYVIMRC | filetype detect | redraw'
 augroup END
