@@ -12,3 +12,6 @@ keybase/config.json
 libimobiledevice/
 nvim/.netrwhist
 nvim/pack/
+yarn/global/node_modules/
+exercism/user.json
+hub
