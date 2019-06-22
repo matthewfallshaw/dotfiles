@@ -17,6 +17,7 @@ Plug 'junegunn/vim-plug'        " Enable help for vim-plug itself
 Plug 'tpope/vim-fugitive'      " A Git wrapper so awesome, it should be illegal
 Plug 'chrisbra/Recover.vim'     " show a diff when recovering a buffer
 " Plug 'gioele/vim-autoswap'      " Please Vim, stop with these swap file messages
+Plug 'airblade/vim-rooter'      " Changes Vim working directory to project root
 
 " UI
 Plug 'vim-airline/vim-airline'   " vim modeline decorations
@@ -26,8 +27,8 @@ Plug 't9md/vim-choosewin'        " Land on window you chose like tmux's 'display
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " sdile explorer
 " Plug 'mhinz/vim-startify'       " The fancy start screen for Vim
 Plug 'ryanoasis/vim-devicons'    " Adds file type glyphs/icons to popular Vim plugins: NERDTree,
-Plug 'easymotion/vim-easymotion' " Vim motions on speed!
                                  " vim-airline, Powerline, Unite, vim-startify and more
+Plug 'easymotion/vim-easymotion' " Vim motions on speed!
 Plug 'rizzatti/dash.vim'         " Dash.app integration
 
 " input
@@ -105,6 +106,7 @@ set scrolloff=5        " start scrolling when cursor is within 5 lines of the ed
 set linebreak          " soft wraps on words not individual chars
 set mouse=a            " enable mouse support in all modes
 " set autochdir          " set pwd to directory of current file
+                         " disabled while playing with airblade/vim-rooter
 set nofoldenable       " disable folding
 
 " Search and replace
@@ -131,6 +133,11 @@ function! Anoremap(arg, lhs, rhs)
     execute map_command a:arg a:lhs a:rhs
   endfor
 endfunction
+
+" python
+let g:python_host_prog = glob('~').'/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = glob('~').'/.pyenv/versions/neovim3/bin/python'
+
 " }}}
 
 " UI General {{{
@@ -580,7 +587,7 @@ call Anoremap('<silent>', '<leader>ss' , '<Cmd>Denite spell<CR>')
 call Anoremap('<silent>', '<leader>sr' , '<Cmd>Denite -resume<CR>')
 " }}}
 
-" Coc.vim {{{
+" Coc.vim, linting, completion, language server {{{
 " =======
 
 if !exists("g:gui_oni")
@@ -603,6 +610,13 @@ let g:coc_global_extensions =
 \ , 'coc-yaml'
 \ ]
 
+" let lua_lsp = glob('~/.vscode/extensions/sumneko.lua*', 0, 1)[-1]
+" \     , 'lua-language-server':
+" \         { 'command'    : lua_lsp.'/server/bin/lua-language-server'
+" \         , 'cwd'        : lua_lsp.'/server'
+" \         , 'args'       : ['-E', '-e', 'LANG="en-us"', lua_lsp.'/main.lua']
+" \         , 'filetypes'  : ['lua']
+" \         }
 let g:coc_user_config =
 \ { 'coc.preferences':
 \     { 'formatOnSaveFiletypes': []
@@ -679,7 +693,11 @@ let g:coc_user_config =
 \         , 'filetypes'       : ['sh']
 \         , 'ignoredRootPaths': ['~']
 \         }
-\     }
+\     , 'lua':
+\         { 'command'    : 'lua-lsp'
+\         , 'filetypes'  : ['lua']
+\         }
+\   }
 \ , 'git':
 \     { 'changedSign.text'         : '┃'
 \     , 'addedSign.text'           : '┃'
@@ -698,10 +716,10 @@ let g:coc_status_error_sign   = error_symbol
 let g:coc_status_warning_sign = warning_symbol
 let g:markdown_fenced_languages = ['vim', 'help']
 
-" Keybindings
+" Coc Keybindings
 nmap <silent> <leader>le <Plug>(coc-diagnostic-info)
-nmap <silent> <leader>[c <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>]c <Plug>(coc-diagnostic-next)
+nmap <silent>         [c <Plug>(coc-diagnostic-prev)
+nmap <silent>         ]c <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent>         gd call CocAction('jumpDefinition', 'drop')
 "<Plug>(coc-declaration)
@@ -898,6 +916,15 @@ vmap <leader>C gc
 " dash.vim plugin
 " Dash.app integration
 nmap <silent> <leader>d <Plug>DashSearch
+
+" vim-rooter
+" for non-project files/directories, change to file's directory (similar to autochdir).
+let g:rooter_change_directory_for_non_project_files = 'current'
+let g:rooter_use_lcd = 1                                         " change directory for the current window only
+let g:rooter_resolve_links = 1                                   " resolve symbolic links
+let g:rooter_patterns = ['.git', '.git/', 'Rakefile', 'package.json', 'tsconfig.json']
+call uniq(sort(g:rooter_patterns))  " remove dups
+
 " }}}
 
 " Commands {{{
@@ -972,6 +999,11 @@ nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 " Command mode shortcuts
 cmap ~c/ ~/code/
 cmap ~s/ ~/source/
+
+command! PROF profile start profile.log | profile func * | profile file *
+command! PROFSTOP profile stop
+" == =>
+
 " }}}
 
 " Reload this vimrc when it changes
