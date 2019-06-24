@@ -41,9 +41,7 @@ Plug 'tpope/vim-surround'   " Easily delete, change and add surroundings in pair
 Plug 'godlygeek/tabular'    " text filtering and alignment
 Plug 'reedes/vim-pencil'    " Rethinking Vim as a tool for writing
 Plug 'tpope/vim-unimpaired' " Pairs of handy bracket mappings
-if !exists("g:gui_oni")
-  Plug 'wellle/targets.vim'       " Vim plugin that provides additional text objects
-endif
+Plug 'wellle/targets.vim'       " Vim plugin that provides additional text objects
 
 " linting
 Plug 'w0rp/ale'             " Check syntax in Vim asynchronously and fix files
@@ -54,11 +52,9 @@ Plug 'Shougo/denite.nvim' " Dnite fuzzy finder
 " Plug 'mileszs/ack.vim'    " File search with ack
 
 " filetypes
-if !exists("g:gui_oni")
-  Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine for vim8 & neovim,
-                                                  " full language server protocol support as VSCode
-  Plug 'neoclide/coc-denite'                      " Denite support of coc.nvim
-endif
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine for vim8 & neovim,
+                                                " full language server protocol support as VSCode
+Plug 'neoclide/coc-denite'                      " Denite support of coc.nvim
 Plug 'sheerun/vim-polyglot'   " see https://github.com/sheerun/vim-polyglot#language-packs
 " Plug 'tpope/vim-rails', { 'for': 'ruby' }
 " Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
@@ -215,9 +211,7 @@ let g:airline_extensions =
 \ , 'whitespace'
 \ , 'wordcount'
 \ ]
-if !exists("g:gui_oni")
-  call add(g:airline_extensions, 'coc')
-endif
+call add(g:airline_extensions, 'coc')
 
 " Tabline configuration
 "let g:airline#extensions#tabline#enabled           = 1 " needed since it isn't on by default
@@ -388,16 +382,17 @@ tnoremap <ESC> <C-\><C-n>    " enter normal mode
 tnoremap <leader><ESC> <ESC> " send escape to terminal
 
 " Start new terminals in insert mode
-augroup nvimTerm
-  au TermOpen * if &buftype == 'terminal' | :startinsert | endif
-augroup END
+" augroup nvimTerm
+"   au TermOpen * if &buftype == 'terminal' | :startinsert | endif
+" augroup END
 
 " Set where splits open
 set splitbelow " open horizontal splits below instead of above which is the default
 set splitright " open vertical splits to the right instead of the left with is the default
 
 " Tab creation/destruction
-call Anoremap('<silent>', '<leader>tt', '<Cmd>tabnew +Startify<CR>') " new tab w/ Startify
+" call Anoremap('<silent>', '<leader>tt', '<Cmd>tabnew +Startify<CR>') " new tab w/ Startify
+call Anoremap('<silent>', '<leader>tt', '<Cmd>tabnew<CR>') " new tab w/ Startify
 call Anoremap('<silent>', '<leader>to', '<Cmd>tabonly<CR>')          " close all other tabs
 call Anoremap('<silent>', '<leader>qt', '<Cmd>tabclose<CR>')         " close tab
 
@@ -590,7 +585,6 @@ call Anoremap('<silent>', '<leader>sr' , '<Cmd>Denite -resume<CR>')
 " Coc.vim, linting, completion, language server {{{
 " =======
 
-if !exists("g:gui_oni")
 set hidden         " if not set, TextEdit might fail
 set nobackup       " some lang servers have issues with backups, should be default, set just in case
 set nowritebackup
@@ -604,113 +598,14 @@ let g:coc_global_extensions =
 \ , 'coc-lists'
 \ , 'coc-pairs'
 \ , 'coc-tsserver'
+\ , 'coc-tslint-plugin'
 \ , 'coc-vimlsp'
 \ , 'coc-python'
 \ , 'coc-emoji'
 \ , 'coc-yaml'
+\ , 'coc-solargraph'
+\ , 'coc-python'
 \ ]
-
-" let lua_lsp = glob('~/.vscode/extensions/sumneko.lua*', 0, 1)[-1]
-" \     , 'lua-language-server':
-" \         { 'command'    : lua_lsp.'/server/bin/lua-language-server'
-" \         , 'cwd'        : lua_lsp.'/server'
-" \         , 'args'       : ['-E', '-e', 'LANG="en-us"', lua_lsp.'/main.lua']
-" \         , 'filetypes'  : ['lua']
-" \         }
-let g:coc_user_config =
-\ { 'coc.preferences':
-\     { 'formatOnSaveFiletypes': []
-\     , 'jumpCommand'          : 'split'
-\     }
-\ , 'codeLens':
-\     { 'enable': v:true
-\     }
-\ , 'diagnostic':
-\     { 'virtualText'        : v:true
-\     , 'refreshOnInsertMode': v:false
-\     , 'errorSign'          : error_symbol
-\     , 'warningSign'        : warning_symbol
-\     , 'infoSign'           : info_symbol
-\     , 'hintSign'           : info_symbol
-\     }
-\ , 'list':
-\     { 'indicator'         : '->>'
-\     , 'selectedSignText'  : ''
-\     , 'extendedSearchMode': v:true
-\     , 'normalMappings'    : {}
-\     , 'insertMappings'    :
-\         { '<CR>' : '<C-o>'
-\         }
-\     }
-\ , 'suggest':
-\     { 'enablePreview'           : v:true
-\     , 'detailField'             : 'menu'
-\     , 'snippetIndicator'        : ''
-\     , 'completionItemKindLabels':
-\         { 'keyword'      : ''
-\         , 'variable'     : ''
-\         , 'value'        : ''
-\         , 'operator'     : 'Ψ'
-\         , 'function'     : 'ƒ'
-\         , 'reference'    : '渚'
-\         , 'constant'     : ''
-\         , 'method'       : ''
-\         , 'struct'       : 'פּ'
-\		      , 'class'        : ''
-\         , 'interface'    : ''
-\         , 'text'         : ''
-\         , 'enum'         : ''
-\         , 'enumMember'   : ''
-\         , 'module'       : ''
-\         , 'color'        : ''
-\         , 'property'     : ''
-\         , 'field'        : '料'
-\         , 'unit'         : ''
-\         , 'event'        : '鬒'
-\         , 'file'         : ''
-\         , 'folder'       : ''
-\         , 'snippet'      : ''
-\         , 'typeParameter': ''
-\         , 'default'      : ''
-\	        }
-\     }
-\ , 'languageserver':
-\     { 'haskell':
-\         { 'command'     : 'hie-8.6.5'
-\         , 'filetypes'   : ['hs', 'lhs', 'haskell']
-\         , 'rootPatterns': ['stack.yaml']
-\         , 'initializationOptions': {}
-\         }
-\     , 'ccls':
-\         { 'command'     : 'ccls'
-\         , 'filetypes'   : ['c', 'cpp', 'objc', 'objcpp']
-\         , 'rootPatterns': ['.ccls', 'compile_commands.json', '.git/']
-\         , 'initializationOptions': {}
-\         }
-\     , 'bash':
-\         { 'command'         : 'bash-language-server'
-\         , 'args'            : ['start']
-\         , 'filetypes'       : ['sh']
-\         , 'ignoredRootPaths': ['~']
-\         }
-\     , 'lua':
-\         { 'command'    : 'lua-lsp'
-\         , 'filetypes'  : ['lua']
-\         }
-\   }
-\ , 'git':
-\     { 'changedSign.text'         : '┃'
-\     , 'addedSign.text'           : '┃'
-\     , 'removedSign.text'         : '_'
-\     , 'topRemovedSign.text'      : '‾'
-\     , 'changeRemovedSign.text'   : '≃'
-\     , 'addedSign.hlGroup'        : 'GitGutterAdd'
-\     , 'changedSign.hlGroup'      : 'GitGutterChange'
-\     , 'removedSign.hlGroup'      : 'GitGutterDelete'
-\     , 'topRemovedSign.hlGroup'   : 'GitGutterDelete'
-\     , 'changeRemovedSign.hlGroup': 'GitGutterChangeDelete'
-\     }
-\ }
 
 let g:coc_status_error_sign   = error_symbol
 let g:coc_status_warning_sign = warning_symbol
@@ -721,12 +616,12 @@ nmap <silent> <leader>le <Plug>(coc-diagnostic-info)
 nmap <silent>         [c <Plug>(coc-diagnostic-prev)
 nmap <silent>         ]c <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent>         gd call CocAction('jumpDefinition', 'drop')
+nmap <silent>         gd :call CocAction('jumpDefinition', 'edit')<CR>
 "<Plug>(coc-declaration)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
-nmap <silent>         gi call CocAction('jumpImplementation', 'drop')
+nmap <silent>         gi :call CocAction('jumpImplementation', 'edit')<CR>
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
-nmap <silent>         gy call CocAction('jumpTypeDefinition', 'drop')
+nmap <silent>         gy :call CocAction('jumpTypeDefinition', 'edit')<CR>
 nmap <silent> <leader>gr <Plug>(coc-references)
 vmap <silent> <leader>lf <Plug>(coc-format-selected)
 nmap <silent> <leader>lf <Plug>(coc-format-selected)
@@ -782,7 +677,6 @@ hi link CocHintHighlight SpellRare
 hi link CocHighlightText SpellCap
 hi link CocCodeLens Comment
 
-endif  " !exists("g:gui_oni")
 " }}}
 
 " Linter/Fixer {{{
@@ -793,18 +687,22 @@ endif  " !exists("g:gui_oni")
 
 " Disable linters for languges that have defined language servers above
 let g:ale_linters =
-\ { 'c'         : []
-\ , 'haskell'   : []
-\ , 'javascript': []
-\ , 'lua'       : []
-\ , 'sh'        : []
-\ , 'typescript': []
-\ , 'vim'       : []
-\ }
+      \ { 'c'         : []
+      \ , 'haskell'   : []
+      \ , 'javascript': []
+      \ , 'lua'       : []
+      \ , 'sh'        : []
+      \ , 'typescript': []
+      \ , 'vim'       : []
+      \ }
+      " \ , 'typescript': ['tslint']
 
 " Configure and enable fixer
 let g:ale_fix_on_save = 1
-let g:ale_fixers = { '*' : ['remove_trailing_lines', 'trim_whitespace'] }
+let g:ale_fixers =
+      \ { '*'          : ['remove_trailing_lines', 'trim_whitespace']
+      \ }
+      " \ , 'typescript' : ['tslint']
 
 " Customize symbols
 let g:ale_sign_error         = error_symbol
