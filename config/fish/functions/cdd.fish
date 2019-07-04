@@ -1,5 +1,4 @@
-# cd into ~/code
-function cdd
+function cdd -d "cd into ~/code"
   set -l cdpath "$HOME/code"
   if [ -z "$argv[1]" ]
     cd $cdpath

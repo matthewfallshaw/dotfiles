@@ -1,4 +1,4 @@
-function gco
+function gco -d "`git checkout [master | arg`"
   if [ -z "$argv[1]" ]; then
     git checkout master
   else

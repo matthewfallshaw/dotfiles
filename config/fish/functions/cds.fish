@@ -1,5 +1,4 @@
-# cd into ~/source
-function cds
+function cds -d "cd into ~/source"
   set -l cdpath "$HOME/source"
   if [ -z "$argv[1]" ]
     cd $cdpath

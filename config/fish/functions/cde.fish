@@ -1,5 +1,4 @@
-# cd into ~/eclipse-workspace
-function cde
+function cde -d "cd into ~/eclipse-workspace"
   set -l cdpath "$HOME/eclipse-workspace"
   if [ -z "$argv[1]" ]
     cd $cdpath

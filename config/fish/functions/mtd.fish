@@ -1,5 +1,4 @@
-# Make a temp directory and cd into it
-function mtd
+function mtd -d "Make a temp directory and cd into it"
   set -l dir (mktemp -d)
   if test -n "$dir"
     if test -d "$dir"
