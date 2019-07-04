@@ -52,7 +52,7 @@ Plug 'Shougo/denite.nvim' " Dnite fuzzy finder
 " Plug 'mileszs/ack.vim'    " File search with ack
 
 " filetypes
-Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine for vim8 & neovim,
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}} " Intellisense engine for vim8 & neovim,
                                                 " full language server protocol support as VSCode
 Plug 'neoclide/coc-denite'                      " Denite support of coc.nvim
 Plug 'sheerun/vim-polyglot'   " see https://github.com/sheerun/vim-polyglot#language-packs
@@ -174,7 +174,7 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
-" Variables to reuse in config
+" Variables for symbol used in config
 let error_symbol      = ''
 let warning_symbol    = ''
 let info_symbol       = ''
@@ -202,6 +202,7 @@ let g:airline_skip_empty_sections              = 1             " don't show sect
 let g:airline_extensions =
 \ [ 'ale'
 \ , 'branch'
+\ , 'coc'
 \ , 'denite'
 \ , 'fugitiveline'
 \ , 'keymap'
@@ -211,7 +212,6 @@ let g:airline_extensions =
 \ , 'whitespace'
 \ , 'wordcount'
 \ ]
-call add(g:airline_extensions, 'coc')
 
 " Tabline configuration
 "let g:airline#extensions#tabline#enabled           = 1 " needed since it isn't on by default
@@ -593,12 +593,12 @@ set shortmess+=c   " don't show ins-completion-menu messages.
 
 " General configuration
 let g:coc_global_extensions =
-\ [ 'coc-json'
+\ [ 'coc-eslint'
+\ , 'coc-json'
 \ , 'coc-git'
 \ , 'coc-lists'
 \ , 'coc-pairs'
 \ , 'coc-tsserver'
-\ , 'coc-tslint-plugin'
 \ , 'coc-vimlsp'
 \ , 'coc-python'
 \ , 'coc-emoji'
@@ -636,11 +636,11 @@ nmap <silent> <leader>lS :Denite coc-workspace<CR>
 nmap <silent> <leader>lE :Denite coc-diagnostic<CR>
 " use tab to navigate completion menu and jump in snippets
 inoremap <expr> <Tab>
-      \ pumvisible()
-      \ ? '<C-n>'
-      \ : coc#jumpable()
-      \   ? '<C-r>=coc#rpc#request("doKeymap", ["snippets-expand-jump",""])<CR>'
-      \   : '<Tab>'
+\ pumvisible()
+\ ? '<C-n>'
+\ : coc#jumpable()
+\   ? '<C-r>=coc#rpc#request("doKeymap", ["snippets-expand-jump",""])<CR>'
+\   : '<Tab>'
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
@@ -687,22 +687,22 @@ hi link CocCodeLens Comment
 
 " Disable linters for languges that have defined language servers above
 let g:ale_linters =
-      \ { 'c'         : []
-      \ , 'haskell'   : []
-      \ , 'javascript': []
-      \ , 'lua'       : []
-      \ , 'sh'        : []
-      \ , 'typescript': []
-      \ , 'vim'       : []
-      \ }
-      " \ , 'typescript': ['tslint']
+\ { 'c'         : []
+\ , 'haskell'   : []
+\ , 'javascript': []
+\ , 'lua'       : []
+\ , 'sh'        : []
+\ , 'typescript': []
+\ , 'vim'       : []
+\ }
+" \ , 'typescript': ['tslint']
 
 " Configure and enable fixer
 let g:ale_fix_on_save = 1
 let g:ale_fixers =
-      \ { '*'          : ['remove_trailing_lines', 'trim_whitespace']
-      \ }
-      " \ , 'typescript' : ['tslint']
+\ { '*'          : ['remove_trailing_lines', 'trim_whitespace']
+\ }
+" \ , 'typescript' : ['tslint']
 
 " Customize symbols
 let g:ale_sign_error         = error_symbol
@@ -790,10 +790,10 @@ set conceallevel=2
 
 " GitGutter
 " https://github.com/airblade/vim-gitgutter
-let g:gitgutter_override_sign_column_highlight = 0     " make sign column look consistent
-let g:gitgutter_sign_added    = '┃'                    " replace default symbols with something nicer
-let g:gitgutter_sign_modified = g:gitgutter_sign_added
-let g:gitgutter_sign_removed  = g:gitgutter_sign_added
+" let g:gitgutter_override_sign_column_highlight = 0     " make sign column look consistent
+" let g:gitgutter_sign_added    = '┃'                    " replace default symbols with something nicer
+" let g:gitgutter_sign_modified = g:gitgutter_sign_added
+" let g:gitgutter_sign_removed  = g:gitgutter_sign_added
 
 " tabular
 " Helps vim-markdown with table formatting amoung many other things
@@ -901,6 +901,26 @@ cmap ~s/ ~/source/
 command! PROF profile start profile.log | profile func * | profile file *
 command! PROFSTOP profile stop
 " == =>
+
+" Searchable list of mappings
+function! s:ShowMaps()
+  let old_reg = getreg("a")                  " save the current content of register a
+  let old_reg_type = getregtype("a")         " save the type of the register as well
+  try
+    redir @a                                 " redirect output to register a
+    " Get the list of all key mappings silently, satisfy "Press ENTER to continue"
+    silent map | call feedkeys("\<CR>        ")
+    redir END                                " end output redirection
+    vnew                                     " new buffer in vertical window
+    put a                                    " put content of register
+                                             " Sort on 4th character column which is the key(s)
+    %!sort --key 1,14
+  finally                                    " Execute even if exception is raised
+    call setreg("a", old_reg, old_reg_type)  " restore register a
+  endtry
+endfunction
+com! ShowMaps call s:ShowMaps()              " Enable :ShowMaps to call the function
+nnoremap <leader>m :ShowMaps<CR>             " Map keys to call the function
 
 " }}}
 

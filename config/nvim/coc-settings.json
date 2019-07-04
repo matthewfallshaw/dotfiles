@@ -146,7 +146,8 @@
   "git.removedSign.hlGroup": "GitGutterDelete",
   "git.topRemovedSign.hlGroup": "GitGutterDelete",
   "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
-  "tslint.configFile": "./tslint.json",
-  "tslint.autoFixOnSave": false,
-  "tslint.suppressWhileTypeErrorsPresent": false
+  "eslint.filetypes": [
+    "javascript",
+    "typescript"
+  ]
 }
