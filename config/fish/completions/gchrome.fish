@@ -1,22 +1,10 @@
-set SEP 'SHUQUAOZ6EIYUO4KAHTH'  # a presumed unique key
-
-if test -d "$HOME/.config/google-chrome"
-  set __gchrome_base_dir "$HOME/.config/google-chrome"
-else
-  set __gchrome_base_dir "$HOME/Library/Application Support/Google/Chrome"
-end
-
-function __gchrome_get_profiles
-  jq -r '[.profile.info_cache | to_entries[] | {"key": .key, "value": .value.name}] | .[] | "\(.value|@sh)'$SEP'\(.key|@sh)"' "$__gchrome_base_dir/Local State"
-end
-
 function __gchrome_get_profile_from_pair
-  set -l k_v (string split $SEP $argv[1])
+  set -l k_v (string split \t $argv[1])
   echo $k_v[2]
 end
 
 function __gchrome_get_profile_alias_from_pair
-  set -l k_v (string split $SEP $argv[1])
+  set -l k_v (string split \t $argv[1])
   echo $k_v[1]
 end
 
