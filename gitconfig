@@ -61,8 +61,9 @@
   aa = add -A           # Adds all changes.
   co = checkout
   cob = checkout -b     # Creates a new branch at the current location (e.g. `git cob new-branch`).
-  cop = checkout -p     # Resets changes chunk-by-chunk. Also very handy. (To instead reset file changes,
-                        # you can use `git co -- file1 folder2`, or `git co -- .` to reset them all.)
+  cop = checkout -p     # Resets changes chunk-by-chunk. Also very handy. (To instead reset file
+                        # changes, you can use `git co -- file1 folder2`, or `git co -- .` to reset
+                        # them all.)
   cm = commit -m        # Commit with message, e.g. `git cm "Whitespace fixes"`
   ca = commit --amend   # Instead of making a new commit, updates the last commit.
   cma = commit --all -m
@@ -80,30 +81,41 @@
   # Branch management
   pu = ! git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
       # Pushes (and sets upstream) to a branch with the same name. Very handy for new branches.
-  db = branch -d  # Deletes a local branch. This will not let you delete a branch that isn't merged -
-                  # in that case you'll need `fdb` defined below.
+  db = branch -d
+      # Deletes a local branch. This will not let you delete a branch that isn't merged - in that case
+      # you'll need `fdb` defined below.
 
   # Scary branch management
-  fp = push --force  # 'Force push' overrides the remote branch. Take care with this one! Useful after rebasing.
-  fdb = branch -D    # Forcibly deletes a branch (e.g. `git fdb old-branch`). You can usually find it again
-                     # with `git reflog` if you notice quickly you made a mistake.
+  fp = push --force
+      # 'Force push' overrides the remote branch. Take care with this one! Useful after rebasing.
+  fdb = branch -D
+      # Forcibly deletes a branch (e.g. `git fdb old-branch`). You can usually find it again with `git
+      # reflog` if you notice quickly you made a mistake.
   dbf = branch -D
-  mb = branch -f     # Forcibly moves a branch to the current location. Useful if you e.g. have origin/master
-                     # checked out, and want to move a branch there. Will lose the old branch!
+  mb = branch -f
+      # Forcibly moves a branch to the current location. Useful if you e.g. have origin/master checked
+      # out, and want to move a branch there. Will lose the old branch!
 
   # Merge things
   mt = mergetool
   dt = difftool
-  m = merge --no-ff     # Merges in another branch. Always creates a merge commit.
-  ff = merge --ff-only  # Fast-forwards to another branch. Will not merge or rebase.
-                        # (e.g. `git ff origin/master` will move your branch forward to match origin/master.)
+  m = merge --no-ff
+      # Merges in another branch. Always creates a merge commit.
+  ff = merge --ff-only
+      # Fast-forwards to another branch. Will not merge or rebase. (e.g. `git ff origin/master` will
+      # move your branch forward to match origin/master.)
   ffm = merge --ff-only origin/master  # Specialized to origin/master.
 
   # Rebase things
-  rb = rebase --preserve-merges  # The default way to move your commits on top of another branch.
-  rbm = rebase --preserve-merges origin/master  # Specialized to moving your changes on top of origin/master.
-  rbi = rebase -i  # An interactive rebase which lets you choose which commits to apply, and in which order. Very powerful.
-  rbmi = rebase -i origin/master  # Specialized to moving on top of origin/master.
+  rb = rebase --preserve-merges
+      # The default way to move your commits on top of another branch.
+  rbm = rebase --preserve-merges origin/master
+      # Specialized to moving your changes on top of origin/master.
+  rbi = rebase -i
+      # An interactive rebase which lets you choose which commits to apply, and in which order.
+      # Very powerful.
+  rbmi = rebase -i origin/master
+      # Specialized to moving on top of origin/master.
   rbim = rebase -i origin/master
   cont = rebase --continue
   abort = rebase --abort
@@ -115,16 +127,22 @@
   rhard = reset HEAD --hard     # Nukes all changes and resets everything to the current commit.
   rhard1 = reset HEAD~1 --hard  # Nukes everything and moves to the previous commit.
   rhard2 = reset HEAD~2 --hard  # Nukes everything and moves to the previous previous commit.
-  fcl = clean --force      # Deletes all untracked files (that aren't gitignored). Useful when you have junk lying around.
-  fcld = clean --force -d  # Deletes all untracked files and directories (that aren't gitignored). Irrecoverably.
-  ignore-unsafe = update-index --assume-unchanged  # Stops tracking changes to a file. Use with care.
+  fcl = clean --force
+      # Deletes all untracked files (that aren't gitignored). Useful when you have junk lying around.
+  fcld = clean --force -d
+      # Deletes all untracked files and directories (that aren't gitignored). Irrecoverably.
+  ignore-unsafe = update-index --assume-unchanged
+      # Stops tracking changes to a file. Use with care.
 
   # Submodules
-  su = submodule update --init --recursive  # Updates submodules, should you forced into that little corner of hell.
-  ll = ! git pull && git submodule update --recursive  # Pulls and updates submodules. (Does not initiliaze new ones.)
+  su = submodule update --init --recursive
+      # Updates submodules, should you forced into that little corner of hell.
+  ll = ! git pull && git submodule update --recursive
+      # Pulls and updates submodules. (Does not initiliaze new ones.)
 
   # Misc things
-  po = push origin  # To delete a branch, `git push origin :branch`, i.e. `git po :branch`.
+  po = push origin
+      # To delete a branch, `git push origin :branch`, i.e. `git po :branch`.
   com = checkout master
   coom = checkout origin/master
   cg = config --global  # Easily access global git configuration =)
