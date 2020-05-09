@@ -1,5 +1,0 @@
-My dotfiles, mostly for OSX and Ruby
-
-== Dependencies
-ruby, and
-`sudo gem install wirble interactive_editor awesome_print`

@@ -1,16 +1,35 @@
+# frozen_string_literal: true
+
 # secrets in ~/.dotfiles_secrets like
 # filename:
 #   "search_term": replace_term
 #   "other_search_term": other_replace_term
 
-%w[rubygems rake yaml shellwords tempfile].each {|l| require l }
+%w[rubygems rake yaml shellwords tempfile].each { |l| require l }
 
-IGNORE_LIST = %w[install.rb Rakefile README vendor lib tags oh-my-zsh]
-DESTDIR = File.expand_path("~")
+IGNORE_LIST = %w[install.rb Rakefile README vendor lib tags oh-my-zsh].freeze
+DESTDIR = File.expand_path('~')
 SOURCEDIR = File.dirname(__FILE__)
 SECRETS = File.expand_path('~/.dotfiles_secrets')
+NONDOT = %w[].freeze
+GDRIVEAPPSUPPORT = "~/Google Drive/system/Library/Application Support/"
 
-task :default => :all
+task default: %w[all]
+
+namespace :app_support do
+  apps = Dir[File.expand_path("#{GDRIVEAPPSUPPORT}*")].map {|a| File.basename(a)}
+  apps.each do |app|
+    desc "Symlink #{app} to #{GDRIVEAPPSUPPORT}"
+    task dotfile do
+      rm_r dotfile
+      rm_r target(dotfile)
+    end
+  end
+
+  task all: apps
+end
+desc 'Symlink all folders in #{GDRIVEAPPSUPPORT} to ~/Library/Application Support/'
+task app_support: 'app_support:all'
 
 def secrets
   @secrets ||= begin
@@ -35,7 +54,7 @@ dotfiles_with_secrets.exclude do |f|
   !secrets.keys.include?(f)
 end
 dotfiles_without_secrets = dotfiles - dotfiles_with_secrets
- 
+
 desc <<DESC
 install dotfiles into user's home directory, and replace secrets defined in ~/.dotfiles_secrets
 (~/.dotfiles_secrets should look like:
@@ -45,10 +64,14 @@ install dotfiles into user's home directory, and replace secrets defined in ~/.d
 )
 DESC
 task all: dotfiles
-task all: "oh-my-zsh"
+# task all: 'oh-my-zsh'
 
 def target(dotfile)
-  File.join(DESTDIR, ".#{dotfile}")
+  if NONDOT.include?(dotfile)
+    File.join(DESTDIR, dotfile)
+  else
+    File.join(DESTDIR, ".#{dotfile}")
+  end
 end
 
 dotfiles_without_secrets.each do |dotfile|
